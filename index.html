@@ -283,6 +283,20 @@
     const dow = new Date(dateStr + 'T00:00:00').getDay();
     return gymDays.indexOf(dow) >= 0 ? gymBudget : (st.kcalBudget || 2100);
   }
+  function weightOnOrBefore(dateStr) {
+    let out = null;
+    Object.keys(S.days).sort().forEach(dt => { if (dt <= dateStr && S.days[dt].weight) out = S.days[dt].weight; });
+    return out || S.settings.startWeight || 103.2;
+  }
+  // Protein ramps on a schedule (settings.proteinPlan), then tracks bodyweight at ~2 g/kg.
+  function proteinFor(dateStr) {
+    const st = S.settings, plan = st.proteinPlan;
+    if (!plan || !plan.length) return st.proteinTarget || 150;
+    let cur = null;
+    plan.forEach(p => { if (p.from <= dateStr) cur = p; });
+    if (!cur) return st.proteinTarget || 150;
+    return cur.g ? cur.g : Math.round((cur.perKg || 2.0) * weightOnOrBefore(dateStr));
+  }
 
   function countUp(el, to, suffix) {
     const from = parseInt((el.textContent || '0').replace(/[^\d-]/g, '')) || 0;
@@ -345,7 +359,8 @@
     ring.setAttribute('stroke', remaining < 0 ? 'url(#rgOver)' : frac > .82 ? 'url(#rgWarn)' : 'url(#rg)');
     countUp(document.getElementById('kLeft'), Math.abs(remaining));
     document.getElementById('kLbl').textContent = remaining >= 0 ? 'KCAL LEFT' : 'KCAL OVER ⚠️';
-    document.getElementById('mProt').innerHTML = '<span class="' + (protein >= st.proteinTarget ? 'ok' : '') + '">' + protein + '</span><span class="muted" style="font-weight:400">/' + st.proteinTarget + 'g</span>';
+    const protTarget = proteinFor(TODAY);
+    document.getElementById('mProt').innerHTML = '<span class="' + (protein >= protTarget ? 'ok' : '') + '">' + protein + '</span><span class="muted" style="font-weight:400">/' + protTarget + 'g</span>';
     const litres = (d.waterMl || 0) / 1000;
     document.getElementById('mWater').innerHTML = '<span class="' + (litres >= 3 ? 'ok' : '') + '">' + (+litres.toFixed(2)) + '</span><span class="muted" style="font-weight:400">/3 L</span>';
     const walkMin = (d.walks || []).reduce((a, w) => a + (w.min || 0), 0);
