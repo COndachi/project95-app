@@ -439,10 +439,24 @@
     renderReport();
   }
 
+  let chatExpanded = false;
   function renderChat() {
     const el = document.getElementById('chatThread');
-    const msgs = (S.chat || []).slice(-12);
-    el.innerHTML = msgs.length ? '' : '<div class="muted" style="font-size:13px">Ask anything — "can I fit a beer tonight?", "why is my weight stuck?" — and your coach answers with your full log in front of them.</div>';
+    const all = S.chat || [];
+    el.innerHTML = '';
+    if (!all.length) {
+      el.innerHTML = '<div class="muted" style="font-size:13px">Ask anything — "can I fit a beer tonight?", "why is my weight stuck?" — and your coach answers with your full log in front of them.</div>';
+      return;
+    }
+    const msgs = chatExpanded ? all : all.slice(-4);
+    if (all.length > msgs.length || chatExpanded) {
+      const tog = document.createElement('div');
+      tog.className = 'muted';
+      tog.style.cssText = 'font-size:12px;text-align:center;padding:2px 0 4px;cursor:pointer';
+      tog.textContent = chatExpanded ? 'Hide earlier messages' : 'Show earlier messages (' + (all.length - msgs.length) + ')';
+      tog.onclick = () => { chatExpanded = !chatExpanded; renderChat(); };
+      el.appendChild(tog);
+    }
     msgs.forEach(m => {
       const div = document.createElement('div');
       div.className = 'msg ' + (m.role === 'coach' ? 'coach' : 'me');
