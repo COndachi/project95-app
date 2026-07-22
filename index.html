@@ -131,6 +131,7 @@
       <div class="minis">
         <div class="mini"><span>🥩 Protein</span><b id="mProt">0g</b></div>
         <div class="mini"><span>💧 Water</span><b id="mWater">0 L</b></div>
+        <div class="mini"><span>👣 Steps</span><b id="mSteps">0</b></div>
         <div class="mini"><span>🏃 Active</span><b id="mWalk">0 min</b></div>
       </div>
     </div>
@@ -188,7 +189,14 @@
           <button class="mini-btn blue" onclick="logWorkout()">Log</button>
         </div>
       </div>
-      <button class="mini-btn blue" style="width:100%;margin-top:9px;padding:11px" onclick="document.getElementById('workoutIn').click()">📸 Snap workout / Strava — Claude reads it</button>
+      <div class="flexbet" style="margin-top:9px">
+        <span style="font-size:14px">👣 Steps today</span>
+        <div class="row" style="gap:7px;align-items:center">
+          <input type="number" id="stepsIn" placeholder="from phone" style="width:104px;padding:10px">
+          <button class="mini-btn blue" onclick="logSteps()">Set</button>
+        </div>
+      </div>
+      <button class="mini-btn blue" style="width:100%;margin-top:9px;padding:11px" onclick="document.getElementById('workoutIn').click()">📸 Snap workout / Strava / step counter — Claude reads it</button>
     </div>
     <div class="sub muted" id="walkList" style="font-size:12px;margin-top:8px"></div>
   </div>
@@ -289,9 +297,12 @@
   }
   function dayObj() { return S.days[TODAY] || { weight:null, waterMl:0, walks:[], meals:[] }; }
   function esc(s) { const d = document.createElement('div'); d.textContent = s; return d.innerHTML; }
-  // Gym days (Tue/Wed/Fri) get a higher budget — Collo trains those days and needs the fuel.
+  // Gym days (Tue/Wed/Fri) get a higher budget — unless gym is paused from a date
+  // (gymPausedFrom), in which case every day from then on is a walk day. Historical
+  // days before the pause keep their gym budgets.
   function budgetFor(dateStr) {
     const st = S.settings;
+    if (st.gymPausedFrom && dateStr >= st.gymPausedFrom) return st.kcalBudget || 2100;
     const gymBudget = st.kcalBudgetGym || 2500;
     const gymDays = st.gymDays || [2, 3, 5]; // JS getDay(): Tue=2, Wed=3, Fri=5
     const dow = new Date(dateStr + 'T00:00:00').getDay();
@@ -379,6 +390,9 @@
     document.getElementById('mWater').innerHTML = '<span class="' + (litres >= 3 ? 'ok' : '') + '">' + (+litres.toFixed(2)) + '</span><span class="muted" style="font-weight:400">/3 L</span>';
     const walkMin = (d.walks || []).reduce((a, w) => a + (w.min || 0), 0);
     document.getElementById('mWalk').innerHTML = '<span class="' + (walkMin >= 30 ? 'ok' : '') + '">' + walkMin + '</span><span class="muted" style="font-weight:400"> min</span>';
+    const stepsTgt = st.stepsTarget || 10000;
+    const stepsVal = d.steps || 0;
+    document.getElementById('mSteps').innerHTML = '<span class="' + (stepsVal >= stepsTgt ? 'ok' : '') + '">' + stepsVal.toLocaleString() + '</span><span class="muted" style="font-weight:400">/' + Math.round(stepsTgt / 1000) + 'k</span>';
 
     const mc = document.getElementById('mealsCard');
     mc.innerHTML = '';
@@ -537,7 +551,7 @@
     const dim = new Date(+mp[0], +mp[1], 0).getDate();
     const eatDays = [];
     let protSum = 0, waterSum = 0, waterDays = 0, underN = 0, casualN = 0, casualKcal = 0;
-    let activeMin = 0, burned = 0, wFirst = null, wLast = null;
+    let activeMin = 0, burned = 0, wFirst = null, wLast = null, stepsSum = 0, stepsDays = 0;
     const mix = {}, bars = [];
     for (let i = 1; i <= dim; i++) {
       const key = repMonth + '-' + ('0' + i).slice(-2);
@@ -559,6 +573,7 @@
         });
         if (day.waterMl) { waterSum += day.waterMl; waterDays++; any = true; }
         if (day.weight) { if (wFirst === null) wFirst = day.weight; wLast = day.weight; any = true; }
+        if (day.steps) { stepsSum += day.steps; stepsDays++; any = true; }
       }
       const dayBudget = budgetFor(key);
       if (kcal > 0) { eatDays.push(kcal); protSum += prot; if (kcal <= dayBudget) underN++; }
@@ -566,11 +581,12 @@
     }
 
     const baseB = st.kcalBudget || 2100, gymB = st.kcalBudgetGym || 2500;
-    const bw = 300 / dim, cap = Math.max(baseB, gymB) * 1.4;
+    const monthHasGym = bars.some(b => b.budget > baseB);
+    const bw = 300 / dim, cap = (monthHasGym ? Math.max(baseB, gymB) : baseB) * 1.4;
     const yBase = (44 - (baseB / cap) * 40).toFixed(1), yGym = (44 - (gymB / cap) * 40).toFixed(1);
     let sv = '<line x1="0" y1="45" x2="300" y2="45" stroke="#232c44" stroke-width="1"/>' +
       '<line x1="0" y1="' + yBase + '" x2="300" y2="' + yBase + '" stroke="#3a4668" stroke-width="1" stroke-dasharray="4 4"/>' +
-      '<line x1="0" y1="' + yGym + '" x2="300" y2="' + yGym + '" stroke="#2f3a58" stroke-width="1" stroke-dasharray="2 4"/>';
+      (monthHasGym ? '<line x1="0" y1="' + yGym + '" x2="300" y2="' + yGym + '" stroke="#2f3a58" stroke-width="1" stroke-dasharray="2 4"/>' : '');
     bars.forEach(b => {
       const x = ((b.day - 1) * bw + 1).toFixed(1), w = Math.max(1.5, bw - 2).toFixed(1);
       if (b.kcal > 0) {
@@ -581,7 +597,9 @@
       }
     });
     document.getElementById('repBars').innerHTML = sv;
-    document.getElementById('repBarsLbl').textContent = 'Daily kcal · budget ' + baseB.toLocaleString() + ' walk / ' + gymB.toLocaleString() + ' gym · teal under, red over';
+    document.getElementById('repBarsLbl').textContent = monthHasGym
+      ? 'Daily kcal · budget ' + baseB.toLocaleString() + ' walk / ' + gymB.toLocaleString() + ' gym · teal under, red over'
+      : 'Daily kcal · budget ' + baseB.toLocaleString() + ' · teal under, red over';
 
     const avgK = eatDays.length ? Math.round(eatDays.reduce((a, b) => a + b, 0) / eatDays.length) : 0;
     const avgP = eatDays.length ? Math.round(protSum / eatDays.length) : 0;
@@ -595,6 +613,7 @@
       tile('🥩 Protein avg', avgK ? avgP + ' g' : '—') +
       tile('💧 Water avg', waterDays ? (+avgW.toFixed(1)) + ' L' : '—') +
       tile('🏃 Active', activeMin ? activeMin + ' min' : '—') +
+      tile('👣 Steps avg', stepsDays ? Math.round(stepsSum / stepsDays).toLocaleString() : '—') +
       tile('🍪 Snacks', casualN ? casualN + '× · ' + casualKcal.toLocaleString() + ' kcal' : 'none 🎯');
 
     let take;
@@ -657,6 +676,17 @@
     const tgt = st.startWeight - (st.startWeight - st.goalWeight) * Math.min(1, (dayN - 1) / 142);
     if (v <= tgt) { confetti(); toast('On the glide path — ' + v.toFixed(1) + ' kg 🎉'); }
     else toast('Saved ' + v.toFixed(1) + ' kg — keep pushing 💪');
+  }
+  async function logSteps() {
+    const v = parseInt(document.getElementById('stepsIn').value);
+    if (isNaN(v) || v < 0) return toast('Enter your step count');
+    document.getElementById('stepsIn').value = '';
+    const tgt = S.settings.stepsTarget || 10000;
+    const before = (S.days[TODAY] || {}).steps || 0;
+    await quick('steps', v);
+    if (before < tgt && v >= tgt) { confetti(); toast('👣 ' + v.toLocaleString() + ' — target smashed! 🎉'); }
+    else if (v < tgt) toast('👣 ' + v.toLocaleString() + ' — ' + (tgt - v).toLocaleString() + ' to go');
+    else toast('👣 ' + v.toLocaleString() + ' saved');
   }
   async function logWorkout() {
     const type = document.getElementById('wkType').value;
