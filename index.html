@@ -143,6 +143,11 @@
   </div>
   <input type="file" id="photoIn" accept="image/*" class="hide" onchange="photoPicked(this)">
 
+  <div id="quickWrap" class="hide">
+    <div class="sect">⚡ Quick add · your usuals</div>
+    <div class="card" id="quickChips" style="display:flex;flex-wrap:wrap;gap:8px"></div>
+  </div>
+
   <div class="sect">Today's meals</div>
   <div class="card" id="mealsCard"></div>
 
@@ -449,8 +454,63 @@
       dgEl.innerHTML = '<span class="muted" style="font-size:13px">Fresh day. Your morning recap lands here each day ☀️</span>';
     }
 
+    renderQuick();
     renderChat();
     renderReport();
+  }
+
+  // "Quick add": foods he has logged (and had counted) at least twice become
+  // one-tap chips with their usual values — logged instantly as done, no
+  // analysis wait. Self-updating from history.
+  let FAVS = [];
+  function favorites() {
+    const info = {};
+    Object.keys(S.days).forEach(dt => {
+      (S.days[dt].meals || []).forEach(m => {
+        if (m.status !== 'done' || !m.desc || m.kcal == null) return;
+        const key = m.desc.toLowerCase().replace(/[.,!]/g, '').replace(/\s+/g, ' ').trim();
+        if (!info[key]) info[key] = { desc: m.desc, kcals: [], prots: [], casuals: 0, n: 0, last: '' };
+        const f = info[key];
+        f.n++; f.kcals.push(m.kcal || 0); f.prots.push(m.protein || 0); if (m.casual) f.casuals++;
+        if (dt > f.last) { f.last = dt; f.desc = m.desc; }
+      });
+    });
+    const med = a => { const s = a.slice().sort((x, y) => x - y); return s[Math.floor(s.length / 2)]; };
+    return Object.keys(info)
+      .filter(k => info[k].n >= 2)
+      .sort((a, b) => info[b].n - info[a].n || (info[b].last > info[a].last ? 1 : -1))
+      .slice(0, 6)
+      .map(k => ({ desc: info[k].desc, kcal: med(info[k].kcals), protein: med(info[k].prots), casual: info[k].casuals * 2 > info[k].n }));
+  }
+  function foodEmo(d) {
+    d = d.toLowerCase();
+    if (/coffee|espresso|cortado|americano/.test(d)) return '☕';
+    if (/\btea\b|chai/.test(d)) return '🍵';
+    if (/egg/.test(d)) return '🥚';
+    if (/yoghurt|yogurt/.test(d)) return '🥛';
+    if (/watermelon|apple|banana|mango|fruit|avocado/.test(d)) return '🍎';
+    if (/muesli|oats|porridge/.test(d)) return '🥣';
+    return '🍽️';
+  }
+  function renderQuick() {
+    FAVS = favorites();
+    document.getElementById('quickWrap').classList.toggle('hide', !FAVS.length);
+    const el = document.getElementById('quickChips');
+    el.innerHTML = '';
+    FAVS.forEach((f, i) => {
+      const b = document.createElement('button');
+      b.className = 'mini-btn';
+      const short = f.desc.length > 26 ? f.desc.slice(0, 25) + '…' : f.desc;
+      b.textContent = foodEmo(f.desc) + ' ' + short + ' · ' + f.kcal;
+      b.style.maxWidth = '100%';
+      b.onclick = () => quickAddFav(i);
+      el.appendChild(b);
+    });
+  }
+  async function quickAddFav(i) {
+    const f = FAVS[i];
+    toast(foodEmo(f.desc) + ' Logged & counted — ' + f.kcal + ' kcal');
+    apply(await apiPost({ action: 'logMeal', desc: f.desc, kcal: f.kcal, protein: f.protein, casual: f.casual }));
   }
 
   let chatExpanded = false;
