@@ -139,6 +139,33 @@
   .repeat-card .repeat-name { display:block; font-weight:750; font-size:12.5px; line-height:1.25; margin-top:7px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
   .repeat-card .repeat-meta { display:block; color:var(--muted); font-size:10.5px; margin-top:4px; }
   .repeat-card .repeat-count { float:right; color:#8c641f; background:var(--cream); border-radius:999px; padding:3px 6px; font-size:9.5px; font-weight:800; }
+  .week-card { overflow:hidden; }
+  .week-head { display:flex; justify-content:space-between; align-items:center; gap:8px; }
+  .week-title { font-size:16px; font-weight:800; letter-spacing:-.2px; text-align:center; }
+  .week-nav { width:35px; height:35px; padding:0; border-radius:50%; font-size:18px; }
+  .week-strip { display:grid; grid-template-columns:repeat(7,1fr); gap:5px; margin-top:15px; }
+  .week-day { min-width:0; text-align:center; padding:7px 2px 8px; border-radius:15px; border:1px solid transparent; }
+  .week-day.today { background:var(--cream); border-color:#ead4a3; }
+  .week-day.future { opacity:.38; }
+  .week-day .wd { font-size:9px; text-transform:uppercase; letter-spacing:.8px; color:var(--muted); font-weight:800; }
+  .week-day .dn { font-size:12px; font-weight:800; margin-top:3px; }
+  .week-day .orb { width:27px; height:27px; margin:6px auto 0; border-radius:50%; display:flex; align-items:center; justify-content:center; background:#e8e2d7; color:#77766e; font-size:9px; font-weight:800; border:3px solid #f5f1e9; box-shadow:0 0 0 1px #ddd5c8; }
+  .week-day .orb.s1 { background:#f0d8cc; color:#914e36; }
+  .week-day .orb.s2 { background:#f4dc9d; color:#815b15; }
+  .week-day .orb.s3 { background:#b9d6c7; color:#245648; }
+  .week-day .orb.s4 { background:var(--forest-2); color:#fff; box-shadow:0 0 0 1px var(--forest-2),0 0 0 5px rgba(36,86,72,.08); }
+  .week-stats { display:grid; grid-template-columns:1fr 1fr; gap:8px; margin-top:14px; }
+  .week-stat { background:#f8f4ec; border:1px solid #e4ddd1; border-radius:14px; padding:10px 11px; }
+  .week-stat span { display:block; font-size:9.5px; color:var(--muted); text-transform:uppercase; letter-spacing:.6px; font-weight:750; }
+  .week-stat b { display:block; font-size:15px; margin-top:3px; font-variant-numeric:tabular-nums; }
+  .week-take { margin-top:12px; padding:11px 12px; border-radius:14px; background:#edf4ee; color:#35584a; font-size:12px; line-height:1.45; }
+  .week-rows { margin-top:10px; border-top:1px solid #e5dfd4; }
+  .week-row { display:flex; align-items:flex-start; gap:9px; padding:10px 0; border-bottom:1px solid #ece6dc; }
+  .week-row:last-child { border-bottom:0; padding-bottom:0; }
+  .week-row .date { width:48px; flex:0 0 48px; font-size:11px; font-weight:800; color:var(--forest-2); }
+  .week-row .facts { flex:1; min-width:0; font-size:11.5px; line-height:1.45; }
+  .week-row .facts .subline { color:var(--muted); margin-top:1px; }
+  .week-row .day-score { flex:0 0 auto; font-size:10px; font-weight:800; color:#6e6d65; background:#eee8dc; border-radius:999px; padding:4px 7px; }
   .journey .now { font-size: 31px; font-weight: 800; font-variant-numeric: tabular-nums; letter-spacing:-1px; }
   .jbar { position: relative; height: 12px; background: #e6e0d5; border-radius: 8px; margin: 15px 0 7px; }
   .jbar .fill { position: absolute; inset: 0 auto 0 0; border-radius: 8px; background: linear-gradient(90deg, var(--coral), var(--sun)); transition: width 1s cubic-bezier(.22,1,.36,1); }
@@ -257,6 +284,19 @@
     <div class="jlabels"><span>103.2 start</span><span>99.1 halfway</span><span>95.0 finish</span></div>
     <svg class="spark" id="spark" viewBox="0 0 300 74" preserveAspectRatio="none"></svg>
     <div class="sub muted" id="trendTxt" style="font-size:12px"></div>
+  </div>
+
+  <div class="sect">Your week <span class="sect-sub">progress stays here when the day changes</span></div>
+  <div class="card week-card">
+    <div class="week-head">
+      <button class="mini-btn week-nav" id="weekPrev" aria-label="Previous week" onclick="weekNav(-1)">‹</button>
+      <div class="week-title" id="weekTitle">This week</div>
+      <button class="mini-btn week-nav" id="weekNext" aria-label="Next week" onclick="weekNav(1)">›</button>
+    </div>
+    <div class="week-strip" id="weekStrip"></div>
+    <div class="week-stats" id="weekStats"></div>
+    <div class="week-take" id="weekTake"></div>
+    <div class="week-rows" id="weekRows"></div>
   </div>
 
   <div id="quickWrap" class="hide">
@@ -578,9 +618,119 @@
       dgEl.innerHTML = '<span class="muted" style="font-size:13px">Fresh day. Your morning recap lands here each day ☀️</span>';
     }
 
+    renderWeek();
     renderQuick();
     renderChat();
     renderReport();
+  }
+
+  let weekCursor = null;
+  function localDateKey(d) {
+    return d.getFullYear() + '-' + ('0' + (d.getMonth() + 1)).slice(-2) + '-' + ('0' + d.getDate()).slice(-2);
+  }
+  function mondayFor(dateStr) {
+    const d = new Date(dateStr + 'T12:00:00');
+    d.setDate(d.getDate() - ((d.getDay() + 6) % 7));
+    return localDateKey(d);
+  }
+  function addDays(dateStr, n) {
+    const d = new Date(dateStr + 'T12:00:00');
+    d.setDate(d.getDate() + n);
+    return localDateKey(d);
+  }
+  function weekNav(dir) {
+    const currentWeek = mondayFor(TODAY);
+    const firstWeek = mondayFor(S.settings.startDate);
+    let next = addDays(weekCursor || currentWeek, dir * 7);
+    if (next < firstWeek) next = firstWeek;
+    if (next > currentWeek) next = currentWeek;
+    weekCursor = next;
+    renderWeek();
+  }
+  function weekDayMetrics(key) {
+    const day = S.days[key] || {};
+    let kcal = 0, protein = 0, pending = 0;
+    (day.meals || []).forEach(m => {
+      if (m.status === 'done') { kcal += m.kcal || 0; protein += m.protein || 0; }
+      else pending++;
+    });
+    const water = day.waterMl || 0;
+    const steps = day.steps || 0;
+    const active = (day.walks || []).reduce((n, w) => n + (w.min || 0), 0);
+    const logged = !!(day.weight || water || steps || (day.meals || []).length || (day.walks || []).length);
+    const anchors = [
+      kcal > 0 && pending === 0 && kcal <= budgetFor(key),
+      protein >= proteinFor(key),
+      water >= (S.settings.waterTargetMl || 3000),
+      steps >= (S.settings.stepsTarget || 10000)
+    ];
+    return { key:key, day:day, kcal:kcal, protein:protein, pending:pending, water:water, steps:steps, active:active, logged:logged, score:anchors.filter(Boolean).length };
+  }
+  function weekRangeLabel(startKey, endKey) {
+    const a = new Date(startKey + 'T12:00:00'), b = new Date(endKey + 'T12:00:00');
+    if (a.getMonth() === b.getMonth()) return a.getDate() + ' to ' + b.getDate() + ' ' + b.toLocaleDateString('en', { month:'short' });
+    return a.toLocaleDateString('en', { day:'numeric', month:'short' }) + ' to ' + b.toLocaleDateString('en', { day:'numeric', month:'short' });
+  }
+  function renderWeek() {
+    const currentWeek = mondayFor(TODAY);
+    const firstWeek = mondayFor(S.settings.startDate);
+    if (!weekCursor || weekCursor < firstWeek || weekCursor > currentWeek) weekCursor = currentWeek;
+    const endKey = addDays(weekCursor, 6);
+    const current = weekCursor === currentWeek;
+    document.getElementById('weekTitle').textContent = (current ? 'This week · ' : '') + weekRangeLabel(weekCursor, endKey);
+    document.getElementById('weekPrev').style.visibility = weekCursor > firstWeek ? 'visible' : 'hidden';
+    document.getElementById('weekNext').style.visibility = weekCursor < currentWeek ? 'visible' : 'hidden';
+
+    const metrics = [];
+    for (let i = 0; i < 7; i++) metrics.push(weekDayMetrics(addDays(weekCursor, i)));
+    const strip = document.getElementById('weekStrip');
+    strip.innerHTML = metrics.map((m, i) => {
+      const d = new Date(m.key + 'T12:00:00');
+      const future = m.key > TODAY;
+      const cls = 'week-day' + (m.key === TODAY ? ' today' : '') + (future ? ' future' : '');
+      const orb = future ? '·' : m.logged ? m.score + '/4' : '—';
+      return '<div class="' + cls + '"><div class="wd">' + ['Mon','Tue','Wed','Thu','Fri','Sat','Sun'][i] + '</div>' +
+        '<div class="dn">' + d.getDate() + '</div><div class="orb ' + (m.logged ? 's' + m.score : '') + '">' + orb + '</div></div>';
+    }).join('');
+
+    const elapsed = metrics.filter(m => m.key <= TODAY && m.key >= S.settings.startDate);
+    const logged = elapsed.filter(m => m.logged);
+    const mealDays = elapsed.filter(m => m.kcal > 0);
+    const waterDays = elapsed.filter(m => m.water > 0);
+    const stepDays = elapsed.filter(m => m.steps > 0);
+    const avg = (arr, fn) => arr.length ? arr.reduce((n, x) => n + fn(x), 0) / arr.length : 0;
+    const avgK = Math.round(avg(mealDays, m => m.kcal));
+    const avgP = Math.round(avg(mealDays, m => m.protein));
+    const avgWater = avg(waterDays, m => m.water) / 1000;
+    const avgSteps = Math.round(avg(stepDays, m => m.steps));
+    const active = elapsed.reduce((n, m) => n + m.active, 0);
+    const under = mealDays.filter(m => m.kcal <= budgetFor(m.key)).length;
+    const weights = elapsed.filter(m => m.day.weight).map(m => m.day.weight);
+    const weightChange = weights.length > 1 ? weights[weights.length - 1] - weights[0] : null;
+    const stat = (label, value) => '<div class="week-stat"><span>' + label + '</span><b>' + value + '</b></div>';
+    document.getElementById('weekStats').innerHTML =
+      stat('Calories avg', avgK ? avgK.toLocaleString() : '—') +
+      stat('Protein avg', avgP ? avgP + 'g' : '—') +
+      stat('Water avg', waterDays.length ? (+avgWater.toFixed(1)) + ' L' : '—') +
+      stat('Steps avg', avgSteps ? avgSteps.toLocaleString() : '—') +
+      stat('Active time', active ? active + ' min' : '—') +
+      stat('Weight change', weightChange === null ? '—' : (weightChange > 0 ? '+' : '') + weightChange.toFixed(1) + ' kg');
+
+    let take = logged.length + ' of ' + elapsed.length + ' days have a saved log.';
+    if (mealDays.length) take += ' Calories were within budget on ' + under + ' of ' + mealDays.length + ' eating days.';
+    if (weightChange !== null) take += ' Weight moved ' + (weightChange > 0 ? '+' : '') + weightChange.toFixed(1) + ' kg.';
+    document.getElementById('weekTake').textContent = take;
+
+    const rows = document.getElementById('weekRows');
+    rows.innerHTML = elapsed.map(m => {
+      const d = new Date(m.key + 'T12:00:00');
+      const date = d.toLocaleDateString('en', { weekday:'short', day:'numeric' });
+      if (!m.logged) return '<div class="week-row"><div class="date">' + date + '</div><div class="facts muted">No log saved</div><div class="day-score">0/4</div></div>';
+      const food = m.kcal ? m.kcal.toLocaleString() + ' kcal · ' + m.protein + 'g protein' : (m.pending ? 'Meal waiting to be counted' : 'No food logged');
+      const lower = (m.water ? (+((m.water / 1000).toFixed(1))) + ' L water' : 'water —') + ' · ' +
+        (m.steps ? m.steps.toLocaleString() + ' steps' : 'steps —') + (m.active ? ' · ' + m.active + ' active min' : '');
+      return '<div class="week-row"><div class="date">' + date + '</div><div class="facts"><div>' + food + '</div><div class="subline">' + lower + '</div></div><div class="day-score">' + m.score + '/4</div></div>';
+    }).join('');
   }
 
   // "Eat again": rank completed meals by frequency and recency. Similar wording
