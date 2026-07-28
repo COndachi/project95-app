@@ -392,8 +392,8 @@
   <div class="modal hide" id="ctxModal" onclick="if(event.target===this){this.classList.add('hide');pendingPhoto=null;toast('Photo discarded')}">
     <div class="box">
       <h3>📸 Got it — what's on the plate?</h3>
-      <div class="muted" style="font-size:12.5px;margin-bottom:10px">Optional, but a hint like "goat stew + matoke, ate half" makes the calorie count much more accurate.</div>
-      <input type="text" id="ctxIn" placeholder="e.g. matoke + goat stew, small plate" onkeydown="if(event.key==='Enter')submitPhoto(true)">
+      <div class="muted" style="font-size:12.5px;margin-bottom:10px">Optional, but a hint like "goat stew + matoke, ate half" makes the calorie count much more accurate. Added oil defaults to zero, so mention the amount only when you used some.</div>
+      <input type="text" id="ctxIn" placeholder="e.g. oven baked, no oil, ate half" onkeydown="if(event.key==='Enter')submitPhoto(true)">
       <div class="row" style="margin-top:14px">
         <button class="btn-hero" onclick="submitPhoto(true)">Log it</button>
         <button class="btn-ghost" onclick="submitPhoto(false)" style="flex:0 0 auto;padding:15px 16px">Skip</button>
@@ -816,7 +816,7 @@
     const all = S.chat || [];
     el.innerHTML = '';
     if (!all.length) {
-      el.innerHTML = '<div class="muted" style="font-size:13px">Ask anything — "can I fit a beer tonight?", "why is my weight stuck?" — and your coach answers with your full log in front of them.</div>';
+      el.innerHTML = '<div class="muted" style="font-size:13px">Ask anything, or correct a log by saying "that dinner was oven baked with no oil." The coach can amend the meal and recalculate your totals.</div>';
       return;
     }
     const msgs = chatExpanded ? all : all.slice(-4);
@@ -840,7 +840,7 @@
     const v = document.getElementById('chatIn').value.trim();
     if (!v) return;
     document.getElementById('chatIn').value = '';
-    toast('Sent 💬 — coach replies within the hour');
+    toast('Sent 💬 — coach can reply and update meal totals');
     apply(await apiPost({ action: 'chatPost', role: 'collo', text: v }));
   }
 
@@ -994,7 +994,7 @@
     if (!v) return;
     document.getElementById('typeModal').classList.add('hide');
     document.getElementById('descIn').value = '';
-    toast('Logged 🍽️ — Claude will count it shortly');
+    toast('Logged 🍽️ — your coach will count it shortly');
     apply(await apiPost({ action: 'logMeal', desc: v }));
   }
   let pendingPhoto = null;
@@ -1019,7 +1019,7 @@
     if (!pendingPhoto) return;
     const b64 = pendingPhoto; pendingPhoto = null;
     const desc = withCtx ? document.getElementById('ctxIn').value.trim() : '';
-    toast('Photo logged 📸 — Claude will count the calories');
+    toast('Photo logged 📸 — your coach will count the calories');
     apply(await apiPost({ action: 'logMeal', photoB64: b64, mime: 'image/jpeg', desc: desc }));
   }
   async function quick(kind, val) { apply(await apiPost({ action: 'quickLog', kind: kind, value: val })); }
