@@ -99,6 +99,12 @@
   .hero-card .mini .muted { color:#b9cfc4; }
   .mini b { font-size: 13px; font-variant-numeric: tabular-nums; }
   .mini .ok, .hero-card .mini .ok { color: #f4c66a } .mini .warn { color: var(--coral) }
+  .energy-strip { display:grid; grid-template-columns:repeat(3,1fr); gap:7px; margin-top:12px; }
+  .energy-stat { padding:9px 7px; text-align:center; border-radius:13px; background:rgba(255,255,255,.08); border:1px solid rgba(255,255,255,.11); }
+  .energy-stat span { display:block; color:#b9cfc4; font-size:9.5px; line-height:1.2; }
+  .energy-stat b { display:block; color:#fff; font-size:16px; margin-top:3px; font-variant-numeric:tabular-nums; }
+  .energy-stat small { color:#b9cfc4; font-size:9px; }
+  .energy-note { color:#b9cfc4; font-size:10px; line-height:1.35; margin-top:6px; text-align:center; }
   .momentum { margin-top: 14px; padding: 13px 14px; border-radius: 17px; background: rgba(255,255,255,.1); border: 1px solid rgba(255,255,255,.12); }
   .momentum .label { font-size:10px; letter-spacing:1.3px; text-transform:uppercase; color:#b9cfc4; font-weight:800; }
   .momentum .move { font-size:15px; font-weight:750; margin-top:4px; }
@@ -256,6 +262,12 @@
         <div class="mini"><span>🏃 Active</span><b id="mWalk">0 min</b></div>
       </div>
     </div>
+    <div class="energy-strip" aria-label="Daily calorie calculation">
+      <div class="energy-stat"><span>Food consumed</span><b id="mConsumed">0</b><small>kcal</small></div>
+      <div class="energy-stat"><span>Activity burned</span><b id="mBurned">0</b><small>approx. kcal</small></div>
+      <div class="energy-stat"><span>Net calories</span><b id="mNet">0</b><small>approx. kcal</small></div>
+    </div>
+    <div class="energy-note">Net = food consumed − recorded activity. Your food budget stays unchanged.</div>
     <div class="momentum">
       <div class="label">Next best move</div>
       <div class="move" id="nextMove">Open the day with one honest log.</div>
@@ -528,6 +540,11 @@
     let kcal = 0, protein = 0, pending = 0;
     (d.meals || []).forEach(m => { if (m.status === 'done') { kcal += m.kcal || 0; protein += m.protein || 0; } else pending++; });
     const remaining = budget - kcal;
+    const burnedToday = Math.round((d.walks || []).reduce((sum, w) => sum + (Number(w.kcal) || 0), 0));
+    const netKcal = kcal - burnedToday;
+    document.getElementById('mConsumed').textContent = kcal.toLocaleString();
+    document.getElementById('mBurned').textContent = burnedToday ? '~' + burnedToday.toLocaleString() : '0';
+    document.getElementById('mNet').textContent = burnedToday ? '~' + netKcal.toLocaleString() : netKcal.toLocaleString();
     const ring = document.getElementById('ringFg');
     const frac = Math.min(1, kcal / budget);
     ring.style.strokeDashoffset = CIRC * (1 - frac);
