@@ -126,6 +126,7 @@
   .meal .d { font-size: 14px; font-weight: 700; }
   .meal .m { font-size: 11.5px; color: var(--muted); margin-top: 2px; }
   .meal.casual .m { color: #a86d15; }
+  .meal .ingredients { font-size: 11px; color: var(--muted); margin-top: 3px; line-height: 1.35; }
   .meal .note { font-size: 11.5px; color: #5b7168; margin-top: 3px; font-style: italic; }
   .meal .kc { text-align: right; flex-shrink: 0; }
   .meal .kc b { font-size: 15px; font-variant-numeric: tabular-nums; }
@@ -300,7 +301,7 @@
   </div>
 
   <div id="quickWrap" class="hide">
-    <div class="sect">Eat again <span class="sect-sub">learned from what you log</span></div>
+    <div class="sect">Quick log <span class="sect-sub">regular choices and learned meals</span></div>
     <div class="card repeat-grid" id="quickChips"></div>
   </div>
 
@@ -570,11 +571,17 @@
       const div = document.createElement('div');
       div.className = 'meal' + (m.casual ? ' casual' : '');
       const emo = m.casual ? '🍪' : (m.photoId ? '📷' : '🍽️');
+      const nutrients = [
+        m.carbs == null ? '' : m.carbs + 'g carbs',
+        m.fat == null ? '' : m.fat + 'g fat',
+        m.sodium == null ? '' : m.sodium + 'mg sodium'
+      ].filter(Boolean).join(' · ');
+      const ingredients = (m.ingredients || []).length ? '<div class="ingredients">' + esc(m.ingredients.join(' · ')) + '</div>' : '';
       const kc = m.status === 'done'
         ? '<div class="kc"><b>' + m.kcal + '</b><span>kcal · ' + (m.protein || 0) + 'g</span></div>'
         : '<div class="kc"><span class="dots"><span></span><span></span><span></span></span><span style="display:block;font-size:11px" class="muted">counting</span></div>';
       div.innerHTML = '<div class="emo">' + emo + '</div><div class="t"><div class="d">' + esc(m.desc || 'Photo meal') + '</div>' +
-        '<div class="m">' + m.at + (m.casual ? ' · snack' : '') + '</div>' +
+        '<div class="m">' + m.at + (m.casual ? ' · snack' : '') + (nutrients ? ' · ' + nutrients : '') + '</div>' + ingredients +
         (m.note ? '<div class="note">💬 ' + esc(m.note) + '</div>' : '') + '</div>' + kc +
         '<button class="del" onclick="delMeal(\'' + m.id + '\')">✕</button>';
       mc.appendChild(div);
@@ -736,6 +743,9 @@
   // "Eat again": rank completed meals by frequency and recency. Similar wording
   // is clustered, and recent one-offs remain available so this section never
   // waits for an exact description to appear twice.
+  const PINNED_FAVS = [
+    { desc:'Coke Zero, 250 ml', kcal:0, protein:0, casual:false, n:0, last:'', pinned:true }
+  ];
   let FAVS = [];
   function mealTokens(desc) {
     const plurals = { eggs:'egg', apples:'apple', bananas:'banana', chapatis:'chapati', coffees:'coffee', potatoes:'potato', vegetables:'vegetable' };
@@ -772,15 +782,18 @@
       });
     });
     const med = a => { const s = a.slice().sort((x, y) => x - y); return s[Math.floor(s.length / 2)]; };
-    return groups
+    const learned = groups
       .sort((a, b) => b.n - a.n || (b.last > a.last ? 1 : -1))
-      .slice(0, 6)
+      .filter(f => !/\bcoke\s*zero\b/i.test(f.desc))
+      .slice(0, 5)
       .map(f => ({ desc: f.desc, kcal: med(f.kcals), protein: med(f.prots), casual: f.casuals * 2 > f.n, n: f.n, last: f.last }));
+    return PINNED_FAVS.concat(learned);
   }
   function foodEmo(d) {
     d = d.toLowerCase();
     if (/coffee|espresso|cortado|americano/.test(d)) return '☕';
     if (/\btea\b|chai/.test(d)) return '🍵';
+    if (/\bcoke\s*zero\b/.test(d)) return '🥤';
     if (/egg/.test(d)) return '🥚';
     if (/yoghurt|yogurt/.test(d)) return '🥛';
     if (/watermelon|apple|banana|mango|fruit|avocado/.test(d)) return '🍎';
@@ -797,7 +810,7 @@
       b.className = 'repeat-card';
       const short = f.desc.length > 30 ? f.desc.slice(0, 29) + '…' : f.desc;
       b.innerHTML = '<span style="font-size:18px">' + foodEmo(f.desc) + '</span>' +
-        '<span class="repeat-count">' + (f.n > 1 ? f.n + '× lately' : 'recent') + '</span>' +
+        '<span class="repeat-count">' + (f.pinned ? 'regular drink' : (f.n > 1 ? f.n + '× lately' : 'recent')) + '</span>' +
         '<span class="repeat-name">' + esc(short) + '</span>' +
         '<span class="repeat-meta">' + f.kcal.toLocaleString() + ' kcal · ' + f.protein + 'g protein</span>';
       b.onclick = () => quickAddFav(i);
@@ -1023,6 +1036,7 @@
     apply(await apiPost({ action: 'logMeal', photoB64: b64, mime: 'image/jpeg', desc: desc }));
   }
   async function quick(kind, val) { apply(await apiPost({ action: 'quickLog', kind: kind, value: val })); }
+  async function persistSteps(val) { return apiPost({ action: 'quickLog', kind: 'steps', value: val }); }
   async function logWeight() {
     const v = parseFloat(document.getElementById('wIn').value);
     if (!v || v < 60 || v > 130) return toast('Enter a weight in kg');
@@ -1039,11 +1053,23 @@
     if (isNaN(v) || v < 0) return toast('Enter your step count');
     document.getElementById('stepsIn').value = '';
     const tgt = S.settings.stepsTarget || 10000;
+    const hadDay = !!S.days[TODAY];
     const before = (S.days[TODAY] || {}).steps || 0;
-    await quick('steps', v);
-    if (before < tgt && v >= tgt) { confetti(); toast('👣 ' + v.toLocaleString() + ' — target smashed! 🎉'); }
-    else if (v < tgt) toast('👣 ' + v.toLocaleString() + ' — ' + (tgt - v).toLocaleString() + ' to go');
-    else toast('👣 ' + v.toLocaleString() + ' saved');
+    if (!hadDay) S.days[TODAY] = { weight: null, waterMl: 0, walks: [], meals: [] };
+    S.days[TODAY].steps = v;
+    render();
+    toast('👣 ' + v.toLocaleString() + ' shown now · saving…');
+    try {
+      apply(await persistSteps(v));
+      if (before < tgt && v >= tgt) { confetti(); toast('👣 ' + v.toLocaleString() + ' — target smashed! 🎉'); }
+      else if (v < tgt) toast('👣 Saved · ' + (tgt - v).toLocaleString() + ' to go');
+      else toast('👣 ' + v.toLocaleString() + ' saved');
+    } catch (e) {
+      if (hadDay) S.days[TODAY].steps = before;
+      else delete S.days[TODAY];
+      render();
+      toast('Step save failed — your previous total is restored');
+    }
   }
   async function logWorkout() {
     const type = document.getElementById('wkType').value;
