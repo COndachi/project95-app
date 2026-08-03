@@ -174,28 +174,14 @@
   .week-row .facts .subline { color:var(--muted); margin-top:1px; }
   .week-row .day-score { flex:0 0 auto; font-size:10px; font-weight:800; color:#6e6d65; background:#eee8dc; border-radius:999px; padding:4px 7px; }
   .journey .now { font-size: 31px; font-weight: 800; font-variant-numeric: tabular-nums; letter-spacing:-1px; }
-  .jbar { position: relative; height: 12px; background: #e6e0d5; border-radius: 8px; margin: 34px 0 7px; }
+  .jbar { position: relative; height: 12px; background: #e6e0d5; border-radius: 8px; margin: 62px 0 7px; }
   .jbar .fill { position: absolute; inset: 0 auto 0 0; border-radius: 8px; background: linear-gradient(90deg, var(--coral), var(--sun)); transition: width 1s cubic-bezier(.22,1,.36,1); }
-  .jbar .walker { position:absolute; top:50%; width:28px; height:39px; z-index:3; pointer-events:none; transform-origin:50% 100%; transition:left 1s cubic-bezier(.22,1,.36,1); animation:walkerBob .72s ease-in-out infinite; }
-  .walker span { position:absolute; display:block; }
-  .walker-shadow { left:4px; bottom:-2px; width:21px; height:5px; border-radius:50%; background:rgba(23,59,50,.2); animation:walkerShadow .72s ease-in-out infinite; }
-  .walker-head { left:7px; top:0; width:14px; height:14px; border:2px solid var(--forest); border-radius:48% 52% 45% 48%; background:#8f5a3c; box-shadow:inset 0 4px 0 #2d211b; z-index:5; }
-  .walker-head::before { content:""; position:absolute; right:2px; top:6px; width:2px; height:2px; border-radius:50%; background:#1f1d18; }
-  .walker-head::after { content:""; position:absolute; right:-4px; top:7px; width:4px; height:3px; border-radius:0 70% 70% 0; background:#8f5a3c; }
-  .walker-body { left:8px; top:13px; width:12px; height:15px; border:2px solid var(--forest); border-radius:5px 5px 4px 4px; background:var(--coral); z-index:4; }
-  .walker-arm, .walker-leg { width:4px; border:1px solid var(--forest); border-radius:999px; transform-origin:50% 2px; }
-  .walker-arm { top:15px; height:14px; background:#8f5a3c; z-index:3; }
-  .walker-arm.one { left:8px; animation:walkerArmOne .72s ease-in-out infinite; }
-  .walker-arm.two { left:17px; animation:walkerArmTwo .72s ease-in-out infinite; }
-  .walker-leg { top:25px; height:15px; background:var(--forest-2); z-index:2; }
-  .walker-leg.one { left:10px; animation:walkerLegOne .72s ease-in-out infinite; }
-  .walker-leg.two { left:16px; animation:walkerLegTwo .72s ease-in-out infinite; }
-  @keyframes walkerBob { 0%,100% { transform:translate(-50%,-34px) rotate(-1deg) } 50% { transform:translate(-50%,-36px) rotate(1deg) } }
-  @keyframes walkerShadow { 0%,100% { transform:scaleX(1); opacity:.22 } 50% { transform:scaleX(.72); opacity:.12 } }
-  @keyframes walkerArmOne { 0%,100% { transform:rotate(36deg) } 50% { transform:rotate(-36deg) } }
-  @keyframes walkerArmTwo { 0%,100% { transform:rotate(-36deg) } 50% { transform:rotate(36deg) } }
-  @keyframes walkerLegOne { 0%,100% { transform:rotate(-30deg) } 50% { transform:rotate(30deg) } }
-  @keyframes walkerLegTwo { 0%,100% { transform:rotate(30deg) } 50% { transform:rotate(-30deg) } }
+  .jbar .walker { position:absolute; top:50%; width:72px; height:72px; z-index:3; pointer-events:none; transform:translate(-50%,-57px); transition:left 1s cubic-bezier(.22,1,.36,1); }
+  .walker::after { content:""; position:absolute; left:21px; bottom:5px; width:31px; height:6px; border-radius:50%; background:rgba(23,59,50,.2); filter:blur(1px); animation:runnerShadow .66s ease-in-out infinite; }
+  .walker .runner { position:relative; z-index:1; display:block; width:100%; height:100%; object-fit:contain; transform-origin:50% 86%; filter:drop-shadow(0 2px 1px rgba(23,59,50,.22)); animation:runnerStride .66s ease-in-out infinite; }
+  .runner-fallback { position:relative; z-index:1; font-size:48px; line-height:72px; text-align:center; }
+  @keyframes runnerStride { 0%,100% { transform:translateY(0) rotate(-1.2deg) scaleX(1); } 50% { transform:translateY(-3px) rotate(1deg) scaleX(1.015); } }
+  @keyframes runnerShadow { 0%,100% { transform:scaleX(1); opacity:.24; } 50% { transform:scaleX(.7); opacity:.12; } }
   .jlabels { display: flex; justify-content: space-between; font-size: 10.5px; color: var(--muted); font-weight: 650; }
   .spark { width: 100%; height: 74px; margin-top: 10px; }
   .move-block { padding:14px 0; border-top:1px solid #e5dfd4; }
@@ -232,12 +218,7 @@
     .activity-grid select { grid-column:1 / -1; }
   }
   @media (prefers-reduced-motion: reduce) {
-    .jbar .walker { animation:none; transform:translate(-50%,-34px); }
-    .walker-shadow, .walker-arm, .walker-leg { animation:none !important; }
-    .walker-arm.one { transform:rotate(16deg); }
-    .walker-arm.two { transform:rotate(-16deg); }
-    .walker-leg.one { transform:rotate(-12deg); }
-    .walker-leg.two { transform:rotate(12deg); }
+    .walker::after, .walker .runner { animation:none; }
   }
 </style>
 </head>
@@ -322,8 +303,8 @@
     <div class="jbar">
       <div class="fill" id="jFill" style="width:0%"></div>
       <div class="walker" id="jDot" style="left:0%" role="img" aria-label="Walking toward the 95 kilogram finish">
-        <span class="walker-shadow"></span><span class="walker-leg one"></span><span class="walker-leg two"></span>
-        <span class="walker-arm one"></span><span class="walker-arm two"></span><span class="walker-body"></span><span class="walker-head"></span>
+        <img class="runner" src="https://condachi.github.io/project95-app/assets/fitness-runner.png" alt="Fitness runner moving toward the 95 kilogram finish" onerror="this.hidden=true;this.nextElementSibling.hidden=false">
+        <span class="runner-fallback" hidden aria-hidden="true">🏃🏾‍♂️</span>
       </div>
     </div>
     <div class="jlabels"><span>103.2 start</span><span>99.1 halfway</span><span>95.0 finish</span></div>
