@@ -174,10 +174,28 @@
   .week-row .facts .subline { color:var(--muted); margin-top:1px; }
   .week-row .day-score { flex:0 0 auto; font-size:10px; font-weight:800; color:#6e6d65; background:#eee8dc; border-radius:999px; padding:4px 7px; }
   .journey .now { font-size: 31px; font-weight: 800; font-variant-numeric: tabular-nums; letter-spacing:-1px; }
-  .jbar { position: relative; height: 12px; background: #e6e0d5; border-radius: 8px; margin: 15px 0 7px; }
+  .jbar { position: relative; height: 12px; background: #e6e0d5; border-radius: 8px; margin: 34px 0 7px; }
   .jbar .fill { position: absolute; inset: 0 auto 0 0; border-radius: 8px; background: linear-gradient(90deg, var(--coral), var(--sun)); transition: width 1s cubic-bezier(.22,1,.36,1); }
-  .jbar .dot { position: absolute; top: 50%; transform: translate(-50%, -50%); width: 20px; height: 20px; border-radius: 50%; background: #fff; border: 4px solid var(--coral); box-shadow: 0 0 0 5px rgba(239,118,79,.14); transition: left 1s cubic-bezier(.22,1,.36,1); animation: goalPulse 2.6s ease-in-out infinite; }
-  @keyframes goalPulse { 50% { box-shadow: 0 0 0 8px rgba(239,118,79,.06) } }
+  .jbar .walker { position:absolute; top:50%; width:28px; height:39px; z-index:3; pointer-events:none; transform-origin:50% 100%; transition:left 1s cubic-bezier(.22,1,.36,1); animation:walkerBob .72s ease-in-out infinite; }
+  .walker span { position:absolute; display:block; }
+  .walker-shadow { left:4px; bottom:-2px; width:21px; height:5px; border-radius:50%; background:rgba(23,59,50,.2); animation:walkerShadow .72s ease-in-out infinite; }
+  .walker-head { left:7px; top:0; width:14px; height:14px; border:2px solid var(--forest); border-radius:48% 52% 45% 48%; background:#8f5a3c; box-shadow:inset 0 4px 0 #2d211b; z-index:5; }
+  .walker-head::before { content:""; position:absolute; right:2px; top:6px; width:2px; height:2px; border-radius:50%; background:#1f1d18; }
+  .walker-head::after { content:""; position:absolute; right:-4px; top:7px; width:4px; height:3px; border-radius:0 70% 70% 0; background:#8f5a3c; }
+  .walker-body { left:8px; top:13px; width:12px; height:15px; border:2px solid var(--forest); border-radius:5px 5px 4px 4px; background:var(--coral); z-index:4; }
+  .walker-arm, .walker-leg { width:4px; border:1px solid var(--forest); border-radius:999px; transform-origin:50% 2px; }
+  .walker-arm { top:15px; height:14px; background:#8f5a3c; z-index:3; }
+  .walker-arm.one { left:8px; animation:walkerArmOne .72s ease-in-out infinite; }
+  .walker-arm.two { left:17px; animation:walkerArmTwo .72s ease-in-out infinite; }
+  .walker-leg { top:25px; height:15px; background:var(--forest-2); z-index:2; }
+  .walker-leg.one { left:10px; animation:walkerLegOne .72s ease-in-out infinite; }
+  .walker-leg.two { left:16px; animation:walkerLegTwo .72s ease-in-out infinite; }
+  @keyframes walkerBob { 0%,100% { transform:translate(-50%,-34px) rotate(-1deg) } 50% { transform:translate(-50%,-36px) rotate(1deg) } }
+  @keyframes walkerShadow { 0%,100% { transform:scaleX(1); opacity:.22 } 50% { transform:scaleX(.72); opacity:.12 } }
+  @keyframes walkerArmOne { 0%,100% { transform:rotate(36deg) } 50% { transform:rotate(-36deg) } }
+  @keyframes walkerArmTwo { 0%,100% { transform:rotate(-36deg) } 50% { transform:rotate(36deg) } }
+  @keyframes walkerLegOne { 0%,100% { transform:rotate(-30deg) } 50% { transform:rotate(30deg) } }
+  @keyframes walkerLegTwo { 0%,100% { transform:rotate(30deg) } 50% { transform:rotate(-30deg) } }
   .jlabels { display: flex; justify-content: space-between; font-size: 10.5px; color: var(--muted); font-weight: 650; }
   .spark { width: 100%; height: 74px; margin-top: 10px; }
   .move-block { padding:14px 0; border-top:1px solid #e5dfd4; }
@@ -212,6 +230,14 @@
     .mini { padding:8px; font-size:11px; }
     .activity-grid { grid-template-columns:1fr 1fr; }
     .activity-grid select { grid-column:1 / -1; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .jbar .walker { animation:none; transform:translate(-50%,-34px); }
+    .walker-shadow, .walker-arm, .walker-leg { animation:none !important; }
+    .walker-arm.one { transform:rotate(16deg); }
+    .walker-arm.two { transform:rotate(-16deg); }
+    .walker-leg.one { transform:rotate(-12deg); }
+    .walker-leg.two { transform:rotate(12deg); }
   }
 </style>
 </head>
@@ -293,7 +319,13 @@
         <button class="mini-btn blue" onclick="logWeight()">Save</button>
       </div>
     </div>
-    <div class="jbar"><div class="fill" id="jFill" style="width:0%"></div><div class="dot" id="jDot" style="left:0%"></div></div>
+    <div class="jbar">
+      <div class="fill" id="jFill" style="width:0%"></div>
+      <div class="walker" id="jDot" style="left:0%" role="img" aria-label="Walking toward the 95 kilogram finish">
+        <span class="walker-shadow"></span><span class="walker-leg one"></span><span class="walker-leg two"></span>
+        <span class="walker-arm one"></span><span class="walker-arm two"></span><span class="walker-body"></span><span class="walker-head"></span>
+      </div>
+    </div>
     <div class="jlabels"><span>103.2 start</span><span>99.1 halfway</span><span>95.0 finish</span></div>
     <svg class="spark" id="spark" viewBox="0 0 300 74" preserveAspectRatio="none"></svg>
     <div class="sub muted" id="trendTxt" style="font-size:12px"></div>
