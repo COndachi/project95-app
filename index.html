@@ -903,7 +903,16 @@
       const rate = (recent[recent.length - 1].w - recent[0].w) / span * 7;
       const daysToEnd = (t1 - new Date(recent[recent.length - 1].d).getTime()) / 86400000;
       const proj = recent[recent.length - 1].w + rate / 7 * daysToEnd;
-      txt.textContent = 'Trend ' + (rate <= 0 ? '' : '+') + rate.toFixed(2) + ' kg/wk → projected ' + proj.toFixed(1) + ' kg on 1 Dec' + (proj <= 95.05 ? ' 🎯' : ' (need 95.0 — tighten up)');
+      const first = pts[0], last = pts[pts.length - 1];
+      const overallDays = (new Date(last.d) - new Date(first.d)) / 86400000;
+      const overallRate = overallDays > 0 ? (last.w - first.w) / overallDays * 7 : 0;
+      const neededRate = daysToEnd > 0 && last.w > st.goalWeight ? (st.goalWeight - last.w) / daysToEnd * 7 : 0;
+      const rateText = v => (v > 0 ? '+' : '') + v.toFixed(2);
+      const firstLabel = new Date(first.d + 'T12:00:00').toLocaleDateString('en', { day:'numeric', month:'short' });
+      txt.textContent = 'Recent 14-day pace: ' + rateText(rate) + ' kg/wk, about ' + proj.toFixed(1) + ' kg by 1 Dec if sustained. ' +
+        'Logged pace since ' + firstLabel + ': ' + rateText(overallRate) + ' kg/wk. ' +
+        (neededRate ? 'Needed from here: ' + rateText(neededRate) + ' kg/wk. ' : 'Goal reached. ') +
+        'Daily weight varies, so judge the multi-week trend.';
     } else txt.textContent = 'Dashed line = your glide path. Stay on or under it.';
   }
 
