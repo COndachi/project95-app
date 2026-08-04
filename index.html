@@ -774,9 +774,10 @@
   // is clustered, and recent one-offs remain available so this section never
   // waits for an exact description to appear twice.
   const PINNED_FAVS = [
-    { desc:'Coke Zero, 250 ml', kcal:0, protein:0, casual:false, n:0, last:'', pinned:true },
-    { desc:'Cortado', kcal:20, protein:.9, casual:false, n:0, last:'', pinned:true },
-    { desc:'1 apple', kcal:100, protein:1, casual:false, n:0, last:'', pinned:true }
+    { desc:'Coke Zero, 250 ml', kcal:0, protein:0, casual:false, n:0, last:'', pinned:true, pinLabel:'regular drink' },
+    { desc:'Cortado', kcal:20, protein:.9, casual:false, n:0, last:'', pinned:true, pinLabel:'regular drink' },
+    { desc:'1 apple', kcal:100, protein:1, casual:false, n:0, last:'', pinned:true, pinLabel:'regular food' },
+    { desc:'1 egg', kcal:72, protein:6.3, casual:false, n:0, last:'', pinned:true, pinLabel:'regular food' }
   ];
   let FAVS = [];
   function mealTokens(desc) {
@@ -816,7 +817,8 @@
     const med = a => { const s = a.slice().sort((x, y) => x - y); return s[Math.floor(s.length / 2)]; };
     const learned = groups
       .sort((a, b) => b.n - a.n || (b.last > a.last ? 1 : -1))
-      .filter(f => !/\bcoke\s*zero\b/i.test(f.desc) && !/^\s*\d+\s+(green\s+)?apples?\s*$/i.test(f.desc))
+      .filter(f => !/\bcoke\s*zero\b/i.test(f.desc) && !/\bcortado\b/i.test(f.desc) &&
+        !/^\s*\d+\s+(green\s+)?apples?\s*$/i.test(f.desc) && !/^\s*1\s+(whole\s+)?eggs?\s*$/i.test(f.desc))
       .slice(0, 6)
       .map(f => ({ desc: f.desc, kcal: med(f.kcals), protein: med(f.prots), casual: f.casuals * 2 > f.n, n: f.n, last: f.last }));
     return PINNED_FAVS.concat(learned);
@@ -842,7 +844,7 @@
       b.className = 'repeat-card';
       const short = f.desc.length > 30 ? f.desc.slice(0, 29) + '…' : f.desc;
       b.innerHTML = '<span style="font-size:18px">' + foodEmo(f.desc) + '</span>' +
-        '<span class="repeat-count">' + (f.pinned ? 'regular drink' : (f.n > 1 ? f.n + '× lately' : 'recent')) + '</span>' +
+        '<span class="repeat-count">' + (f.pinned ? (f.pinLabel || 'regular choice') : (f.n > 1 ? f.n + '× lately' : 'recent')) + '</span>' +
         '<span class="repeat-name">' + esc(short) + '</span>' +
         '<span class="repeat-meta">' + f.kcal.toLocaleString() + ' kcal · ' + f.protein + 'g protein</span>';
       b.onclick = () => quickAddFav(i);
