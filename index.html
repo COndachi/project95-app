@@ -853,8 +853,14 @@
   }
   async function quickAddFav(i) {
     const f = FAVS[i];
-    toast(foodEmo(f.desc) + ' Logged & counted — ' + f.kcal + ' kcal');
-    apply(await apiPost({ action: 'logMeal', desc: f.desc, kcal: f.kcal, protein: f.protein, casual: f.casual }));
+    try {
+      const saved = await apiPost({ action: 'logMeal', desc: f.desc, kcal: f.kcal, protein: f.protein, casual: f.casual });
+      if (!saved || !saved.ok) throw new Error((saved && saved.error) || 'save failed');
+      apply(saved);
+      toast(foodEmo(f.desc) + ' Logged & counted — ' + f.kcal + ' kcal');
+    } catch (e) {
+      toast('Could not save that item. Check the connection and tap once more.');
+    }
   }
 
   let chatExpanded = false;
