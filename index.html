@@ -455,67 +455,13 @@
     const r = await fetch(API + '?api=1&code=' + encodeURIComponent(CODE) + '&action=' + action, { cache: 'no-store' });
     return r.json();
   }
-  // iPhone in-app browsers can block Apps Script's cross-site fetch POST
-  // redirect. Submit writes as a regular HTML form instead, then read the
-  // saved state back over the GET route that already works on those browsers.
-  // Private meal/activity details remain in the POST body, not the URL.
+  // The static page normally launches the Apps Script-hosted interface, where
+  // writes use Google's native app channel. Keep this fetch
+  // transport only as a fallback if the launch navigation is interrupted.
   async function apiPost(body) {
-    return new Promise((resolve, reject) => {
-      const id = 'p95write_' + Date.now() + '_' + Math.random().toString(36).slice(2);
-      const frame = document.createElement('iframe');
-      const form = document.createElement('form');
-      let timer = null;
-      let settled = false;
-      const cleanup = () => {
-        clearTimeout(timer);
-        form.remove();
-        frame.remove();
-      };
-      frame.name = id;
-      frame.style.display = 'none';
-      form.method = 'POST';
-      form.action = API;
-      form.target = id;
-      form.style.display = 'none';
-      const payload = Object.assign({ code: CODE, writeId: id }, body);
-      Object.keys(payload).forEach(k => {
-        const v = payload[k];
-        if (v == null || v === false) return;
-        const input = document.createElement('input');
-        input.type = 'hidden';
-        input.name = k;
-        input.value = v === true ? '1' : (typeof v === 'object' ? JSON.stringify(v) : String(v));
-        form.appendChild(input);
-      });
-      document.body.appendChild(frame);
-      document.body.appendChild(form);
-      form.submit();
-      (async () => {
-        for (let attempt = 0; attempt < 25 && !settled; attempt++) {
-          await new Promise(r => setTimeout(r, 800));
-          try {
-            const saved = await apiGet('state');
-            if (saved && saved.ok && saved.state && (saved.state.writeIds || []).includes(id)) {
-              settled = true;
-              cleanup();
-              resolve(saved);
-              return;
-            }
-          } catch (e) {}
-        }
-        if (!settled) {
-          settled = true;
-          cleanup();
-          reject(new Error('save was not confirmed'));
-        }
-      })();
-      timer = setTimeout(() => {
-        if (settled) return;
-        settled = true;
-        cleanup();
-        reject(new Error('save timed out'));
-      }, 30000);
-    });
+    const r = await fetch(API, { method: 'POST', headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+      body: JSON.stringify(Object.assign({ code: CODE }, body)) });
+    return r.json();
   }
   function apply(o) {
     if (!o || !o.ok) {
@@ -1211,6 +1157,21 @@
     setTimeout(() => { try { document.getElementById('gateIn').focus(); } catch (e) {} }, 60);
   }
   function hideGate() { document.getElementById('gate').classList.add('hide'); }
+  function launchNativeApp() {
+    const form = document.createElement('form');
+    form.method = 'POST';
+    form.action = API;
+    form.style.display = 'none';
+    [['action', 'launch'], ['code', CODE]].forEach(pair => {
+      const input = document.createElement('input');
+      input.type = 'hidden';
+      input.name = pair[0];
+      input.value = pair[1];
+      form.appendChild(input);
+    });
+    document.body.appendChild(form);
+    form.submit();
+  }
   async function submitGate() {
     const v = document.getElementById('gateIn').value.trim();
     if (!v) return;
@@ -1220,7 +1181,7 @@
       if (!o.ok) { CODE = ''; document.getElementById('gateErr').textContent = 'That code didn\'t work.'; document.getElementById('gateErr').classList.remove('hide'); return; }
       localStorage.setItem('p95code', v);
       document.getElementById('gateErr').classList.add('hide');
-      hideGate(); apply(o);
+      hideGate(); launchNativeApp();
     } catch (e) {
       CODE = '';
       document.getElementById('gateErr').textContent = 'No connection — try again.';
@@ -1232,7 +1193,7 @@
     try {
       const o = await apiGet('state');
       if (!o.ok) return showGate(true);
-      hideGate(); apply(o);
+      hideGate(); launchNativeApp();
     } catch (e) { toast('No connection — pull to refresh'); }
   }
   boot();
