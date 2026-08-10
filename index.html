@@ -465,6 +465,7 @@
       const frame = document.createElement('iframe');
       const form = document.createElement('form');
       let timer = null;
+      let settled = false;
       const cleanup = () => {
         clearTimeout(timer);
         form.remove();
@@ -472,7 +473,6 @@
       };
       frame.name = id;
       frame.style.display = 'none';
-      frame.srcdoc = '<!doctype html><title>saving</title>';
       form.method = 'POST';
       form.action = API;
       form.target = id;
@@ -487,24 +487,34 @@
         input.value = v === true ? '1' : (typeof v === 'object' ? JSON.stringify(v) : String(v));
         form.appendChild(input);
       });
-      frame.addEventListener('load', () => {
-        frame.addEventListener('load', async () => {
-          try {
-            const saved = await apiGet('state');
-            cleanup();
-            if (!saved || !saved.ok) throw new Error((saved && saved.error) || 'save failed');
-            if (!saved.state || !(saved.state.writeIds || []).includes(id)) throw new Error('save was not confirmed');
-            resolve(saved);
-          } catch (e) {
-            cleanup();
-            reject(e);
-          }
-        }, { once: true });
-        form.submit();
-      }, { once: true });
       document.body.appendChild(frame);
       document.body.appendChild(form);
-      timer = setTimeout(() => { cleanup(); reject(new Error('save timed out')); }, 30000);
+      form.submit();
+      (async () => {
+        for (let attempt = 0; attempt < 25 && !settled; attempt++) {
+          await new Promise(r => setTimeout(r, 800));
+          try {
+            const saved = await apiGet('state');
+            if (saved && saved.ok && saved.state && (saved.state.writeIds || []).includes(id)) {
+              settled = true;
+              cleanup();
+              resolve(saved);
+              return;
+            }
+          } catch (e) {}
+        }
+        if (!settled) {
+          settled = true;
+          cleanup();
+          reject(new Error('save was not confirmed'));
+        }
+      })();
+      timer = setTimeout(() => {
+        if (settled) return;
+        settled = true;
+        cleanup();
+        reject(new Error('save timed out'));
+      }, 30000);
     });
   }
   function apply(o) {
