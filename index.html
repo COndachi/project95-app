@@ -455,9 +455,8 @@
     const r = await fetch(API + '?api=1&code=' + encodeURIComponent(CODE) + '&action=' + action, { cache: 'no-store' });
     return r.json();
   }
-  // The static page normally launches the Apps Script-hosted interface, where
-  // writes use Google's native app channel. Keep this fetch
-  // transport only as a fallback if the launch navigation is interrupted.
+  // POST must stay a "simple" request (text/plain, no custom headers) so the
+  // clean GitHub Pages interface can write to Apps Script without a preflight.
   async function apiPost(body) {
     const r = await fetch(API, { method: 'POST', headers: { 'Content-Type': 'text/plain;charset=utf-8' },
       body: JSON.stringify(Object.assign({ code: CODE }, body)) });
@@ -1157,21 +1156,6 @@
     setTimeout(() => { try { document.getElementById('gateIn').focus(); } catch (e) {} }, 60);
   }
   function hideGate() { document.getElementById('gate').classList.add('hide'); }
-  function launchNativeApp() {
-    const form = document.createElement('form');
-    form.method = 'POST';
-    form.action = API;
-    form.style.display = 'none';
-    [['action', 'launch'], ['code', CODE]].forEach(pair => {
-      const input = document.createElement('input');
-      input.type = 'hidden';
-      input.name = pair[0];
-      input.value = pair[1];
-      form.appendChild(input);
-    });
-    document.body.appendChild(form);
-    form.submit();
-  }
   async function submitGate() {
     const v = document.getElementById('gateIn').value.trim();
     if (!v) return;
@@ -1181,7 +1165,7 @@
       if (!o.ok) { CODE = ''; document.getElementById('gateErr').textContent = 'That code didn\'t work.'; document.getElementById('gateErr').classList.remove('hide'); return; }
       localStorage.setItem('p95code', v);
       document.getElementById('gateErr').classList.add('hide');
-      hideGate(); launchNativeApp();
+      hideGate(); apply(o);
     } catch (e) {
       CODE = '';
       document.getElementById('gateErr').textContent = 'No connection — try again.';
@@ -1193,7 +1177,7 @@
     try {
       const o = await apiGet('state');
       if (!o.ok) return showGate(true);
-      hideGate(); launchNativeApp();
+      hideGate(); apply(o);
     } catch (e) { toast('No connection — pull to refresh'); }
   }
   boot();
