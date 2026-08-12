@@ -452,7 +452,7 @@
     setTimeout(() => t.classList.remove('show'), 2300);
   }
   async function apiGet(action) {
-    const r = await fetch(API + '?api=1&code=' + encodeURIComponent(CODE) + '&action=' + action, { cache: 'no-store' });
+    const r = await fetch(API + '?api=1&code=' + encodeURIComponent(CODE) + '&action=' + action + '&_=' + Date.now(), { cache: 'no-store' });
     return r.json();
   }
   // POST must stay a "simple" request (text/plain, no custom headers) so the
