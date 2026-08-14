@@ -35,7 +35,7 @@
       radial-gradient(circle at 4% 17%, rgba(185,214,199,.33) 0 100px, transparent 101px),
       var(--paper);
     color: var(--ink);
-    padding: calc(env(safe-area-inset-top, 0px) + 20px) 15px calc(env(safe-area-inset-bottom, 0px) + 112px);
+    padding: calc(env(safe-area-inset-top, 0px) + 20px) 15px calc(env(safe-area-inset-bottom, 0px) + 158px);
     max-width: 500px;
     margin: 0 auto;
     min-height: 100vh;
@@ -108,12 +108,18 @@
   .momentum { margin-top: 14px; padding: 13px 14px; border-radius: 17px; background: rgba(255,255,255,.1); border: 1px solid rgba(255,255,255,.12); }
   .momentum .label { font-size:10px; letter-spacing:1.3px; text-transform:uppercase; color:#b9cfc4; font-weight:800; }
   .momentum .move { font-size:15px; font-weight:750; margin-top:4px; }
-  .momentum .score { font-size:11px; color:#c7d9d0; margin-top:3px; }
+  .momentum .score { font-size:12px; color:#f4e8c9; margin-top:5px; font-weight:750; }
+  .anchor-status { display:grid; grid-template-columns:repeat(4,1fr); gap:6px; margin-top:10px; }
+  .anchor { display:flex; align-items:center; justify-content:center; gap:4px; min-width:0; padding:6px 3px; border-radius:10px; background:rgba(255,255,255,.07); color:#b9cfc4; font-size:9px; font-weight:750; }
+  .anchor::before { content:""; width:6px; height:6px; border-radius:50%; background:rgba(255,255,255,.22); flex:0 0 auto; }
+  .anchor.done { color:#fff4dc; background:rgba(244,198,106,.14); }
+  .anchor.done::before { background:var(--sun); box-shadow:0 0 0 3px rgba(244,198,106,.12); }
   button { font-family: inherit; border: 0; cursor: pointer; transition: transform .12s ease, filter .2s, box-shadow .2s; }
   button:active { transform: scale(.96); }
   .btn-hero { flex: 1; padding: 14px 8px; font-size: 14px; font-weight: 750; border-radius: 15px; color: #fff; background: linear-gradient(135deg, #ef764f, #df5f3b); box-shadow: 0 8px 22px -12px rgba(200,73,62,.8); }
   .btn-ghost { flex: 1; padding: 14px 8px; font-size: 14px; font-weight: 750; border-radius: 15px; color: var(--forest); background: var(--card); border: 1px solid var(--line); }
-  .action-row { position: sticky; top: 8px; z-index: 20; margin-top: 12px; padding: 6px; border: 1px solid rgba(209,201,187,.8); border-radius: 19px; background: rgba(244,240,232,.84); backdrop-filter: blur(12px); box-shadow: 0 10px 24px -22px rgba(23,34,29,.9); }
+  .action-row { position:fixed; left:50%; bottom:calc(12px + env(safe-area-inset-bottom, 0px)); transform:translateX(-50%); width:min(calc(100% - 24px), 476px); z-index:40; margin:0; padding:7px; border:1px solid rgba(209,201,187,.9); border-radius:20px; background:rgba(244,240,232,.94); backdrop-filter:blur(16px); box-shadow:0 16px 40px -18px rgba(23,34,29,.75); }
+  .action-row .btn-hero, .action-row .btn-ghost { min-height:48px; }
   .mini-btn { padding: 9px 13px; font-size: 12px; font-weight: 750; border-radius: 11px; background: #f3eee4; color: var(--forest); border: 1px solid #ddd5c7; }
   .mini-btn.blue { background: var(--forest-2); color: #fff; border: 0; box-shadow: 0 6px 16px -10px rgba(23,59,50,.8); }
   .sect { font-size: 10.5px; font-weight: 800; color: #7b7d72; text-transform: uppercase; letter-spacing: 1.65px; margin: 22px 5px 0; }
@@ -121,7 +127,8 @@
   .flexbet { display: flex; justify-content: space-between; align-items: center; }
   input[type=text], input[type=number], select { font-family: inherit; width: 100%; padding: 12px; font-size: 16px; border: 1px solid #d8d0c2; border-radius: 13px; background: #fbf8f2; color: var(--ink); outline: none; }
   input:focus, select:focus { border-color: var(--coral); box-shadow: 0 0 0 3px rgba(239,118,79,.12); }
-  .bar { height: 9px; background: #e6e0d5; border-radius: 6px; overflow: hidden; margin-top: 11px; }
+  .bar { height: 10px; background: #e6e0d5; border-radius: 7px; overflow: hidden; margin-top: 11px; }
+  .bar.water-bar { height:14px; border-radius:8px; }
   .bar > div { height: 100%; border-radius: 6px; transition: width .9s cubic-bezier(.22,1,.36,1); background: linear-gradient(90deg, var(--forest-2), #70a087); background-size: 200% 100%; animation: shimmer 2.6s linear infinite; }
   @keyframes shimmer { from { background-position: 0% 0 } to { background-position: 200% 0 } }
   .meal { display: flex; gap: 11px; padding: 12px 0; border-top: 1px solid #e5dfd4; align-items: center; }
@@ -142,7 +149,10 @@
   .dots span:nth-child(2) { animation-delay: .2s } .dots span:nth-child(3) { animation-delay: .4s }
   @keyframes blink { 0%,80%,100% { opacity: .25; transform: scale(.8) } 40% { opacity: 1; transform: scale(1.15) } }
   .repeat-grid { display:grid; grid-template-columns:1fr 1fr; gap:9px; }
-  .repeat-card { text-align:left; min-width:0; padding:12px; border-radius:16px; background:#f8f4ec; border:1px solid #e2dbcf; color:var(--ink); }
+  .repeat-card { text-align:left; min-width:0; min-height:96px; padding:13px; border-radius:16px; background:#f8f4ec; border:1px solid #e2dbcf; color:var(--ink); touch-action:manipulation; }
+  .repeat-card:active { transform:scale(.97); background:#eaf2ec; border-color:#96b7a6; box-shadow:0 0 0 3px rgba(36,86,72,.10); }
+  .repeat-card:focus-visible { outline:3px solid rgba(239,118,79,.3); outline-offset:2px; }
+  .repeat-card:disabled { opacity:.62; cursor:wait; transform:none; }
   .repeat-card .repeat-name { display:block; font-weight:750; font-size:12.5px; line-height:1.25; margin-top:7px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
   .repeat-card .repeat-meta { display:block; color:var(--muted); font-size:10.5px; margin-top:4px; }
   .repeat-card .repeat-count { float:right; color:#8c641f; background:var(--cream); border-radius:999px; padding:3px 6px; font-size:9.5px; font-weight:800; }
@@ -151,6 +161,7 @@
   .week-title { font-size:16px; font-weight:800; letter-spacing:-.2px; text-align:center; }
   .week-nav { width:35px; height:35px; padding:0; border-radius:50%; font-size:18px; }
   .week-strip { display:grid; grid-template-columns:repeat(7,1fr); gap:5px; margin-top:15px; }
+  .goal-legend { margin-top:8px; color:var(--muted); font-size:10.5px; text-align:center; }
   .week-day { min-width:0; text-align:center; padding:7px 2px 8px; border-radius:15px; border:1px solid transparent; }
   .week-day.today { background:var(--cream); border-color:#ead4a3; }
   .week-day.future { opacity:.38; }
@@ -167,13 +178,15 @@
   .week-stat b { display:block; font-size:15px; margin-top:3px; font-variant-numeric:tabular-nums; }
   .week-take { margin-top:12px; padding:11px 12px; border-radius:14px; background:#edf4ee; color:#35584a; font-size:12px; line-height:1.45; }
   .week-rows { margin-top:10px; border-top:1px solid #e5dfd4; }
-  .week-row { display:flex; align-items:flex-start; gap:9px; padding:10px 0; border-bottom:1px solid #ece6dc; }
+  .week-row { display:flex; align-items:flex-start; gap:9px; padding:13px 0; border-bottom:1px solid #ece6dc; }
   .week-row:last-child { border-bottom:0; padding-bottom:0; }
   .week-row .date { width:48px; flex:0 0 48px; font-size:11px; font-weight:800; color:var(--forest-2); }
   .week-row .facts { flex:1; min-width:0; font-size:11.5px; line-height:1.45; }
   .week-row .facts .subline { color:var(--muted); margin-top:1px; }
   .week-row .day-score { flex:0 0 auto; font-size:10px; font-weight:800; color:#6e6d65; background:#eee8dc; border-radius:999px; padding:4px 7px; }
   .journey .now { font-size: 31px; font-weight: 800; font-variant-numeric: tabular-nums; letter-spacing:-1px; }
+  .pace-pill { display:inline-flex; align-items:center; margin-top:6px; padding:5px 8px; border-radius:999px; background:#edf3ed; color:var(--forest-2); font-size:10.5px; font-weight:800; }
+  .pace-pill.behind { background:#fff0e7; color:#a65334; }
   .jbar { position: relative; height: 12px; background: #e6e0d5; border-radius: 8px; margin: 62px 0 7px; }
   .jbar .fill { position: absolute; inset: 0 auto 0 0; border-radius: 8px; background: linear-gradient(90deg, var(--coral), var(--sun)); transition: width 1s cubic-bezier(.22,1,.36,1); }
   .jbar .walker { position:absolute; top:50%; width:72px; height:72px; z-index:3; pointer-events:none; transform:translate(-50%,-57px); transition:left 1s cubic-bezier(.22,1,.36,1); }
@@ -184,21 +197,29 @@
   @keyframes runnerShadow { 0%,100% { transform:scaleX(1); opacity:.24; } 50% { transform:scaleX(.7); opacity:.12; } }
   .jlabels { display: flex; justify-content: space-between; font-size: 10.5px; color: var(--muted); font-weight: 650; }
   .spark { width: 100%; height: 74px; margin-top: 10px; }
+  .trend-lines { display:grid; gap:7px; margin-top:8px; }
+  .trend-line { display:flex; justify-content:space-between; gap:12px; padding:8px 10px; border-radius:11px; background:#f8f4ec; font-size:11.5px; }
+  .trend-line span { color:var(--muted); }
+  .trend-line b { text-align:right; font-variant-numeric:tabular-nums; }
+  .trend-note { color:var(--muted); font-size:10.5px; line-height:1.4; padding:0 2px; }
   .move-block { padding:14px 0; border-top:1px solid #e5dfd4; }
   .move-block:first-child { border-top:0; padding-top:0; }
   .move-title { font-weight:750; font-size:14px; }
+  .move-heading { display:flex; justify-content:space-between; align-items:baseline; gap:10px; }
+  .move-progress { color:var(--forest-2); font-size:12px; font-weight:800; font-variant-numeric:tabular-nums; white-space:nowrap; }
   .move-help { color:var(--muted); font-size:11.5px; line-height:1.4; margin-top:3px; }
   .move-inputs { display:grid; grid-template-columns:1fr auto; gap:8px; margin-top:10px; }
   .activity-grid { display:grid; grid-template-columns:1.1fr .7fr 1fr; gap:7px; margin-top:10px; }
   .activity-grid input, .activity-grid select { min-width:0; font-size:13px; padding:11px 9px; }
   .digest-card { border: 1px solid #b9d6c7; background: linear-gradient(145deg, #f7fbf7, #eef6f0); white-space: pre-wrap; font-size: 13.5px; line-height: 1.6; }
-  .toast { position: fixed; bottom: 24px; left: 50%; transform: translate(-50%, 80px); width:max-content; max-width:calc(100% - 32px); background: var(--forest); color: #fff; padding: 12px 18px; border-radius: 14px; font-size: 13px; font-weight: 750; opacity: 0; transition: all .35s cubic-bezier(.22,1,.36,1); pointer-events: none; z-index: 99; box-shadow: 0 12px 30px -12px rgba(0,0,0,.4); }
+  .toast { position: fixed; bottom:calc(86px + env(safe-area-inset-bottom, 0px)); left: 50%; transform: translate(-50%, 80px); width:max-content; max-width:calc(100% - 32px); background: var(--forest); color: #fff; padding: 12px 18px; border-radius: 14px; font-size: 13px; font-weight: 750; opacity: 0; transition: all .35s cubic-bezier(.22,1,.36,1); pointer-events: none; z-index: 99; box-shadow: 0 12px 30px -12px rgba(0,0,0,.4); }
   .toast.show { opacity: 1; transform: translate(-50%, 0); }
   .hide { display: none !important; }
   .modal { position: fixed; inset: 0; background: rgba(23,34,29,.54); display: flex; align-items: flex-end; z-index: 50; backdrop-filter: blur(4px); }
   .modal .box { background: var(--card); border-radius: 26px 26px 0 0; padding: 22px 17px 38px; width: 100%; animation: fadeUp .3s forwards; border-top: 1px solid #fff; }
   .modal h3 { font-size: 18px; font-weight: 800; margin-bottom: 12px; }
   .msg { max-width: 88%; padding: 10px 12px; border-radius: 15px; margin-top: 8px; font-size: 13px; line-height: 1.5; white-space: pre-wrap; }
+  .msg { overflow-wrap:anywhere; }
   .msg.coach { background: #f0eee7; border: 1px solid #e0d9cd; margin-right: auto; border-bottom-left-radius: 4px; }
   .msg.me { background: var(--forest-2); color: #fff; margin-left: auto; border-bottom-right-radius: 4px; }
   .msg .mt { font-size: 10px; opacity: .65; margin-top: 3px; }
@@ -209,6 +230,12 @@
   .gatebox { width: 100%; max-width: 340px; text-align: center; }
   .cf { position: fixed; top: -14px; width: 8px; height: 14px; border-radius: 2px; z-index: 200; pointer-events: none; animation: fall 2.3s ease-in forwards; }
   @keyframes fall { to { transform: translate(var(--dx), 108vh) rotate(560deg); opacity: .85 } }
+  .empty-state { text-align:center; padding:12px 8px 10px; }
+  .empty-state .empty-icon { width:46px; height:46px; margin:0 auto 8px; border-radius:15px; display:flex; align-items:center; justify-content:center; background:#edf3ed; font-size:21px; }
+  .empty-state b { display:block; font-size:14px; }
+  .empty-state span { display:block; color:var(--muted); font-size:12px; line-height:1.4; margin-top:4px; }
+  .chip.fire:not(.hide) { animation:flamePulse 2.4s ease-in-out infinite; }
+  @keyframes flamePulse { 0%,100% { transform:scale(1); } 50% { transform:scale(1.04); box-shadow:0 0 0 5px rgba(244,198,106,.10); } }
   @media (max-width: 380px) {
     body { padding-left:11px; padding-right:11px; }
     .ringbox { width:145px; height:145px; transform:scale(.94); margin:-4px; }
@@ -216,9 +243,10 @@
     .mini { padding:8px; font-size:11px; }
     .activity-grid { grid-template-columns:1fr 1fr; }
     .activity-grid select { grid-column:1 / -1; }
+    .anchor { font-size:8.5px; gap:3px; }
   }
   @media (prefers-reduced-motion: reduce) {
-    .walker::after, .walker .runner { animation:none; }
+    .walker::after, .walker .runner, .chip.fire:not(.hide) { animation:none; }
   }
 </style>
 </head>
@@ -274,11 +302,17 @@
       <div class="energy-stat"><span>Activity burned</span><b id="mBurned">0</b><small>approx. kcal</small></div>
       <div class="energy-stat"><span>Net calories</span><b id="mNet">0</b><small>approx. kcal</small></div>
     </div>
-    <div class="energy-note">Net = food consumed − recorded activity. Your food budget stays unchanged.</div>
+    <div class="energy-note" id="energyRule">Activity is separate. Food budget stays unchanged.</div>
     <div class="momentum">
       <div class="label">Next best move</div>
       <div class="move" id="nextMove">Open the day with one honest log.</div>
-      <div class="score" id="todayScore">Your four anchors: food, protein, water and steps.</div>
+      <div class="score" id="todayScore">0/4 daily goals</div>
+      <div class="anchor-status" aria-label="Daily goals">
+        <div class="anchor" id="anchorFood">Food</div>
+        <div class="anchor" id="anchorProtein">Protein</div>
+        <div class="anchor" id="anchorWater">Water</div>
+        <div class="anchor" id="anchorSteps">Steps</div>
+      </div>
     </div>
   </div>
 
@@ -294,6 +328,7 @@
       <div>
         <div class="now" id="wVal">— kg</div>
         <div class="sub muted" id="wHint" style="font-size:12px;margin-top:2px"></div>
+        <div class="pace-pill" id="wPace">Add today's weight</div>
       </div>
       <div class="row" style="gap:7px;align-items:center">
         <input type="number" step="0.1" id="wIn" aria-label="Weight in kilograms" placeholder="kg" style="width:82px;padding:10px">
@@ -309,7 +344,7 @@
     </div>
     <div class="jlabels"><span>103.2 start</span><span>99.1 halfway</span><span>95.0 finish</span></div>
     <svg class="spark" id="spark" viewBox="0 0 300 74" preserveAspectRatio="none"></svg>
-    <div class="sub muted" id="trendTxt" style="font-size:12px"></div>
+    <div class="trend-lines" id="trendTxt"></div>
   </div>
 
   <div class="sect">Your week <span class="sect-sub">progress stays here when the day changes</span></div>
@@ -320,6 +355,7 @@
       <button class="mini-btn week-nav" id="weekNext" aria-label="Next week" onclick="weekNav(1)">›</button>
     </div>
     <div class="week-strip" id="weekStrip"></div>
+    <div class="goal-legend">Daily goals: food, protein, water and steps</div>
     <div class="week-stats" id="weekStats"></div>
     <div class="week-take" id="weekTake"></div>
     <div class="week-rows" id="weekRows"></div>
@@ -336,21 +372,21 @@
   <div class="sect">Water · goal 3.0 L</div>
   <div class="card">
     <div class="flexbet">
-      <div><span style="font-size:20px;font-weight:800" id="waterVal">0 L</span></div>
+      <div><span style="font-size:20px;font-weight:800" id="waterVal">0.0 / 3.0 L</span></div>
       <div class="row" style="gap:7px">
         <button class="mini-btn blue" onclick="quick('water',800)">+ Bottle</button>
         <button class="mini-btn blue" onclick="quick('water',250)">+250</button>
         <button class="mini-btn" onclick="quick('water',-800)">−</button>
       </div>
     </div>
-    <div class="bar"><div id="waterBar" style="width:0%"></div></div>
+    <div class="bar water-bar"><div id="waterBar" style="width:0%"></div></div>
   </div>
 
   <div class="sect">Movement <span class="sect-sub">daily total and workouts stay separate</span></div>
   <div class="card">
     <div class="move-block">
-      <div class="move-title">👣 Full-day steps</div>
-      <div class="move-help">Enter the total showing on your phone today. This is your 10,000-step progress, not one Strava workout.</div>
+      <div class="move-heading"><div class="move-title">👣 Full-day steps</div><div class="move-progress" id="stepsProgress">0 / 10,000</div></div>
+      <div class="move-help">Enter the total currently showing on your phone.</div>
       <div class="move-inputs">
         <input type="number" id="stepsIn" aria-label="Full-day phone step total" placeholder="Phone total now">
         <button class="mini-btn blue" onclick="logSteps()">Update total</button>
@@ -359,7 +395,7 @@
     </div>
     <div class="move-block">
       <div class="move-title">🏃 Strava or another activity</div>
-      <div class="move-help">Log the workout itself. Activity steps stay on this workout and will not overwrite your phone's full-day total.</div>
+      <div class="move-help">Log this workout separately from your phone's full-day steps.</div>
       <div class="activity-grid">
         <select id="wkType" aria-label="Activity type">
           <option value="walk">Walk</option>
@@ -389,7 +425,7 @@
       <input type="text" id="chatIn" placeholder="Ask or tell your coach anything…" onkeydown="if(event.key==='Enter')sendChat()">
       <button class="mini-btn blue" style="flex:0 0 auto" onclick="sendChat()">Send</button>
     </div>
-    <div class="muted" style="font-size:11px;margin-top:8px">Coach counts your logs and reads this thread hourly (10:05–22:05, plus 9:35 &amp; 23:35 counts) — and may text you first when something needs attention</div>
+    <div class="muted" style="font-size:11px;margin-top:8px">The coach checks new logs and corrections throughout the day.</div>
   </div>
 
   <div class="sect">📊 Monthly report</div>
@@ -558,6 +594,7 @@
     document.getElementById('mConsumed').textContent = kcal.toLocaleString();
     document.getElementById('mBurned').textContent = burnedToday ? '~' + burnedToday.toLocaleString() : '0';
     document.getElementById('mNet').textContent = burnedToday ? '~' + netKcal.toLocaleString() : netKcal.toLocaleString();
+    document.getElementById('energyRule').textContent = 'Activity is separate. Food budget: ' + budget.toLocaleString() + ' kcal.';
     const ring = document.getElementById('ringFg');
     const frac = Math.min(1, kcal / budget);
     ring.style.strokeDashoffset = CIRC * (1 - frac);
@@ -592,11 +629,16 @@
     else if (protein < protTarget) nextMove = (protTarget - protein) + 'g protein remains. Keep dinner simple.';
     else nextMove = 'All four anchors are handled. Protect the finish.';
     document.getElementById('nextMove').textContent = nextMove;
-    document.getElementById('todayScore').textContent = anchorN + ' of 4 anchors complete · food, protein, water and steps';
+    document.getElementById('todayScore').textContent = anchorN + '/4 daily goals';
+    ['Food', 'Protein', 'Water', 'Steps'].forEach((name, i) => {
+      const el = document.getElementById('anchor' + name);
+      el.classList.toggle('done', anchors[i]);
+      el.setAttribute('aria-label', name + (anchors[i] ? ' goal complete' : ' goal not complete'));
+    });
 
     const mc = document.getElementById('mealsCard');
     mc.innerHTML = '';
-    if (!(d.meals || []).length) mc.innerHTML = '<div class="muted" style="font-size:13px;padding:4px 0">Nothing yet — snap your plate when you eat 📸</div>';
+    if (!(d.meals || []).length) mc.innerHTML = '<div class="empty-state"><div class="empty-icon">🍽️</div><b>No meals logged today</b><span>Use Snap meal or Type it when you eat.</span></div>';
     (d.meals || []).forEach(m => {
       const div = document.createElement('div');
       div.className = 'meal' + (m.casual ? ' casual' : '');
@@ -617,8 +659,8 @@
       mc.appendChild(div);
     });
 
-    document.getElementById('waterVal').textContent = (+litres.toFixed(2)) + ' L';
-    document.getElementById('waterBar').style.width = Math.min(100, (d.waterMl || 0) / st.waterTargetMl * 100) + '%';
+    document.getElementById('waterVal').textContent = litres.toFixed(1) + ' / ' + ((st.waterTargetMl || 3000) / 1000).toFixed(1) + ' L';
+    document.getElementById('waterBar').style.width = Math.min(100, (d.waterMl || 0) / (st.waterTargetMl || 3000) * 100) + '%';
     if (prevWater < st.waterTargetMl && (d.waterMl || 0) >= st.waterTargetMl) { confetti(); toast('3 litres — hydration complete! 💧'); }
     prevWater = d.waterMl || 0;
 
@@ -627,12 +669,16 @@
     const w = d.weight || (latest ? latest.w : null);
     document.getElementById('wVal').textContent = w ? w.toFixed(1) + ' kg' : '— kg';
     // "on-pace" not "target" — his target is 95.0; this is just today's marker on the glide path.
-    document.getElementById('wHint').textContent = 'on pace today: ' + target.toFixed(1) + ' kg' + (w ? (w <= target ? ' · you’re ' + (target - w).toFixed(1) + ' kg ahead ✅' : ' · ' + (w - target).toFixed(1) + ' kg behind') : '');
+    document.getElementById('wHint').textContent = 'Pace line today: ' + target.toFixed(1) + ' kg';
+    const paceEl = document.getElementById('wPace');
+    paceEl.classList.toggle('behind', !!w && w > target);
+    paceEl.textContent = !w ? 'Add today\'s weight' : w <= target ? (target - w).toFixed(1) + ' kg ahead of pace' : (w - target).toFixed(1) + ' kg behind pace';
     const prog = w ? Math.max(0, Math.min(100, (st.startWeight - w) / (st.startWeight - st.goalWeight) * 100)) : 0;
     document.getElementById('jFill').style.width = prog + '%';
     document.getElementById('jDot').style.left = prog + '%';
 
     const wl = d.walks || [];
+    document.getElementById('stepsProgress').textContent = stepsVal.toLocaleString() + ' / ' + stepsTgt.toLocaleString();
     document.getElementById('walkList').textContent = wl.length
       ? wl.map(x => {
           const emo = x.type === 'gym' ? '🏋️' : x.type === 'run' ? '🏃' : x.type === 'other' ? '🤸' : '🚶';
@@ -726,7 +772,8 @@
       const future = m.key > TODAY;
       const cls = 'week-day' + (m.key === TODAY ? ' today' : '') + (future ? ' future' : '');
       const orb = future ? '·' : m.logged ? m.score + '/4' : '—';
-      return '<div class="' + cls + '"><div class="wd">' + ['Mon','Tue','Wed','Thu','Fri','Sat','Sun'][i] + '</div>' +
+      const goalLabel = future ? '' : m.logged ? m.score + ' of 4 daily goals complete' : 'No goals logged';
+      return '<div class="' + cls + '" aria-label="' + goalLabel + '" title="' + goalLabel + '"><div class="wd">' + ['Mon','Tue','Wed','Thu','Fri','Sat','Sun'][i] + '</div>' +
         '<div class="dn">' + d.getDate() + '</div><div class="orb ' + (m.logged ? 's' + m.score : '') + '">' + orb + '</div></div>';
     }).join('');
 
@@ -762,11 +809,11 @@
     rows.innerHTML = elapsed.map(m => {
       const d = new Date(m.key + 'T12:00:00');
       const date = d.toLocaleDateString('en', { weekday:'short', day:'numeric' });
-      if (!m.logged) return '<div class="week-row"><div class="date">' + date + '</div><div class="facts muted">No log saved</div><div class="day-score">0/4</div></div>';
+      if (!m.logged) return '<div class="week-row"><div class="date">' + date + '</div><div class="facts muted">No log saved</div><div class="day-score">0/4 goals</div></div>';
       const food = m.kcal ? m.kcal.toLocaleString() + ' kcal · ' + m.protein + 'g protein' : (m.pending ? 'Meal waiting to be counted' : 'No food logged');
       const lower = (m.water ? (+((m.water / 1000).toFixed(1))) + ' L water' : 'water —') + ' · ' +
         (m.steps ? m.steps.toLocaleString() + ' steps' : 'steps —') + (m.active ? ' · ' + m.active + ' active min' : '');
-      return '<div class="week-row"><div class="date">' + date + '</div><div class="facts"><div>' + food + '</div><div class="subline">' + lower + '</div></div><div class="day-score">' + m.score + '/4</div></div>';
+      return '<div class="week-row"><div class="date">' + date + '</div><div class="facts"><div>' + food + '</div><div class="subline">' + lower + '</div></div><div class="day-score">' + m.score + '/4 goals</div></div>';
     }).join('');
   }
 
@@ -842,6 +889,7 @@
     FAVS.forEach((f, i) => {
       const b = document.createElement('button');
       b.className = 'repeat-card';
+      b.setAttribute('aria-label', 'Log ' + f.desc + ', ' + f.kcal + ' calories');
       const short = f.desc.length > 30 ? f.desc.slice(0, 29) + '…' : f.desc;
       b.innerHTML = '<span style="font-size:18px">' + foodEmo(f.desc) + '</span>' +
         '<span class="repeat-count">' + (f.pinned ? (f.pinLabel || 'regular choice') : (f.n > 1 ? f.n + '× lately' : 'recent')) + '</span>' +
@@ -853,12 +901,23 @@
   }
   async function quickAddFav(i) {
     const f = FAVS[i];
+    const buttons = Array.from(document.querySelectorAll('.repeat-card'));
+    const button = buttons[i];
+    if (!f || (button && button.disabled)) return;
+    if (button) {
+      button.disabled = true;
+      button.setAttribute('aria-busy', 'true');
+    }
     try {
       const saved = await apiPost({ action: 'logMeal', desc: f.desc, kcal: f.kcal, protein: f.protein, casual: f.casual });
       if (!saved || !saved.ok) throw new Error((saved && saved.error) || 'save failed');
       apply(saved);
       toast(foodEmo(f.desc) + ' Logged & counted — ' + f.kcal + ' kcal');
     } catch (e) {
+      if (button) {
+        button.disabled = false;
+        button.removeAttribute('aria-busy');
+      }
       toast('Could not save that item. Check the connection and tap once more.');
     }
   }
@@ -907,7 +966,7 @@
     const pts = [];
     Object.keys(S.days).sort().forEach(dt => { if (S.days[dt].weight) pts.push({ d: dt, w: S.days[dt].weight }); });
     const svg = document.getElementById('spark'), txt = document.getElementById('trendTxt');
-    if (pts.length < 2) { svg.innerHTML = ''; txt.textContent = 'Weigh in every morning — your trend line appears after a few days.'; return; }
+    if (pts.length < 2) { svg.innerHTML = ''; txt.innerHTML = '<div class="trend-note">Add a few morning weigh-ins to see your projection.</div>'; return; }
     const st = S.settings;
     const t0 = new Date(st.startDate).getTime(), t1 = new Date(st.endDate).getTime();
     const ws = pts.map(p => p.w).concat([st.goalWeight, st.startWeight]);
@@ -931,11 +990,14 @@
       const neededRate = daysToEnd > 0 && last.w > st.goalWeight ? (st.goalWeight - last.w) / daysToEnd * 7 : 0;
       const rateText = v => (v > 0 ? '+' : '') + v.toFixed(2);
       const firstLabel = new Date(first.d + 'T12:00:00').toLocaleDateString('en', { day:'numeric', month:'short' });
-      txt.textContent = (overallProj == null ? '' : 'Projected weight on 1 Dec: ' + overallProj.toFixed(1) + ' kg if your logged pace since ' + firstLabel + ' continues. ') +
-        'Recent 14-day pace: ' + rateText(rate) + ' kg/wk. Overall logged pace: ' + rateText(overallRate) + ' kg/wk. ' +
-        (neededRate ? 'Needed from here: ' + rateText(neededRate) + ' kg/wk. ' : 'Goal reached. ') +
-        'Daily weight varies, so judge the multi-week trend.';
-    } else txt.textContent = 'Dashed line = your glide path. Stay on or under it.';
+      const lineItem = (label, value) => '<div class="trend-line"><span>' + label + '</span><b>' + value + '</b></div>';
+      txt.innerHTML =
+        (overallProj == null ? '' : lineItem('Projected 1 Dec', overallProj.toFixed(1) + ' kg')) +
+        lineItem('Recent pace', rateText(rate) + ' kg/wk') +
+        lineItem('Overall pace since ' + firstLabel, rateText(overallRate) + ' kg/wk') +
+        lineItem('Needed from here', neededRate ? rateText(neededRate) + ' kg/wk' : 'Goal reached') +
+        '<div class="trend-note">Projection follows your logged pace. Use the multi-week trend, not one weigh-in.</div>';
+    } else txt.innerHTML = '<div class="trend-note">Dashed line is the pace line. Stay on or below it.</div>';
   }
 
   let repMonth = null;
