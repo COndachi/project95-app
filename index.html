@@ -170,28 +170,12 @@
   .jbar .ticks i.mid { top: 0; bottom: 0; width: 2px; background: rgba(255,255,255,.55); }
   .jbar .flag { position: absolute; right: -3px; bottom: 5px; width: 22px; height: 30px; overflow: visible; }
   .jbar .flag .cloth { transform-origin: 4px 7px; animation: flagWave 1.5s ease-in-out infinite; }
-  /* the runner: an inline SVG figure whose limbs swing, standing on the bar */
-  .jbar .walker { position: absolute; top: 50%; width: 50px; height: 59px; z-index: 3; pointer-events: none; transform: translate(-50%,-51px); transition: left 1s cubic-bezier(.22,1,.36,1); }
-  .walker .runner { --tempo: .76s; display: block; width: 100%; height: 100%; overflow: visible; animation: runnerBob var(--tempo) ease-in-out infinite; }
-  .walker.ahead .runner { --tempo: .58s; }
-  .walker .torso { transform-origin: 22px 30px; animation: runnerLean var(--tempo) ease-in-out infinite; }
-  .walker .arm { transform-origin: 23px 18px; }
-  .walker .leg { transform-origin: 22px 30px; }
-  .walker .arm.f { animation: swingF var(--tempo) ease-in-out infinite; }
-  .walker .arm.b { animation: swingB var(--tempo) ease-in-out infinite; }
-  .walker .leg.f { animation: strideF var(--tempo) ease-in-out infinite; }
-  .walker .leg.b { animation: strideB var(--tempo) ease-in-out infinite; }
-  .walker .shadow { transform-origin: 22px 50px; animation: runnerShadow var(--tempo) ease-in-out infinite; }
-  .walker .dust { opacity: 0; animation: dust var(--tempo) ease-out infinite; }
-  .walker .dust.two { animation-delay: calc(var(--tempo) / 2); }
-  @keyframes runnerBob { 0%,100% { transform: translateY(0) } 50% { transform: translateY(-3px) } }
-  @keyframes runnerLean { 0%,100% { transform: rotate(-2deg) } 50% { transform: rotate(2.5deg) } }
-  @keyframes swingF { 0%,100% { transform: rotate(40deg) } 50% { transform: rotate(-44deg) } }
-  @keyframes swingB { 0%,100% { transform: rotate(-44deg) } 50% { transform: rotate(40deg) } }
-  @keyframes strideF { 0%,100% { transform: rotate(-36deg) } 50% { transform: rotate(40deg) } }
-  @keyframes strideB { 0%,100% { transform: rotate(40deg) } 50% { transform: rotate(-36deg) } }
-  @keyframes runnerShadow { 0%,100% { transform: scaleX(1); opacity: .3 } 50% { transform: scaleX(.66); opacity: .14 } }
-  @keyframes dust { 0% { opacity: 0; transform: translate(0,0) scale(.4) } 30% { opacity: .6 } 100% { opacity: 0; transform: translate(-13px,-5px) scale(1.4) } }
+  /* the runner: a six-frame sprite cut from the reference sheet, bundled locally,
+     stepped through in place; the ground line of every frame sits on the track */
+  .jbar .walker { position: absolute; top: 50%; width: 45.5px; height: 48px; z-index: 3; pointer-events: none; transform: translate(-50%,-44px); transition: left 1s cubic-bezier(.22,1,.36,1); }
+  .walker .sprite { width: 100%; height: 100%; background: url(assets/runner-sprite.png) 0 0 / 273px 48px no-repeat; animation: runSprite .6s steps(6) infinite; }
+  .walker.ahead .sprite { animation-duration: .48s; }
+  @keyframes runSprite { to { background-position: -273px 0 } }
   @keyframes flagWave { 0%,100% { transform: skewY(0) scaleX(1) } 50% { transform: skewY(-7deg) scaleX(.92) } }
   .jlabels { display: flex; justify-content: space-between; font-size: 11px; color: var(--muted); font-weight: 600; }
   /* weight chart: real axes so 99.9 sits visibly below 103.2 */
@@ -355,23 +339,7 @@
         <div class="fill" id="jFill" style="width:0%"></div>
         <div class="ticks" id="jTicks" aria-hidden="true"></div>
         <svg class="flag" viewBox="0 0 22 30" aria-hidden="true"><line x1="3" y1="1" x2="3" y2="30" stroke="#e7dbe3" stroke-width="2" stroke-linecap="round"/><path class="cloth" d="M4,2 L20,7.5 L4,13 Z" fill="#e7b75c"/></svg>
-        <div class="walker" id="jDot" style="left:0%" role="img" aria-label="You, running from 103.2 toward the 95.0 kilogram finish">
-          <svg class="runner" viewBox="0 0 44 52" aria-hidden="true">
-            <ellipse class="shadow" cx="22" cy="50" rx="13" ry="2.4" fill="rgba(0,0,0,.45)"/>
-            <circle class="dust one" cx="9" cy="48" r="2.4" fill="rgba(255,255,255,.55)"/>
-            <circle class="dust two" cx="12" cy="49" r="1.7" fill="rgba(255,255,255,.45)"/>
-            <g class="leg b"><path d="M22,30 L16,39 L13,47" fill="none" stroke="#7a4b31" stroke-width="4.4" stroke-linecap="round" stroke-linejoin="round"/><ellipse cx="12.5" cy="48.6" rx="3.6" ry="1.9" fill="#1a1016"/></g>
-            <g class="arm b"><path d="M23,18 L17,25 L12,21" fill="none" stroke="#7a4b31" stroke-width="3.6" stroke-linecap="round" stroke-linejoin="round"/></g>
-            <g class="torso">
-              <path d="M16,27 L28,27 L30,36 L24.5,36 L22,31.5 L19.5,36 L14,36 Z" fill="#6f3b78"/>
-              <path d="M22,29 L23.5,17" stroke="#e783a3" stroke-width="9.5" stroke-linecap="round"/>
-              <circle cx="26" cy="10" r="5.2" fill="#8f5a3c"/>
-              <path d="M20.8,10 A5.2,5.2 0 0 1 31.2,10 Z" fill="#1a1016"/>
-            </g>
-            <g class="leg f"><path d="M22,30 L28,38 L31,47" fill="none" stroke="#8f5a3c" stroke-width="4.4" stroke-linecap="round" stroke-linejoin="round"/><ellipse cx="31.5" cy="48.6" rx="3.6" ry="1.9" fill="#1a1016"/></g>
-            <g class="arm f"><path d="M23,18 L29,25 L35,21" fill="none" stroke="#8f5a3c" stroke-width="3.6" stroke-linecap="round" stroke-linejoin="round"/></g>
-          </svg>
-        </div>
+        <div class="walker" id="jDot" style="left:0%" role="img" aria-label="You, running from 103.2 toward the 95.0 kilogram finish"><div class="sprite"></div></div>
       </div>
       <div class="jlabels"><span>103.2 start</span><span>99.1 halfway</span><span>95.0 goal</span></div>
       <svg class="chart" id="spark" viewBox="0 0 340 214" role="img" aria-label="Weight trend against the pace line"></svg>
