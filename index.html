@@ -449,9 +449,10 @@
     t.textContent = msg; t.classList.add('show');
     setTimeout(() => t.classList.remove('show'), 2300);
   }
+  // Reads are POSTs too (27 Oct 2026): a code in a web address ends up in
+  // browser history and logs, so the backend no longer answers GET.
   async function apiGet(action) {
-    const r = await fetch(API + '?api=1&code=' + encodeURIComponent(CODE) + '&action=' + action + '&_=' + Date.now(), { cache: 'no-store' });
-    return r.json();
+    return apiPost({ action: action });
   }
   // POST must stay a "simple" request (text/plain, no custom headers) so the
   // clean GitHub Pages interface can write to Apps Script without a preflight.
