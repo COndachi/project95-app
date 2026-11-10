@@ -5,12 +5,12 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, viewport-fit=cover">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-<meta name="apple-mobile-web-app-title" content="Project 95">
+<meta name="apple-mobile-web-app-title" content="Hatua">
 <meta name="theme-color" content="#130d17">
 <link rel="apple-touch-icon" href="icon.png">
 <link rel="icon" type="image/png" href="icon.png">
 <link rel="manifest" href="manifest.json">
-<title>Project 95</title>
+<title>Hatua</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;500;600;700;800&display=swap">
 <style>
   :root {
@@ -51,7 +51,7 @@
   .wk { display: grid; grid-template-columns: repeat(7,1fr); gap: 4px; margin-top: 18px; }
   .wk div { text-align: center; font-size: 12px; color: var(--muted); font-weight: 600; }
   .wk .o { width: 30px; height: 30px; margin: 6px auto 0; border-radius: 50%; border: 2px solid rgba(255,255,255,.2); display: flex; align-items: center; justify-content: center; font-size: 12px; color: var(--muted); font-weight: 700; }
-  .wk .o.some { border-color: var(--sun); color: var(--sun); }
+  .wk .o.some { border-color: var(--good); color: var(--good); }
   .wk .o.all { background: var(--good); border-color: var(--good); color: #10261e; }
   .wk .today { color: var(--ink); }
   .wk .today .o { box-shadow: 0 0 0 2px var(--paper), 0 0 0 4px var(--coral); }
@@ -64,10 +64,10 @@
   .kcal .big small { font-size: 16px; font-weight: 500; color: var(--muted); margin-left: 4px; }
   .kcal .left { font-size: 14px; color: var(--muted); font-variant-numeric: tabular-nums; }
   .kcal .left b { color: var(--ink); font-weight: 700; }
-  .kcal .left.over b { color: var(--red); }
+  .kcal .left.over b { color: var(--sun); }
   .bar { height: 10px; background: rgba(255,255,255,.1); border-radius: 7px; overflow: hidden; margin-top: 12px; }
   .bar > div { height: 100%; border-radius: 7px; transition: width .9s cubic-bezier(.22,1,.36,1); background: linear-gradient(90deg, var(--coral), var(--sun)); }
-  .bar.k > div.warn { background: var(--sun); } .bar.k > div.over { background: var(--red); }
+  .bar.k > div.warn { background: var(--sun); } .bar.k > div.over { background: var(--sun); }
   .kcal .note { font-size: 12px; color: var(--muted); margin-top: 10px; }
   .goals { display: grid; grid-template-columns: repeat(3,1fr); gap: 12px; }
   .goal .n { font-size: 14px; color: var(--ink2); }
@@ -80,7 +80,9 @@
   .momentum { margin-top: 10px; padding: 12px 14px; border-radius: 14px; background: rgba(19,13,23,.35); border: 1px solid var(--grid); display: flex; gap: 10px; align-items: center; }
   .momentum .move { font-size: 14px; font-weight: 600; flex: 1; }
   .momentum .score { font-size: 12px; color: var(--sun); white-space: nowrap; font-weight: 700; }
-  .anchor-status { display: none; }
+  .anchor-status { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 10px; }
+  .anchor { display: none; padding: 4px 9px; border-radius: 999px; background: rgba(98,199,165,.14); color: var(--good); font-size: 11.5px; font-weight: 700; }
+  .anchor.done { display: inline-flex; }
 
   /* diary */
   .diary .group { border-top: 1px solid var(--grid); padding: 12px 0 8px; }
@@ -142,10 +144,8 @@
   .week-day .wd { font-size: 9px; text-transform: uppercase; letter-spacing: .8px; color: var(--muted); font-weight: 700; }
   .week-day .dn { font-size: 12px; font-weight: 700; margin-top: 3px; }
   .week-day .orb { width: 27px; height: 27px; margin: 6px auto 0; border-radius: 50%; display: flex; align-items: center; justify-content: center; background: rgba(255,255,255,.08); color: var(--muted); font-size: 9px; font-weight: 800; }
-  .week-day .orb.s1 { background: rgba(240,111,127,.25); color: #ffd0d6; }
-  .week-day .orb.s2 { background: rgba(231,183,92,.28); color: #ffe7b0; }
-  .week-day .orb.s3 { background: rgba(98,199,165,.28); color: #cfeee0; }
-  .week-day .orb.s4 { background: var(--good); color: #10261e; }
+  .week-day .orb.done { background: rgba(98,199,165,.22); color: #cfeee0; font-size: 12px; }
+  .week-day .orb.s4 { background: var(--good); color: #10261e; font-size: 12px; }
   .week-stats { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 14px; }
   .week-stat { background: rgba(255,255,255,.05); border: 1px solid var(--line); border-radius: 12px; padding: 10px 11px; }
   .week-stat span { display: block; font-size: 9.5px; color: var(--muted); text-transform: uppercase; letter-spacing: .6px; font-weight: 700; }
@@ -162,7 +162,12 @@
   /* progress (weight) */
   .journey .now { font-size: 34px; font-weight: 800; font-variant-numeric: tabular-nums; letter-spacing: -.03em; }
   .pace-pill { display: inline-flex; align-items: center; margin-top: 6px; padding: 5px 9px; border-radius: 999px; background: rgba(98,199,165,.14); color: var(--good); font-size: 11px; font-weight: 700; }
-  .pace-pill.behind { background: rgba(240,111,127,.14); color: var(--red); }
+  .banked { display: grid; grid-template-columns: repeat(3,1fr); gap: 8px; text-align: center; }
+  .bank b { display: block; font-size: 23px; font-weight: 800; letter-spacing: -.02em; font-variant-numeric: tabular-nums; color: var(--good); }
+  .bank span { display: block; font-size: 11px; color: var(--muted); margin-top: 2px; }
+  .banked .cheer { grid-column: 1 / -1; text-align: left; font-size: 13.5px; font-weight: 600; color: var(--ink2); padding-top: 11px; margin-top: 3px; border-top: 1px solid var(--grid); }
+  .checkin .lbl { font-size: 13px; font-weight: 700; color: var(--sun); }
+  .checkin .txt { font-size: 13px; line-height: 1.5; margin-top: 6px; }
   .jbar { position: relative; height: 12px; background: rgba(255,255,255,.1); border-radius: 7px; margin: 58px 0 8px; }
   .jbar .fill { position: absolute; inset: 0 auto 0 0; border-radius: 7px; background: linear-gradient(90deg, var(--coral), var(--sun)); transition: width 1s cubic-bezier(.22,1,.36,1); }
   .jbar .ticks { position: absolute; inset: 0; pointer-events: none; }
@@ -248,19 +253,25 @@
 <body>
   <div class="hdr">
     <div>
-      <div class="brand"><span class="brand-dot"></span>PROJECT 95</div>
+      <div class="brand"><span class="brand-dot"></span>HATUA · ONE STEP AT A TIME</div>
       <h1 id="tabTitle">Today</h1>
       <div class="sub"><span id="greet">Karibu, Collo</span> · <span id="daymeta">&nbsp;</span></div>
     </div>
     <div style="display:flex;flex-direction:column;gap:6px;align-items:flex-end">
       <div class="chip" id="daychip">Day —</div>
-      <div class="chip fire hide" id="streakchip">🔥</div>
     </div>
   </div>
   <div class="wk" id="topWeek"></div>
 
   <!-- TODAY -->
   <div class="tab-panel on" id="tab-today">
+    <div class="card banked" aria-label="What you have done so far">
+      <div class="bank"><b id="bankKg">—</b><span>kg down so far</span></div>
+      <div class="bank"><b id="bankDays">0</b><span>days logged</span></div>
+      <div class="bank"><b id="bankSteps">0</b><span>steps walked</span></div>
+      <div class="cheer" id="cheer"></div>
+    </div>
+    <div class="card checkin hide" id="checkinCard"><div class="lbl">Sunday check-in</div><div class="txt" id="checkinTxt"></div></div>
     <div class="card kcal">
       <div class="lbl">Calories</div>
       <div class="line"><div class="big"><span id="mConsumed">0</span> cal<small>/ <span id="kBudget">2,100</span></small></div><div class="left" id="kLeftWrap"><b id="kLeft">—</b> <span id="kLbl">left</span></div></div>
@@ -275,8 +286,9 @@
         <div class="goal w"><div class="n">Water</div><div class="v" id="mWater">0 L</div><div class="bar"><div id="waterBar" style="width:0%"></div></div></div>
         <div class="goal s"><div class="n">Steps</div><div class="v" id="mSteps">0</div><div class="bar"><div id="stepsBar" style="width:0%"></div></div></div>
       </div>
-      <div class="momentum"><div class="move" id="nextMove">Open the day with one honest log.</div><div class="score" id="todayScore">0/4</div></div>
-      <div class="anchor-status"><div class="anchor" id="anchorFood"></div><div class="anchor" id="anchorProtein"></div><div class="anchor" id="anchorWater"></div><div class="anchor" id="anchorSteps"></div></div>
+      <div class="momentum"><div class="move" id="nextMove">Log whatever you have so far.</div></div>
+      <div class="anchor-status"><div class="anchor" id="anchorFood">✓ Food logged</div><div class="anchor" id="anchorProtein">✓ Protein</div><div class="anchor" id="anchorWater">✓ Water</div><div class="anchor" id="anchorSteps">✓ Steps</div></div>
+      <div class="row" style="margin-top:12px"><input type="number" inputmode="numeric" id="stepsToday" aria-label="Phone step total so far today" placeholder="👣 Steps on your phone now" onkeydown="if(event.key==='Enter')logSteps('stepsToday')"><button class="mini-btn blue" style="flex:0 0 auto" onclick="logSteps('stepsToday')">Save steps</button></div>
     </div>
 
     <div class="sect">Diary <a href="#" onclick="setTab('week');return false">View week</a></div>
@@ -302,7 +314,7 @@
         <button class="mini-btn week-nav" id="weekNext" aria-label="Next week" onclick="weekNav(1)">›</button>
       </div>
       <div class="week-strip" id="weekStrip"></div>
-      <div class="goal-legend">Daily goals: food, protein, water and steps</div>
+      <div class="goal-legend">A tick means you logged something that day</div>
       <div class="week-stats" id="weekStats"></div>
       <div class="week-take" id="weekTake"></div>
       <div class="week-rows" id="weekRows"></div>
@@ -342,7 +354,7 @@
         <div class="walker" id="jDot" style="left:0%" role="img" aria-label="You, running from 103.2 toward the 95.0 kilogram finish"><div class="sprite"></div></div>
       </div>
       <div class="jlabels"><span>103.2 start</span><span>99.1 halfway</span><span>95.0 goal</span></div>
-      <svg class="chart" id="spark" viewBox="0 0 340 214" role="img" aria-label="Weight trend against the pace line"></svg>
+      <svg class="chart" id="spark" viewBox="0 0 340 214" role="img" aria-label="Weight trend and forecast"></svg>
       <div class="trend-lines" id="trendTxt"></div>
     </div>
     <div class="sect">Movement <span class="sect-sub">phone steps and workouts stay separate</span></div>
@@ -377,7 +389,7 @@
   <input type="file" id="workoutIn" accept="image/*" class="hide" onchange="workoutPhotoPicked(this)">
   <div class="row action-row"></div>
 
-  <nav class="nav" aria-label="Project 95">
+  <nav class="nav" aria-label="Hatua">
     <button id="nav-today" class="on" onclick="setTab('today')"><span>◉</span>Today</button>
     <button id="nav-week" onclick="setTab('week')"><span>▦</span>Week</button>
     <button class="plus" onclick="openSheet()" aria-label="Log something">+</button>
@@ -397,7 +409,7 @@
       <div class="list">
         <button onclick="closeSheet();quick('water',250)">💧 Water, a glass <small>+250 ml</small></button>
         <button onclick="closeSheet();setTab('progress');document.getElementById('wIn').focus()">⚖️ Weight <small>morning weigh-in</small></button>
-        <button onclick="closeSheet();setTab('progress');document.getElementById('stepsIn').focus()">👣 Steps <small>phone total</small></button>
+        <button onclick="closeSheet();setTab('today');document.getElementById('stepsToday').focus()">👣 Steps <small>phone total</small></button>
         <button onclick="closeSheet();setTab('progress');document.getElementById('walkIn').focus()">🏃 Workout <small>Strava or gym</small></button>
       </div>
     </div>
@@ -427,7 +439,7 @@
 
   <div class="gate hide" id="gate">
     <div class="gatebox">
-      <div class="gbrand">PROJECT 95</div>
+      <div class="gbrand">HATUA</div>
       <h2 style="font-size:20px;font-weight:800;margin:8px 0 16px">Enter your access code</h2>
       <input type="text" id="gateIn" placeholder="Access code" autocapitalize="characters" autocorrect="off" autocomplete="off" onkeydown="if(event.key==='Enter')submitGate()">
       <div class="hide" id="gateErr" style="color:#ff8f8f;font-size:13px;margin-top:10px">That code didn\'t work.</div>
@@ -497,6 +509,122 @@
     return cur.g ? cur.g : Math.round((cur.perKg || 2.0) * weightOnOrBefore(dateStr));
   }
 
+  // The protein tick uses what a normal good day reaches: the 75th percentile of the last
+  // 28 fully counted days, rounded to 5 g, never below 120 g and never above the long-term plan.
+  function reachableProtein(dateStr) {
+    const plan = proteinFor(dateStr), vals = [];
+    for (let i = 1; i <= 28; i++) {
+      const day = S.days[addDays(dateStr, -i)];
+      const meals = day && day.meals || [];
+      if (!meals.length || meals.some(m => m.status !== 'done')) continue;
+      vals.push(meals.reduce((n, m) => n + (m.protein || 0), 0));
+    }
+    if (vals.length < 7) return Math.min(plan, S.settings.proteinTarget || 150);
+    vals.sort((a, b) => a - b);
+    const good = Math.round(vals[Math.floor((vals.length - 1) * .75)] / 5) * 5;
+    return Math.min(plan, Math.max(120, good));
+  }
+
+  // One forecast for every screen. It uses the 7-day average so a single water-heavy
+  // morning cannot change it, and it gives a rough date instead of a pass or fail.
+  function forecast95() {
+    const day = 86400000, goal = S.settings.goalWeight;
+    const tOf = d => new Date(d + 'T00:00:00').getTime();
+    const pts = [];
+    Object.keys(S.days).sort().forEach(d => { const w = Number(S.days[d].weight); if (w > 40 && w < 250) pts.push({ d: d, w: w, t: tOf(d) }); });
+    const fc = { goal: goal, avgNow: null, perDay: 0, ready: false, stale: false, eta: null, label: '', next: null, series: [] };
+    if (!pts.length) return fc;
+    fc.series = pts.map(p => { const win = pts.filter(q => q.t <= p.t && p.t - q.t < 7 * day); return { d: p.d, t: p.t, w: win.reduce((a, q) => a + q.w, 0) / win.length }; });
+    const first = fc.series[0], last = fc.series[fc.series.length - 1];
+    fc.avgNow = last.w; fc.lastT = last.t;
+    const tNow = tOf(TODAY);
+    fc.stale = tNow - last.t > 10 * day;
+    fc.ready = pts.length >= 5 && (last.t - first.t) / day >= 14;
+    if (!fc.ready || fc.stale) return fc;
+    // Slope of the 7-day average over the last four weeks (least squares), so the forecast follows how things are going lately.
+    let win = fc.series.filter(p => p.t >= last.t - 28 * day);
+    if (win.length < 4 || (last.t - win[0].t) / day < 10) win = fc.series;
+    const mx = win.reduce((a, p) => a + p.t, 0) / win.length, my = win.reduce((a, p) => a + p.w, 0) / win.length;
+    const den = win.reduce((a, p) => a + (p.t - mx) * (p.t - mx), 0);
+    fc.perDay = den ? win.reduce((a, p) => a + (p.t - mx) * (p.w - my), 0) / den * day : 0;
+    if (last.w > goal && fc.perDay < -0.005) {
+      const rough = t => { const e = new Date(t), dom = e.getDate();
+        return (dom <= 10 ? 'early ' : dom <= 20 ? 'mid ' : 'late ') + e.toLocaleDateString('en', { month: 'long' }) +
+          (e.getFullYear() !== new Date(TODAY + 'T00:00:00').getFullYear() ? ' ' + e.getFullYear() : ''); };
+      const at = kg => Math.max(tNow + day, last.t + (last.w - kg) / -fc.perDay * day);
+      const eta = at(goal);
+      if (eta - tNow < 730 * day) { fc.eta = eta; fc.label = rough(eta); }
+      // The next whole kilo is a nearer, friendlier marker than the final goal.
+      const nextKg = Math.max(goal, Math.floor(last.w - 0.1));
+      if (nextKg > goal && at(nextKg) - tNow < 365 * day) fc.next = { kg: nextKg, label: rough(at(nextKg)) };
+    }
+    return fc;
+  }
+  function forecastText(fc) {
+    if (fc.avgNow === null) return 'Weigh in when you like';
+    if (fc.avgNow <= fc.goal) return fc.goal + ' reached. Well done 🎯';
+    if (fc.stale) return 'Weigh in to refresh your forecast';
+    if (!fc.ready) return 'A forecast appears after a few more weigh-ins';
+    if (fc.next) return 'Next: ' + fc.next.kg + ' kg around ' + fc.next.label;
+    if (fc.eta) return 'At this trend, you reach ' + fc.goal + ' around ' + fc.label;
+    return fc.perDay > 0.01 ? 'Your trend has edged up a little' : 'Your trend is level for now';
+  }
+  const movedText = d => Math.abs(d) < .05 ? 'level' : Math.abs(d).toFixed(1) + ' kg ' + (d < 0 ? 'down' : 'up');
+  function compact(n) { return n >= 1e6 ? (n / 1e6).toFixed(2) + 'M' : n >= 10000 ? Math.round(n / 1000) + 'k' : n.toLocaleString(); }
+  const hasLog = x => !!(x && (x.weight || x.waterMl || x.steps || (x.meals || []).length || (x.walks || []).length));
+  // One true, specific thing that is going well. Never a number that is missing.
+  function cheerLine(fc) {
+    const st = S.settings, tgt = st.stepsTarget || 10000, d = S.days[TODAY] || {};
+    if ((d.steps || 0) >= tgt) return d.steps.toLocaleString() + ' steps today. Your ' + tgt.toLocaleString() + ' is done.';
+    const sr = fc.series;
+    if (sr.length > 7) {
+      const last = sr[sr.length - 1], before = Math.min.apply(null, sr.slice(0, -1).map(p => p.w));
+      if (last.d >= addDays(TODAY, -2) && last.w < before) return 'Your 7-day average is the lowest it has been: ' + last.w.toFixed(1) + ' kg.';
+    }
+    const y = S.days[addDays(TODAY, -1)] || {};
+    if ((y.steps || 0) >= tgt) return 'Yesterday you walked ' + y.steps.toLocaleString() + ' steps.';
+    let wk = 0, logged = 0;
+    for (let i = 0; i < 7; i++) { const x = S.days[addDays(TODAY, -i)]; wk += Number(x && x.steps) || 0; if (hasLog(x)) logged++; }
+    if (wk >= 30000) return wk.toLocaleString() + ' steps over the last 7 days.';
+    if (logged >= 4) return 'You logged ' + logged + ' of the last 7 days.';
+    if (fc.avgNow !== null && st.startWeight - fc.avgNow >= .5) return (st.startWeight - fc.avgNow).toFixed(1) + ' kg down since you started.';
+    return 'Good to see you. Start wherever is easiest.';
+  }
+  function renderBanked(fc) {
+    const st = S.settings;
+    let days = 0, steps = 0;
+    Object.keys(S.days).forEach(k => {
+      if (k < st.startDate || k > TODAY) return;
+      if (hasLog(S.days[k])) days++;
+      steps += Number(S.days[k].steps) || 0;
+    });
+    const down = fc.avgNow === null ? null : st.startWeight - fc.avgNow;
+    document.getElementById('bankKg').textContent = down === null ? '—' : Math.max(0, down).toFixed(1);
+    document.getElementById('bankDays').textContent = days.toLocaleString();
+    document.getElementById('bankSteps').textContent = compact(steps);
+    document.getElementById('cheer').textContent = cheerLine(fc);
+  }
+  // Once a week the plain numbers appear on Today, so the kinder daily view stays honest.
+  function renderCheckin(fc) {
+    const card = document.getElementById('checkinCard');
+    const sunday = new Date(TODAY + 'T12:00:00').getDay() === 0;
+    card.classList.toggle('hide', !sunday);
+    if (!sunday) return;
+    const week = [];
+    for (let i = 6; i >= 0; i--) week.push(weekDayMetrics(addDays(TODAY, -i)));
+    const eat = week.filter(m => m.kcal > 0 && m.key < TODAY);
+    const avg = (arr, fn) => arr.length ? arr.reduce((n, x) => n + fn(x), 0) / arr.length : 0;
+    const parts = ['Days logged: ' + week.filter(m => m.logged).length + ' of 7.'];
+    if (eat.length) parts.push('Food averaged ' + Math.round(avg(eat, m => m.kcal)).toLocaleString() + ' kcal a day against a budget of ' + Math.round(avg(eat, m => budgetFor(m.key))).toLocaleString() + ', with ' + Math.round(avg(eat, m => m.protein)) + ' g protein.');
+    const earlier = fc.series.filter(p => p.d <= addDays(TODAY, -7)).pop();
+    if (fc.avgNow !== null) {
+      const delta = earlier ? fc.avgNow - earlier.w : null;
+      parts.push('Your 7-day average is ' + fc.avgNow.toFixed(1) + ' kg' + (delta === null ? '.' : Math.abs(delta) < .05 ? ', the same as last week.' : ', ' + Math.abs(delta).toFixed(1) + ' kg ' + (delta < 0 ? 'lower' : 'higher') + ' than last week.'));
+      const ft = forecastText(fc); parts.push(/[a-z0-9]$/i.test(ft) ? ft + '.' : ft);
+    }
+    document.getElementById('checkinTxt').textContent = parts.join(' ');
+  }
+
   function countUp(el, to, suffix) {
     const from = parseInt((el.textContent || '0').replace(/[^\d-]/g, '')) || 0;
     if (from === to) { el.textContent = to.toLocaleString() + (suffix || ''); return; }
@@ -522,35 +650,21 @@
     }
   }
 
-  function streak() {
-    let n = 0; const d = new Date(TODAY + 'T00:00:00');
-    for (;;) {
-      const k = d.toISOString().slice(0, 10), day = S.days[k];
-      if (day && ((day.meals && day.meals.length) || day.weight)) { n++; d.setDate(d.getDate() - 1); }
-      else break;
-    }
-    return n;
-  }
-
   function render() {
     const st = S.settings, d = dayObj();
-    const start = new Date(st.startDate + 'T00:00:00'), end = new Date(st.endDate + 'T00:00:00'), now = new Date(TODAY + 'T00:00:00');
+    const start = new Date(st.startDate + 'T00:00:00'), now = new Date(TODAY + 'T00:00:00');
     const dayN = Math.round((now - start) / 86400000) + 1;
-    const left = Math.max(0, Math.round((end - now) / 86400000));
-    const totalDays = Math.round((end - start) / 86400000);
     const budget = budgetFor(TODAY);
     const isGym = budget > (st.kcalBudget || 2100);
 
     const h = new Date().getHours();
     document.getElementById('greet').textContent = (h < 12 ? 'Morning, Collo ☀️' : h < 17 ? 'Afternoon, Collo 💪' : 'Evening, Collo 🌙');
-    document.getElementById('daymeta').textContent = new Date(TODAY).toDateString().slice(0, 10) + ' · ' + left + ' days left' + (isGym ? ' · 💪 gym day · ' + budget.toLocaleString() + ' kcal' : '');
-    document.getElementById('daychip').textContent = 'Day ' + dayN + ' / ' + (totalDays + 1);
-    const sk = streak(), sc = document.getElementById('streakchip');
-    sc.classList.toggle('hide', sk < 2);
-    sc.textContent = '🔥 ' + sk + '-day streak';
+    document.getElementById('daymeta').textContent = new Date(TODAY).toDateString().slice(0, 10) + (isGym ? ' · 💪 gym day · ' + budget.toLocaleString() + ' kcal' : '');
+    document.getElementById('daychip').textContent = 'Day ' + dayN;
 
     let kcal = 0, protein = 0, pending = 0;
     (d.meals || []).forEach(m => { if (m.status === 'done') { kcal += m.kcal || 0; protein += m.protein || 0; } else pending++; });
+    protein = Math.round(protein * 10) / 10;
     const remaining = budget - kcal;
     const burnedToday = Math.round((d.walks || []).reduce((sum, w) => sum + (Number(w.kcal) || 0), 0));
     const netKcal = kcal - burnedToday;
@@ -561,12 +675,12 @@
     const frac = Math.min(1, kcal / budget);
     const kBar = document.getElementById('kBar');
     kBar.style.width = (frac * 100) + '%';
-    kBar.className = remaining < 0 ? 'over' : frac > .82 ? 'warn' : '';
+    kBar.className = remaining < 0 ? 'over' : '';
     document.getElementById('kBudget').textContent = budget.toLocaleString();
     countUp(document.getElementById('kLeft'), Math.abs(remaining));
-    document.getElementById('kLbl').textContent = remaining >= 0 ? 'left' : 'over';
+    document.getElementById('kLbl').textContent = remaining >= 0 ? 'left' : 'above';
     document.getElementById('kLeftWrap').classList.toggle('over', remaining < 0);
-    const protTarget = proteinFor(TODAY);
+    const protTarget = reachableProtein(TODAY);
     document.getElementById('mProt').innerHTML = '<span class="' + (protein >= protTarget ? 'ok' : '') + '">' + protein + '</span><span class="muted" style="font-weight:400">/' + protTarget + 'g</span>';
     document.getElementById('pBar').style.width = Math.min(100, protein / protTarget * 100) + '%';
     const litres = (d.waterMl || 0) / 1000;
@@ -586,20 +700,21 @@
     ];
     const anchorN = anchors.filter(Boolean).length;
     let nextMove = '';
-    if (pending) nextMove = 'Your latest meal is being counted. Keep logging normally.';
-    else if (kcal === 0 && h >= 13) nextMove = 'Log your first meal. One honest entry starts the day.';
-    else if (litres < .8) nextMove = 'Start with one bottle of water. That is the easiest win.';
-    else if (h >= 16 && stepsVal < stepsTgt * .55) nextMove = 'Your steps need daylight. A focused walk moves the number.';
-    else if (h >= 18 && protein < protTarget - 40) nextMove = 'Make the next meal protein-led. You still need ' + (protTarget - protein) + 'g.';
-    else if (stepsVal < stepsTgt) nextMove = (stepsTgt - stepsVal).toLocaleString() + ' steps remain. Log the phone total after your next walk.';
-    else if (protein < protTarget) nextMove = (protTarget - protein) + 'g protein remains. Keep dinner simple.';
-    else nextMove = 'All four anchors are handled. Protect the finish.';
+    if (pending) nextMove = 'Your latest meal is being counted.';
+    else if (kcal === 0 && h >= 13) nextMove = 'Log your first meal when you are ready.';
+    else if (litres < .8) nextMove = 'A bottle of water is an easy place to start.';
+    else if (h >= 16 && stepsVal < stepsTgt * .55) nextMove = 'A walk before dark would be a nice lift.';
+    else if (h >= 18 && protein < protTarget - 40) nextMove = 'A protein-led dinner would round off today.';
+    else if (stepsVal < stepsTgt) nextMove = 'Add your phone steps after your next walk.';
+    else if (protein < protTarget) nextMove = Math.round(protTarget - protein) + ' g more protein would round off today.';
+    else if (litres < 3) nextMove = 'One more bottle of water whenever it suits you.';
+    else nextMove = 'That is a full day. Well done.';
     document.getElementById('nextMove').textContent = nextMove;
-    document.getElementById('todayScore').textContent = anchorN + '/4 daily goals';
+    document.querySelector('.anchor-status').classList.toggle('hide', !anchorN);
     ['Food', 'Protein', 'Water', 'Steps'].forEach((name, i) => {
       const el = document.getElementById('anchor' + name);
       el.classList.toggle('done', anchors[i]);
-      el.setAttribute('aria-label', name + (anchors[i] ? ' goal complete' : ' goal not complete'));
+      el.setAttribute('aria-label', name + (anchors[i] ? ' done' : ''));
     });
 
     renderDiary(d, litres, st);
@@ -608,19 +723,16 @@
     if (prevWater < st.waterTargetMl && (d.waterMl || 0) >= st.waterTargetMl) { confetti(); toast('3 litres — hydration complete! 💧'); }
     prevWater = d.waterMl || 0;
 
-    const target = st.startWeight - (st.startWeight - st.goalWeight) * Math.min(1, (dayN - 1) / totalDays);
     const latest = latestWeight();
     const w = d.weight || (latest ? latest.w : null);
     document.getElementById('wVal').textContent = w ? w.toFixed(1) + ' kg' : '— kg';
-    // "on-pace" not "target" — his target is 95.0; this is just today's marker on the glide path.
-    document.getElementById('wHint').textContent = 'Pace line today: ' + target.toFixed(1) + ' kg';
+    document.getElementById('wHint').textContent = 'Goal: ' + st.goalWeight.toFixed(1) + ' kg';
     const paceEl = document.getElementById('wPace');
-    paceEl.classList.toggle('behind', !!w && w > target);
-    paceEl.textContent = !w ? 'Add today\'s weight' : w <= target ? (target - w).toFixed(1) + ' kg ahead of pace' : (w - target).toFixed(1) + ' kg behind pace';
+    const fc = forecast95();
+    paceEl.textContent = forecastText(fc);
     const prog = w ? Math.max(0, Math.min(100, (st.startWeight - w) / (st.startWeight - st.goalWeight) * 100)) : 0;
     document.getElementById('jFill').style.width = prog + '%';
     document.getElementById('jDot').style.left = prog + '%';
-    document.getElementById('jDot').classList.toggle('ahead', !!w && w <= target);
     const ticks = document.getElementById('jTicks');
     if (ticks && !ticks.childElementCount) {
       const range = st.startWeight - st.goalWeight;
@@ -636,9 +748,11 @@
           if (x.status === 'pending') return emo + ' reading photo…';
           return emo + ' ' + (x.desc ? x.desc + ' · ' : '') + (x.min || 0) + ' min' + (x.steps ? ' · ' + x.steps.toLocaleString() + ' activity steps' : '') + (x.kcal ? ' · ' + x.kcal + ' kcal' : '') + ' at ' + x.at;
         }).join(' · ')
-      : 'No movement yet today — even 20 minutes counts.';
+      : 'No movement logged yet.';
 
     renderTrend();
+    renderBanked(fc);
+    renderCheckin(fc);
 
     // Coach note resets with the day — only today's digest shows.
     const dg = d.digest || null;
@@ -698,7 +812,7 @@
       const emo = x.type === 'gym' ? '🏋️' : x.type === 'run' ? '🏃' : x.type === 'other' ? '🤸' : '🚶';
       if (x.status === 'pending') return emo + ' reading photo…';
       return emo + ' ' + (x.desc ? x.desc + ' · ' : '') + (x.min || 0) + ' min' + (x.kcal ? ' · ' + x.kcal + ' kcal' : '');
-    }).join(' · ') : 'Nothing yet. Even 20 minutes counts.';
+    }).join(' · ') : 'Nothing logged yet.';
     let html = groups.map(g => '<div class="group"><div class="ghead"><div class="ico">' + g.ico + '</div><div class="t"><b>' + g.name + '</b><span>' +
       esc(groupSummary(g.items) || (g.key === 'snacks' ? 'Coffee, tea, fruit, anything small' : 'Nothing logged yet')) + '</span></div>' +
       '<button class="logbtn" onclick="openSheet()">Log</button></div>' + g.items.map(mealRow).join('') + '</div>').join('');
@@ -716,9 +830,9 @@
       const m = weekDayMetrics(key);
       const future = key > TODAY;
       const cls = (key === TODAY ? 'today' : '') + (future ? ' future' : '');
-      const o = future ? '' : m.logged ? (m.score === 4 ? 'all' : (m.score ? 'some' : '')) : '';
-      const inner = !future && m.logged ? (m.score === 4 ? '✓' : m.score) : '';
-      out += '<div class="' + cls + '">' + 'MTWTFSS'[i] + '<div class="o ' + o + '" title="' + (future ? '' : m.score + ' of 4 goals') + '">' + inner + '</div></div>';
+      const o = future ? '' : m.logged ? (m.score === 4 ? 'all' : 'some') : '';
+      const inner = !future && m.logged ? '✓' : '';
+      out += '<div class="' + cls + '">' + 'MTWTFSS'[i] + '<div class="o ' + o + '" title="' + (future || !m.logged ? '' : 'Logged') + '">' + inner + '</div></div>';
     }
     el.innerHTML = out;
   }
@@ -774,12 +888,12 @@
     const active = (day.walks || []).reduce((n, w) => n + (w.min || 0), 0);
     const logged = !!(day.weight || water || steps || (day.meals || []).length || (day.walks || []).length);
     const anchors = [
-      kcal > 0 && pending === 0 && kcal <= budgetFor(key),
-      protein >= proteinFor(key),
+      kcal > 0 && pending === 0,
+      protein >= reachableProtein(key),
       water >= (S.settings.waterTargetMl || 3000),
       steps >= (S.settings.stepsTarget || 10000)
     ];
-    return { key:key, day:day, kcal:kcal, protein:protein, pending:pending, water:water, steps:steps, active:active, logged:logged, score:anchors.filter(Boolean).length };
+    return { key:key, day:day, kcal:kcal, protein:protein, pending:pending, water:water, steps:steps, active:active, logged:logged, score:anchors.filter(Boolean).length, icons:['🍽️','🥩','💧','👣'].filter((x, i) => anchors[i]).join('') };
   }
   function weekRangeLabel(startKey, endKey) {
     const a = new Date(startKey + 'T12:00:00'), b = new Date(endKey + 'T12:00:00');
@@ -803,10 +917,10 @@
       const d = new Date(m.key + 'T12:00:00');
       const future = m.key > TODAY;
       const cls = 'week-day' + (m.key === TODAY ? ' today' : '') + (future ? ' future' : '');
-      const orb = future ? '·' : m.logged ? m.score + '/4' : '—';
-      const goalLabel = future ? '' : m.logged ? m.score + ' of 4 daily goals complete' : 'No goals logged';
+      const orb = future ? '·' : m.logged ? '✓' : '';
+      const goalLabel = future ? '' : m.logged ? 'Logged' : '';
       return '<div class="' + cls + '" aria-label="' + goalLabel + '" title="' + goalLabel + '"><div class="wd">' + ['Mon','Tue','Wed','Thu','Fri','Sat','Sun'][i] + '</div>' +
-        '<div class="dn">' + d.getDate() + '</div><div class="orb ' + (m.logged ? 's' + m.score : '') + '">' + orb + '</div></div>';
+        '<div class="dn">' + d.getDate() + '</div><div class="orb ' + (m.logged ? (m.score === 4 ? 's4' : 'done') : '') + '">' + orb + '</div></div>';
     }).join('');
 
     const elapsed = metrics.filter(m => m.key <= TODAY && m.key >= S.settings.startDate);
@@ -820,9 +934,8 @@
     const avgWater = avg(waterDays, m => m.water) / 1000;
     const avgSteps = Math.round(avg(stepDays, m => m.steps));
     const active = elapsed.reduce((n, m) => n + m.active, 0);
-    const under = mealDays.filter(m => m.kcal <= budgetFor(m.key)).length;
-    const weights = elapsed.filter(m => m.day.weight).map(m => m.day.weight);
-    const weightChange = weights.length > 1 ? weights[weights.length - 1] - weights[0] : null;
+    const srW = forecast95().series, wkEnd = srW.filter(p => p.d >= weekCursor && p.d <= endKey).pop(), wkPrev = srW.filter(p => p.d < weekCursor).pop();
+    const weightChange = wkEnd && wkPrev ? wkEnd.w - wkPrev.w : null;
     const stat = (label, value) => '<div class="week-stat"><span>' + label + '</span><b>' + value + '</b></div>';
     document.getElementById('weekStats').innerHTML =
       stat('Calories avg', avgK ? avgK.toLocaleString() : '—') +
@@ -830,22 +943,21 @@
       stat('Water avg', waterDays.length ? (+avgWater.toFixed(1)) + ' L' : '—') +
       stat('Steps avg', avgSteps ? avgSteps.toLocaleString() : '—') +
       stat('Active time', active ? active + ' min' : '—') +
-      stat('Weight change', weightChange === null ? '—' : (weightChange > 0 ? '+' : '') + weightChange.toFixed(1) + ' kg');
+      stat('Weight trend', weightChange === null ? '—' : movedText(weightChange));
 
-    let take = logged.length + ' of ' + elapsed.length + ' days have a saved log.';
-    if (mealDays.length) take += ' Calories were within budget on ' + under + ' of ' + mealDays.length + ' eating days.';
-    if (weightChange !== null) take += ' Weight moved ' + (weightChange > 0 ? '+' : '') + weightChange.toFixed(1) + ' kg.';
+    let take = logged.length ? 'You logged ' + logged.length + (logged.length === 1 ? ' day ' : ' days ') + (current ? 'this week.' : 'that week.') : (current ? 'A fresh week.' : 'Nothing was logged that week.');
+    if (mealDays.length) take += ' Food averaged ' + avgK.toLocaleString() + ' kcal a day against a budget of ' + Math.round(avg(mealDays, m => budgetFor(m.key))).toLocaleString() + '.';
+    if (weightChange !== null) take += ' Your 7-day average weight: ' + movedText(weightChange) + '.';
     document.getElementById('weekTake').textContent = take;
 
     const rows = document.getElementById('weekRows');
-    rows.innerHTML = elapsed.map(m => {
+    rows.innerHTML = elapsed.filter(m => m.logged).map(m => {
       const d = new Date(m.key + 'T12:00:00');
       const date = d.toLocaleDateString('en', { weekday:'short', day:'numeric' });
-      if (!m.logged) return '<div class="week-row"><div class="date">' + date + '</div><div class="facts muted">No log saved</div><div class="day-score">0/4 goals</div></div>';
       const food = m.kcal ? m.kcal.toLocaleString() + ' kcal · ' + m.protein + 'g protein' : (m.pending ? 'Meal waiting to be counted' : 'No food logged');
       const lower = (m.water ? (+((m.water / 1000).toFixed(1))) + ' L water' : 'water —') + ' · ' +
         (m.steps ? m.steps.toLocaleString() + ' steps' : 'steps —') + (m.active ? ' · ' + m.active + ' active min' : '');
-      return '<div class="week-row"><div class="date">' + date + '</div><div class="facts"><div>' + food + '</div><div class="subline">' + lower + '</div></div><div class="day-score">' + m.score + '/4 goals</div></div>';
+      return '<div class="week-row"><div class="date">' + date + '</div><div class="facts"><div>' + food + '</div><div class="subline">' + lower + '</div></div>' + (m.icons ? '<div class="day-score">' + m.icons + '</div>' : '') + '</div>';
     }).join('');
   }
 
@@ -999,10 +1111,11 @@
     const pts = [];
     Object.keys(S.days).sort().forEach(dt => { const w = Number(S.days[dt].weight); if (w > 40 && w < 250) pts.push({ d: dt, w: w }); });
     const svg = document.getElementById('spark'), txt = document.getElementById('trendTxt');
-    if (pts.length < 2) { svg.innerHTML = ''; txt.innerHTML = '<div class="trend-note">Add a few morning weigh-ins to see your trend against the pace line.</div>'; return; }
+    if (pts.length < 2) { svg.innerHTML = ''; txt.innerHTML = '<div class="trend-note">Add a few morning weigh-ins to see your trend.</div>'; return; }
     const W = 340, H = 214, L = 34, R = 16, T = 24, B = 26, day = 86400000;
     const tOf = d => new Date(d + 'T00:00:00').getTime();
-    const t0 = tOf(st.startDate), t1 = tOf(st.endDate), tNow = tOf(TODAY);
+    const fc = forecast95(), tMile = tOf(st.endDate), tNow = tOf(TODAY), t0 = tOf(st.startDate);
+    const t1 = Math.max(tMile, tNow + 7 * day, fc.eta ? Math.min(fc.eta, tNow + 150 * day) : 0);
     const ws = pts.map(p => p.w).concat([st.goalWeight, st.startWeight]);
     const lo = Math.floor(Math.min.apply(null, ws) - 0.4), hi = Math.ceil(Math.max.apply(null, ws) + 0.4);
     const X = t => L + (W - L - R) * (t - t0) / (t1 - t0);
@@ -1010,14 +1123,6 @@
     const f = n => n.toFixed(1);
     // pace figures
     const first = pts[0], last = pts[pts.length - 1];
-    const recent = pts.slice(-14);
-    const span = (tOf(recent[recent.length - 1].d) - tOf(recent[0].d)) / day;
-    const rate = span >= 3 ? (recent[recent.length - 1].w - recent[0].w) / span * 7 : null;
-    const daysToEnd = (t1 - tOf(last.d)) / day;
-    const overallDays = (tOf(last.d) - tOf(first.d)) / day;
-    const overallRate = overallDays > 0 ? (last.w - first.w) / overallDays * 7 : 0;
-    const overallProj = overallDays >= 7 ? last.w + overallRate / 7 * daysToEnd : null;
-    const neededRate = daysToEnd > 0 && last.w > st.goalWeight ? (st.goalWeight - last.w) / daysToEnd * 7 : 0;
     // a 7-day trailing average takes the morning-to-morning noise out of the line
     const avg = pts.map(p => { const tp = tOf(p.d); const win = pts.filter(q => { const tq = tOf(q.d); return tq <= tp && tp - tq < 7 * day; }); return { d: p.d, w: win.reduce((a, q) => a + q.w, 0) / win.length }; });
     const pathOf = arr => arr.map((p, i) => (i ? 'L' : 'M') + f(X(tOf(p.d))) + ',' + f(Y(p.w))).join(' ');
@@ -1039,16 +1144,13 @@
     // goal line, pace line, today
     out += '<line class="goal" x1="' + L + '" x2="' + (W - R) + '" y1="' + f(Y(st.goalWeight)) + '" y2="' + f(Y(st.goalWeight)) + '"/>' +
       '<text x="' + (L + 6) + '" y="' + f(Y(st.goalWeight) - 5) + '" text-anchor="start" fill="#62c7a5">' + st.goalWeight.toFixed(1) + ' goal</text>';
-    out += '<path class="pace" d="M' + f(X(t0)) + ',' + f(Y(st.startWeight)) + ' L' + f(X(t1)) + ',' + f(Y(st.goalWeight)) + '"/>';
-    const midT = t0 + (t1 - t0) * 0.68, midW = st.startWeight - (st.startWeight - st.goalWeight) * 0.68;
-    out += '<text x="' + f(X(midT)) + '" y="' + f(Y(midW) - 9) + '" text-anchor="middle" fill="#e7b75c">pace line</text>';
     if (tNow > t0 && tNow < t1) out += '<line class="today" x1="' + f(X(tNow)) + '" x2="' + f(X(tNow)) + '" y1="' + (T - 4) + '" y2="' + (H - B) + '"/>' +
       '<text x="' + f(X(tNow)) + '" y="' + (T - 8) + '" text-anchor="middle">today</text>';
     // the data: soft area, faint daily line, strong 7-day line, dotted projection
     out += '<path class="area" d="' + pathOf(avg) + ' L' + f(X(tOf(last.d))) + ',' + (H - B) + ' L' + f(X(tOf(first.d))) + ',' + (H - B) + ' Z"/>';
     out += '<path class="raw" d="' + pathOf(pts) + '"/>';
     out += '<path class="avg draw" id="avgPath" d="' + pathOf(avg) + '"/>';
-    if (overallProj != null) out += '<path class="proj pop" d="M' + f(X(tOf(last.d))) + ',' + f(Y(last.w)) + ' L' + f(X(t1)) + ',' + f(Y(Math.max(lo, Math.min(hi, overallProj)))) + '"/>';
+    if (fc.eta) { const tEnd = Math.min(fc.eta, t1); out += '<path class="proj pop" d="M' + f(X(fc.lastT)) + ',' + f(Y(fc.avgNow)) + ' L' + f(X(tEnd)) + ',' + f(Y(fc.avgNow + fc.perDay * (tEnd - fc.lastT) / day)) + '"/>'; }
     // where you started and where you are
     out += '<circle class="pop" cx="' + f(X(t0)) + '" cy="' + f(Y(st.startWeight)) + '" r="4" fill="#130d17" stroke="#e7b75c" stroke-width="2"/>' +
       '<text class="pop" x="' + f(X(t0) + 8) + '" y="' + f(Y(st.startWeight) + 4) + '" fill="#e7b75c">' + st.startWeight.toFixed(1) + ' start</text>';
@@ -1060,16 +1162,16 @@
     // draw the average line in; if the tab is hidden the length is 0, so just show it
     const drawn = document.getElementById('avgPath');
     try { const len = drawn.getTotalLength(); if (len > 0) drawn.style.setProperty('--len', len.toFixed(1)); else drawn.classList.remove('draw'); } catch (e) { drawn.classList.remove('draw'); }
-    const rateText = v => (v > 0 ? '+' : '') + v.toFixed(2);
     const firstLabel = new Date(first.d + 'T12:00:00').toLocaleDateString('en', { day: 'numeric', month: 'short' });
     const lineItem = (label, value) => '<div class="trend-line"><span>' + label + '</span><b>' + value + '</b></div>';
+    const back = fc.series.filter(p => p.t <= fc.lastT - 28 * day).pop();
     txt.innerHTML =
       lineItem('7-day average', avg[avg.length - 1].w.toFixed(1) + ' kg') +
-      (overallProj == null ? '' : lineItem('Projected 1 Dec', overallProj.toFixed(1) + ' kg')) +
-      (rate == null ? '' : lineItem('Recent pace', rateText(rate) + ' kg/wk')) +
-      lineItem('Overall pace since ' + firstLabel, rateText(overallRate) + ' kg/wk') +
-      lineItem('Needed from here', neededRate ? rateText(neededRate) + ' kg/wk' : 'Goal reached') +
-      '<div class="trend-note">Solid line is your 7-day average, the faint line is each weigh-in, gold dashes are the pace line, and the dotted line is where your overall pace lands you on 1 Dec.</div>';
+      (fc.next ? lineItem('Next kilo', fc.next.kg + ' kg around ' + fc.next.label) : '') +
+      lineItem('Forecast for ' + fc.goal, fc.avgNow <= fc.goal ? 'reached 🎯' : fc.eta ? 'around ' + fc.label : fc.next ? 'more than two years at this trend' : forecastText(fc)) +
+      (back && !fc.stale ? lineItem('Last 4 weeks', movedText(fc.avgNow - back.w)) : '') +
+      (fc.ready ? lineItem('Since ' + firstLabel, movedText(fc.avgNow - fc.series[0].w)) : '') +
+      '<div class="trend-note">Solid line is your 7-day average, the faint line is each weigh-in, and the dotted line is the forecast. One weigh-in can jump with water; the average does not.</div>';
   }
 
   let repMonth = null;
@@ -1084,12 +1186,6 @@
     repMonth = d.getFullYear() + '-' + ('0' + (d.getMonth() + 1)).slice(-2);
     renderReport();
   }
-  function glideAt(date) {
-    const st = S.settings;
-    const total = (new Date(st.endDate) - new Date(st.startDate)) / 86400000;
-    const t = (new Date(date) - new Date(st.startDate)) / 86400000;
-    return st.startWeight - (st.startWeight - st.goalWeight) * Math.max(0, Math.min(1, t / total));
-  }
   function renderReport() {
     const st = S.settings;
     const minYm = st.startDate.slice(0, 7), maxYm = TODAY.slice(0, 7);
@@ -1103,7 +1199,7 @@
     const mp = repMonth.split('-');
     const dim = new Date(+mp[0], +mp[1], 0).getDate();
     const eatDays = [];
-    let protSum = 0, waterSum = 0, waterDays = 0, underN = 0, casualN = 0, casualKcal = 0;
+    let protSum = 0, waterSum = 0, waterDays = 0;
     let activeMin = 0, burned = 0, wFirst = null, wLast = null, stepsSum = 0, stepsDays = 0;
     const mix = {}, bars = [];
     for (let i = 1; i <= dim; i++) {
@@ -1115,7 +1211,6 @@
         (day.meals || []).forEach(m => {
           if (m.status === 'done') {
             kcal += m.kcal || 0; prot += m.protein || 0;
-            if (m.casual) { casualN++; casualKcal += m.kcal || 0; }
           }
           any = true;
         });
@@ -1129,7 +1224,7 @@
         if (day.steps) { stepsSum += day.steps; stepsDays++; any = true; }
       }
       const dayBudget = budgetFor(key);
-      if (kcal > 0) { eatDays.push(kcal); protSum += prot; if (kcal <= dayBudget) underN++; }
+      if (kcal > 0) { eatDays.push(kcal); protSum += prot; }
       bars.push({ day: i, kcal: kcal, logged: any, budget: dayBudget });
     }
 
@@ -1144,40 +1239,40 @@
       const x = ((b.day - 1) * bw + 1).toFixed(1), w = Math.max(1.5, bw - 2).toFixed(1);
       if (b.kcal > 0) {
         const h = Math.max(3, Math.min(1, b.kcal / cap) * 40);
-        sv += '<rect x="' + x + '" y="' + (44 - h).toFixed(1) + '" width="' + w + '" height="' + h.toFixed(1) + '" rx="1.5" fill="' + (b.kcal <= b.budget ? '#e783a3' : '#f06f7f') + '"/>';
+        sv += '<rect x="' + x + '" y="' + (44 - h).toFixed(1) + '" width="' + w + '" height="' + h.toFixed(1) + '" rx="1.5" fill="' + (b.kcal <= b.budget ? '#e783a3' : '#e7b75c') + '"/>';
       } else if (b.logged) {
         sv += '<rect x="' + x + '" y="41" width="' + w + '" height="3" rx="1.5" fill="#3a2841"/>';
       }
     });
     document.getElementById('repBars').innerHTML = sv;
     document.getElementById('repBarsLbl').textContent = monthHasGym
-      ? 'Daily kcal · budget ' + baseB.toLocaleString() + ' walk / ' + gymB.toLocaleString() + ' gym · teal under, red over'
-      : 'Daily kcal · budget ' + baseB.toLocaleString() + ' · teal under, red over';
+      ? 'Daily kcal · budget ' + baseB.toLocaleString() + ' walk / ' + gymB.toLocaleString() + ' gym'
+      : 'Daily kcal · budget ' + baseB.toLocaleString();
 
     const avgK = eatDays.length ? Math.round(eatDays.reduce((a, b) => a + b, 0) / eatDays.length) : 0;
     const avgP = eatDays.length ? Math.round(protSum / eatDays.length) : 0;
     const avgW = waterDays ? waterSum / waterDays / 1000 : 0;
+    if (wFirst !== null) {
+      const srM = forecast95().series, inM = srM.filter(p => p.d.slice(0, 7) === repMonth), prevM = srM.filter(p => p.d < repMonth + '-01').pop();
+      if (inM.length) { wFirst = (prevM || inM[0]).w; wLast = inM[inM.length - 1].w; }
+    }
     const tile = (lbl, val) => '<div class="mini"><span>' + lbl + '</span><b>' + val + '</b></div>';
     document.getElementById('repGrid').innerHTML =
-      tile('⚖️ Weight', wFirst !== null ? wFirst.toFixed(1) + ' → ' + wLast.toFixed(1) : '—') +
-      tile('📉 Change', wFirst !== null ? (wLast - wFirst <= 0 ? '' : '+') + (wLast - wFirst).toFixed(1) + ' kg' : '—') +
+      tile('⚖️ 7-day average', wFirst !== null ? wFirst.toFixed(1) + ' → ' + wLast.toFixed(1) : '—') +
+      tile('📉 Change', wFirst !== null ? movedText(wLast - wFirst) : '—') +
       tile('🍽️ Avg kcal', avgK ? avgK.toLocaleString() : '—') +
-      tile('✅ Under budget', eatDays.length ? underN + '/' + eatDays.length + ' d' : '—') +
+      tile('📅 Days logged', bars.filter(b => b.logged).length + ' d') +
       tile('🥩 Protein avg', avgK ? avgP + ' g' : '—') +
       tile('💧 Water avg', waterDays ? (+avgW.toFixed(1)) + ' L' : '—') +
       tile('🏃 Active', activeMin ? activeMin + ' min' : '—') +
-      tile('👣 Steps avg', stepsDays ? Math.round(stepsSum / stepsDays).toLocaleString() : '—') +
-      tile('🍪 Snacks', casualN ? casualN + '× · ' + casualKcal.toLocaleString() + ' kcal' : 'none 🎯');
+      tile('👣 Steps avg', stepsDays ? Math.round(stepsSum / stepsDays).toLocaleString() : '—');
 
     let take;
     if (wFirst === null) {
-      take = 'Weigh in each morning to unlock the weight verdict for this month.';
+      take = 'Weigh in on a few mornings to see how this month moved.';
     } else {
-      const endRef = repMonth === maxYm ? TODAY : repMonth + '-' + ('0' + dim).slice(-2);
-      const planned = glideAt(endRef) - glideAt(repMonth + '-01');
       const actual = wLast - wFirst;
-      take = 'Weight ' + (actual <= 0 ? '' : '+') + actual.toFixed(1) + ' kg vs plan ' + planned.toFixed(1) + ' kg — ' +
-        (actual <= planned + 0.15 ? 'on pace, keep going 🎯' : 'behind pace. Casual eating is usually the leak.');
+      take = 'Your 7-day average weight: ' + movedText(actual) + ' this month.';
     }
     const mixTxt = Object.keys(mix).map(k => k + ' ' + mix[k]).join(' · ');
     if (activeMin && mixTxt) take += ' Movement: ' + mixTxt + ' min' + (burned ? ' · ~' + burned.toLocaleString() + ' kcal burned' : '') + '.';
@@ -1225,16 +1320,13 @@
     if (!v || v < 60 || v > 130) return toast('Enter a weight in kg');
     document.getElementById('wIn').value = '';
     apply(await apiPost({ action: 'quickLog', kind: 'weight', value: v }));
-    const st = S.settings, d = new Date(TODAY + 'T00:00:00'), s0 = new Date(st.startDate + 'T00:00:00');
-    const dayN = Math.round((d - s0) / 86400000) + 1;
-    const tgt = st.startWeight - (st.startWeight - st.goalWeight) * Math.min(1, (dayN - 1) / 142);
-    if (v <= tgt) { confetti(); toast('On the glide path — ' + v.toFixed(1) + ' kg 🎉'); }
-    else toast('Saved ' + v.toFixed(1) + ' kg — keep pushing 💪');
+    toast('Saved ' + v.toFixed(1) + ' kg. Thanks for weighing in.');
   }
-  async function logSteps() {
-    const v = parseInt(document.getElementById('stepsIn').value);
+  async function logSteps(src) {
+    const box = document.getElementById(src || 'stepsIn');
+    const v = parseInt(box.value);
     if (isNaN(v) || v < 0) return toast('Enter your step count');
-    document.getElementById('stepsIn').value = '';
+    box.value = ''; box.blur();
     const tgt = S.settings.stepsTarget || 10000;
     const hadDay = !!S.days[TODAY];
     const before = (S.days[TODAY] || {}).steps || 0;
@@ -1244,8 +1336,8 @@
     toast('👣 ' + v.toLocaleString() + ' shown now · saving…');
     try {
       apply(await persistSteps(v));
-      if (before < tgt && v >= tgt) { confetti(); toast('👣 ' + v.toLocaleString() + ' — target smashed! 🎉'); }
-      else if (v < tgt) toast('👣 Saved · ' + (tgt - v).toLocaleString() + ' to go');
+      if (before < tgt && v >= tgt) { confetti(); toast('👣 ' + v.toLocaleString() + ' steps. Brilliant! 🎉'); }
+      else if (v < tgt) toast('👣 ' + v.toLocaleString() + ' steps saved');
       else toast('👣 ' + v.toLocaleString() + ' saved');
     } catch (e) {
       if (hadDay) S.days[TODAY].steps = before;

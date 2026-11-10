@@ -1,6 +1,6 @@
 {
-  "name": "Project 95",
-  "short_name": "Project 95",
+  "name": "Hatua",
+  "short_name": "Hatua",
   "start_url": "./",
   "scope": "./",
   "display": "standalone",
@@ -8,6 +8,11 @@
   "background_color": "#0d1220",
   "theme_color": "#0d1220",
   "icons": [
-    { "src": "icon.png", "sizes": "180x180", "type": "image/png", "purpose": "any" }
+    {
+      "src": "icon.png",
+      "sizes": "180x180",
+      "type": "image/png",
+      "purpose": "any"
+    }
   ]
 }
