@@ -6,26 +6,26 @@
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="apple-mobile-web-app-title" content="Hatua">
-<meta name="theme-color" content="#130d17">
+<meta name="theme-color" content="#142822">
 <link rel="apple-touch-icon" href="icon.png">
 <link rel="icon" type="image/png" href="icon.png">
 <link rel="manifest" href="manifest.json">
 <title>Hatua</title>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;500;600;700;800&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600..800&family=Inter+Tight:wght@400;500;600;700;800&display=swap">
 <style>
   :root {
-    /* Night Desk (direction B): the Ondachi plum, rose and gold */
-    --ink: #fff8fb; --ink2: #e7dbe3; --muted: #aa97a5;
-    --paper: #130d17; --card: #24182a; --card2: #302037;
+    /* Dawn over the hills: deep eucalyptus night, sunrise amber and clay */
+    --ink: #f6f7ee; --ink2: #dfe5d6; --muted: #97a89c;
+    --paper: #0e1c19; --card: #172a25; --card2: #20372f;
     --line: rgba(255,255,255,.12); --grid: rgba(255,255,255,.08);
-    --forest: #302037; --forest-2: #6f3b78;
-    --coral: #e783a3; --sun: #e7b75c; --good: #62c7a5; --sage: #2b3d36; --cream: #302037; --red: #f06f7f;
+    --forest: #20372f; --forest-2: #2f7a5f;
+    --coral: #ef8a5f; --sun: #f5c04e; --good: #6fd6a8; --sage: #2b3d36; --cream: #20372f; --red: #f06f7f;
   }
   * { box-sizing: border-box; margin: 0; -webkit-tap-highlight-color: transparent; }
   html { background: var(--paper); }
   body {
     font-family: "Inter Tight", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-    background: radial-gradient(circle at 15% -10%, rgba(153,74,136,.35), transparent 40%), linear-gradient(180deg, #1c1221, #130d17 50%);
+    background: radial-gradient(circle at 85% -6%, rgba(245,192,78,.12), transparent 42%), linear-gradient(180deg, #142822, #0e1c19 52%);
     color: var(--ink);
     padding: calc(env(safe-area-inset-top, 0px) + 20px) 15px calc(env(safe-area-inset-bottom, 0px) + 158px);
     max-width: 500px; margin: 0 auto; min-height: 100vh; overflow-x: hidden;
@@ -47,7 +47,7 @@
   .hdr .sub { font-size: 13px; color: var(--muted); margin-top: 6px; }
   .brand { display: none; }
   .chip { background: rgba(255,255,255,.06); border: 1px solid var(--line); border-radius: 999px; padding: 6px 10px; font-size: 12px; font-weight: 600; white-space: nowrap; color: var(--ink); }
-  .chip.fire { border-color: rgba(231,183,92,.4); background: rgba(231,183,92,.12); color: var(--sun); }
+  .chip.fire { border-color: rgba(245,192,78,.4); background: rgba(245,192,78,.12); color: var(--sun); }
   .wk { display: grid; grid-template-columns: repeat(7,1fr); gap: 4px; margin-top: 18px; }
   .wk div { text-align: center; font-size: 12px; color: var(--muted); font-weight: 600; }
   .wk .o { width: 30px; height: 30px; margin: 6px auto 0; border-radius: 50%; border: 2px solid rgba(255,255,255,.2); display: flex; align-items: center; justify-content: center; font-size: 12px; color: var(--muted); font-weight: 700; }
@@ -74,14 +74,14 @@
   .goal .v { font-size: 20px; font-weight: 800; margin-top: 2px; font-variant-numeric: tabular-nums; }
   .goal .v .muted { font-size: 13px; font-weight: 500; }
   .goal .bar { height: 7px; margin-top: 8px; }
-  .goal.p .bar > div { background: var(--coral); } .goal.w .bar > div { background: #8ca7ed; } .goal.s .bar > div { background: var(--sun); }
+  .goal.p .bar > div { background: var(--coral); } .goal.w .bar > div { background: #7cc0ee; } .goal.s .bar > div { background: var(--sun); }
   .goal .ok { color: var(--good); }
   .mini .ok { color: var(--good); }
-  .momentum { margin-top: 10px; padding: 12px 14px; border-radius: 14px; background: rgba(19,13,23,.35); border: 1px solid var(--grid); display: flex; gap: 10px; align-items: center; }
+  .momentum { margin-top: 10px; padding: 12px 14px; border-radius: 14px; background: rgba(14,28,25,.35); border: 1px solid var(--grid); display: flex; gap: 10px; align-items: center; }
   .momentum .move { font-size: 14px; font-weight: 600; flex: 1; }
   .momentum .score { font-size: 12px; color: var(--sun); white-space: nowrap; font-weight: 700; }
   .anchor-status { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 10px; }
-  .anchor { display: none; padding: 4px 9px; border-radius: 999px; background: rgba(98,199,165,.14); color: var(--good); font-size: 11.5px; font-weight: 700; }
+  .anchor { display: none; padding: 4px 9px; border-radius: 999px; background: rgba(111,214,168,.14); color: var(--good); font-size: 11.5px; font-weight: 700; }
   .anchor.done { display: inline-flex; }
 
   /* diary */
@@ -92,7 +92,7 @@
   .ghead .t { flex: 1; min-width: 0; }
   .ghead .t b { display: block; font-size: 17px; font-weight: 700; }
   .ghead .t span { display: block; font-size: 13px; color: var(--muted); margin-top: 2px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-  .logbtn { background: rgba(231,131,163,.16); color: var(--coral); border: 0; border-radius: 999px; padding: 10px 16px; font: 700 14px "Inter Tight", system-ui, sans-serif; cursor: pointer; flex-shrink: 0; }
+  .logbtn { background: rgba(239,138,95,.16); color: var(--coral); border: 0; border-radius: 999px; padding: 10px 16px; font: 700 14px "Inter Tight", system-ui, sans-serif; cursor: pointer; flex-shrink: 0; }
   .meal { display: flex; gap: 11px; padding: 10px 0 4px 50px; align-items: center; }
   .meal .emo { display: none; }
   .meal .t { flex: 1; min-width: 0; }
@@ -114,22 +114,22 @@
   /* buttons + inputs */
   button { font-family: inherit; border: 0; cursor: pointer; transition: transform .12s ease, filter .2s; }
   button:active { transform: scale(.96); }
-  .btn-hero { flex: 1; padding: 14px 8px; font-size: 14px; font-weight: 700; border-radius: 14px; color: #24101c; background: linear-gradient(135deg, var(--coral), #ba628b); }
+  .btn-hero { flex: 1; padding: 14px 8px; font-size: 14px; font-weight: 700; border-radius: 14px; color: #1d1006; background: linear-gradient(135deg, var(--coral), #d9653f); }
   .btn-ghost { flex: 1; padding: 14px 8px; font-size: 14px; font-weight: 700; border-radius: 14px; color: var(--ink); background: rgba(255,255,255,.06); border: 1px solid var(--line); }
   .mini-btn { padding: 9px 13px; font-size: 12px; font-weight: 700; border-radius: 11px; background: rgba(255,255,255,.06); color: var(--ink); border: 1px solid var(--line); }
   .mini-btn.blue { background: var(--forest-2); color: var(--ink); border: 0; }
   input[type=text], input[type=number], select { font-family: inherit; width: 100%; padding: 12px; font-size: 16px; border: 1px solid var(--line); border-radius: 12px; background: rgba(255,255,255,.06); color: var(--ink); outline: none; }
-  input:focus, select:focus { border-color: var(--coral); box-shadow: 0 0 0 3px rgba(231,131,163,.15); }
+  input:focus, select:focus { border-color: var(--coral); box-shadow: 0 0 0 3px rgba(239,138,95,.15); }
   select option { color: #111; }
 
   /* repeat (eat again) */
   .repeat-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 9px; }
   .repeat-card { text-align: left; min-width: 0; min-height: 92px; padding: 13px; border-radius: 16px; background: rgba(255,255,255,.05); border: 1px solid var(--line); color: var(--ink); touch-action: manipulation; }
-  .repeat-card:active { background: rgba(231,131,163,.14); border-color: var(--coral); }
+  .repeat-card:active { background: rgba(239,138,95,.14); border-color: var(--coral); }
   .repeat-card:disabled { opacity: .62; cursor: wait; transform: none; }
   .repeat-card .repeat-name { display: block; font-weight: 700; font-size: 12.5px; line-height: 1.25; margin-top: 7px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
   .repeat-card .repeat-meta { display: block; color: var(--muted); font-size: 10.5px; margin-top: 4px; }
-  .repeat-card .repeat-count { float: right; color: var(--sun); background: rgba(231,183,92,.14); border-radius: 999px; padding: 3px 6px; font-size: 9.5px; font-weight: 800; }
+  .repeat-card .repeat-count { float: right; color: var(--sun); background: rgba(245,192,78,.14); border-radius: 999px; padding: 3px 6px; font-size: 9.5px; font-weight: 800; }
 
   /* week */
   .week-card { overflow: hidden; }
@@ -139,18 +139,18 @@
   .week-strip { display: grid; grid-template-columns: repeat(7,1fr); gap: 5px; margin-top: 15px; }
   .goal-legend { margin-top: 8px; color: var(--muted); font-size: 10.5px; text-align: center; }
   .week-day { min-width: 0; text-align: center; padding: 7px 2px 8px; border-radius: 12px; border: 1px solid transparent; }
-  .week-day.today { background: rgba(231,183,92,.12); border-color: rgba(231,183,92,.4); }
+  .week-day.today { background: rgba(245,192,78,.12); border-color: rgba(245,192,78,.4); }
   .week-day.future { opacity: .38; }
   .week-day .wd { font-size: 9px; text-transform: uppercase; letter-spacing: .8px; color: var(--muted); font-weight: 700; }
   .week-day .dn { font-size: 12px; font-weight: 700; margin-top: 3px; }
   .week-day .orb { width: 27px; height: 27px; margin: 6px auto 0; border-radius: 50%; display: flex; align-items: center; justify-content: center; background: rgba(255,255,255,.08); color: var(--muted); font-size: 9px; font-weight: 800; }
-  .week-day .orb.done { background: rgba(98,199,165,.22); color: #cfeee0; font-size: 12px; }
+  .week-day .orb.done { background: rgba(111,214,168,.22); color: #cfeee0; font-size: 12px; }
   .week-day .orb.s4 { background: var(--good); color: #10261e; font-size: 12px; }
   .week-stats { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 14px; }
   .week-stat { background: rgba(255,255,255,.05); border: 1px solid var(--line); border-radius: 12px; padding: 10px 11px; }
   .week-stat span { display: block; font-size: 9.5px; color: var(--muted); text-transform: uppercase; letter-spacing: .6px; font-weight: 700; }
   .week-stat b { display: block; font-size: 15px; margin-top: 3px; font-variant-numeric: tabular-nums; }
-  .week-take { margin-top: 12px; padding: 11px 12px; border-radius: 12px; background: rgba(98,199,165,.12); color: #cfeee0; font-size: 12px; line-height: 1.45; }
+  .week-take { margin-top: 12px; padding: 11px 12px; border-radius: 12px; background: rgba(111,214,168,.12); color: #cfeee0; font-size: 12px; line-height: 1.45; }
   .week-rows { margin-top: 10px; border-top: 1px solid var(--grid); }
   .week-row { display: flex; align-items: flex-start; gap: 9px; padding: 13px 0; border-bottom: 1px solid var(--grid); }
   .week-row:last-child { border-bottom: 0; padding-bottom: 0; }
@@ -161,27 +161,12 @@
 
   /* progress (weight) */
   .journey .now { font-size: 34px; font-weight: 800; font-variant-numeric: tabular-nums; letter-spacing: -.03em; }
-  .pace-pill { display: inline-flex; align-items: center; margin-top: 6px; padding: 5px 9px; border-radius: 999px; background: rgba(98,199,165,.14); color: var(--good); font-size: 11px; font-weight: 700; }
+  .pace-pill { display: inline-flex; align-items: center; margin-top: 6px; padding: 5px 9px; border-radius: 999px; background: rgba(111,214,168,.14); color: var(--good); font-size: 11px; font-weight: 700; }
   .banked { display: grid; grid-template-columns: repeat(3,1fr); gap: 8px; text-align: center; }
   .bank b { display: block; font-size: 23px; font-weight: 800; letter-spacing: -.02em; font-variant-numeric: tabular-nums; color: var(--good); }
   .bank span { display: block; font-size: 11px; color: var(--muted); margin-top: 2px; }
-  .banked .cheer { grid-column: 1 / -1; text-align: left; font-size: 13.5px; font-weight: 600; color: var(--ink2); padding-top: 11px; margin-top: 3px; border-top: 1px solid var(--grid); }
   .checkin .lbl { font-size: 13px; font-weight: 700; color: var(--sun); }
   .checkin .txt { font-size: 13px; line-height: 1.5; margin-top: 6px; }
-  .jbar { position: relative; height: 12px; background: rgba(255,255,255,.1); border-radius: 7px; margin: 58px 0 8px; }
-  .jbar .fill { position: absolute; inset: 0 auto 0 0; border-radius: 7px; background: linear-gradient(90deg, var(--coral), var(--sun)); transition: width 1s cubic-bezier(.22,1,.36,1); }
-  .jbar .ticks { position: absolute; inset: 0; pointer-events: none; }
-  .jbar .ticks i { position: absolute; top: 3px; bottom: 3px; width: 1px; background: rgba(255,255,255,.22); }
-  .jbar .ticks i.mid { top: 0; bottom: 0; width: 2px; background: rgba(255,255,255,.55); }
-  .jbar .flag { position: absolute; right: -3px; bottom: 5px; width: 22px; height: 30px; overflow: visible; }
-  .jbar .flag .cloth { transform-origin: 4px 7px; animation: flagWave 1.5s ease-in-out infinite; }
-  /* the runner: a six-frame sprite cut from the reference sheet, bundled locally,
-     stepped through in place; the ground line of every frame sits on the track */
-  .jbar .walker { position: absolute; top: 50%; width: 45.5px; height: 48px; z-index: 3; pointer-events: none; transform: translate(-50%,-44px); transition: left 1s cubic-bezier(.22,1,.36,1); }
-  .walker .sprite { width: 100%; height: 100%; background: url(assets/runner-sprite.png) 0 0 / 273px 48px no-repeat; animation: runSprite .6s steps(6) infinite; }
-  .walker.ahead .sprite { animation-duration: .48s; }
-  @keyframes runSprite { to { background-position: -273px 0 } }
-  @keyframes flagWave { 0%,100% { transform: skewY(0) scaleX(1) } 50% { transform: skewY(-7deg) scaleX(.92) } }
   .jlabels { display: flex; justify-content: space-between; font-size: 11px; color: var(--muted); font-weight: 600; }
   /* weight chart: real axes so 99.9 sits visibly below 103.2 */
   .chart { width: 100%; height: auto; margin-top: 16px; display: block; overflow: visible; }
@@ -212,24 +197,24 @@
 
   /* tabs + plus + sheet */
   .tab-panel { display: none; } .tab-panel.on { display: block; }
-  .nav { position: fixed; left: 0; right: 0; bottom: 0; z-index: 40; display: flex; justify-content: space-around; align-items: flex-end; background: rgba(19,13,23,.94); backdrop-filter: blur(15px); border-top: 1px solid var(--grid); padding: 10px 6px max(12px, env(safe-area-inset-bottom, 0px)); }
+  .nav { position: fixed; left: 0; right: 0; bottom: 0; z-index: 40; display: flex; justify-content: space-around; align-items: flex-end; background: rgba(14,28,25,.94); backdrop-filter: blur(15px); border-top: 1px solid var(--grid); padding: 10px 6px max(12px, env(safe-area-inset-bottom, 0px)); }
   .nav button { background: none; color: var(--muted); font-size: 11px; font-weight: 600; display: flex; flex-direction: column; align-items: center; gap: 4px; padding: 4px 10px; }
   .nav button span { font-size: 20px; line-height: 1; }
   .nav button.on { color: var(--ink); }
-  .nav .plus { width: 58px; height: 58px; border-radius: 50%; background: linear-gradient(135deg, var(--coral), #ba628b); color: #24101c; font-size: 30px; font-weight: 700; display: flex; align-items: center; justify-content: center; margin-top: -26px; box-shadow: 0 10px 24px rgba(231,131,163,.35); }
-  .sheet { position: fixed; inset: 0; z-index: 60; background: rgba(7,4,9,.7); backdrop-filter: blur(8px); display: flex; align-items: flex-end; }
+  .nav .plus { width: 58px; height: 58px; border-radius: 50%; background: linear-gradient(135deg, var(--coral), #d9653f); color: #1d1006; font-size: 30px; font-weight: 700; display: flex; align-items: center; justify-content: center; margin-top: -26px; box-shadow: 0 10px 24px rgba(239,138,95,.35); }
+  .sheet { position: fixed; inset: 0; z-index: 60; background: rgba(3,10,8,.7); backdrop-filter: blur(8px); display: flex; align-items: flex-end; }
   .sheet .box { width: 100%; background: var(--card); border-radius: 24px 24px 0 0; padding: 18px 16px calc(24px + env(safe-area-inset-bottom, 0px)); border-top: 1px solid rgba(255,255,255,.18); animation: fadeUp .25s forwards; }
   .sheet h3 { font-size: 16px; font-weight: 700; margin-bottom: 12px; }
   .grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
   .tile { background: rgba(255,255,255,.06); border: 1px solid var(--line); border-radius: 16px; padding: 18px 10px; text-align: center; color: var(--ink); font-weight: 700; font-size: 15px; }
   .tile i { display: block; width: 44px; height: 44px; border-radius: 50%; margin: 0 auto 8px; font-style: normal; font-size: 20px; line-height: 44px; }
-  .tile i.rose { background: rgba(231,131,163,.2); } .tile i.gold { background: rgba(231,183,92,.2); } .tile i.blue { background: rgba(140,167,237,.2); } .tile i.green { background: rgba(98,199,165,.2); }
+  .tile i.rose { background: rgba(239,138,95,.2); } .tile i.gold { background: rgba(245,192,78,.2); } .tile i.blue { background: rgba(124,192,238,.2); } .tile i.green { background: rgba(111,214,168,.2); }
   .list { margin-top: 10px; background: rgba(255,255,255,.04); border: 1px solid var(--line); border-radius: 16px; }
   .list button { width: 100%; text-align: left; background: none; color: var(--ink); font-size: 16px; font-weight: 600; padding: 15px 16px; border-top: 1px solid var(--grid); display: flex; align-items: center; gap: 12px; }
   .list button:first-child { border-top: 0; }
   .list button small { margin-left: auto; color: var(--muted); font-weight: 500; font-size: 13px; }
   @keyframes fadeUp { from { opacity: 0; transform: translateY(13px) } to { opacity: 1; transform: none } }
-  .modal { position: fixed; inset: 0; background: rgba(7,4,9,.76); display: flex; align-items: flex-end; z-index: 50; backdrop-filter: blur(6px); }
+  .modal { position: fixed; inset: 0; background: rgba(3,10,8,.76); display: flex; align-items: flex-end; z-index: 50; backdrop-filter: blur(6px); }
   .modal .box { background: var(--card); border-radius: 24px 24px 0 0; padding: 22px 17px 38px; width: 100%; animation: fadeUp .3s forwards; border-top: 1px solid rgba(255,255,255,.18); }
   .modal h3 { font-size: 18px; font-weight: 700; margin-bottom: 12px; }
   .toast { position: fixed; bottom: calc(86px + env(safe-area-inset-bottom, 0px)); left: 50%; transform: translate(-50%, 80px); width: max-content; max-width: calc(100% - 32px); background: var(--card2); color: var(--ink); border: 1px solid var(--line); padding: 12px 18px; border-radius: 14px; font-size: 14px; font-weight: 600; opacity: 0; transition: .3s; z-index: 100; }
@@ -239,15 +224,92 @@
   .gate .muted { color: #c7d9d0; }
   .gate input { background: rgba(255,255,255,.1); border-color: rgba(255,255,255,.2); color: #fff; text-align:center; }
   .gatebox { width: 100%; max-width: 340px; text-align: center; }
-  .cf { position: fixed; top: -14px; width: 8px; height: 14px; border-radius: 2px; z-index: 200; pointer-events: none; animation: fall 2.3s ease-in forwards; }
-  @keyframes fall { to { transform: translate(var(--dx), 108vh) rotate(560deg); opacity: .85 } }
+  /* v2: one matching icon set, a solid band under the phone's status bar, steps ring, calmer chart */
+  body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-area-inset-top, 0px); background: rgba(16,33,29,.86); -webkit-backdrop-filter: blur(16px); backdrop-filter: blur(16px); z-index: 60; pointer-events: none; }
+  .ic { width: 1em; height: 1em; display: block; fill: none; stroke: currentColor; stroke-width: 1.9; stroke-linecap: round; stroke-linejoin: round; }
+  .nav button span { font-size: 22px; display: block; }
+  .nav button.on .ic { stroke: var(--coral); }
+  .ghead .ico { color: var(--ink2); font-size: 19px; }
+  .ghead .ico.c-water { color: #7cc0ee; } .ghead .ico.c-move { color: var(--good); }
+  .tile i { display: flex; align-items: center; justify-content: center; }
+  .mini { background: rgba(255,255,255,.05); border: 1px solid var(--line); border-radius: 12px; padding: 10px 11px; min-width: 0; }
+  .mini span { display: block; font-size: 9.5px; color: var(--muted); text-transform: uppercase; letter-spacing: .6px; font-weight: 700; }
+  .mini b { display: block; font-size: 15px; margin-top: 3px; font-variant-numeric: tabular-nums; }
+  .week-row .day-score { display: flex; gap: 6px; font-size: 13px; color: var(--good); padding: 5px 8px; }
+  .tile i.rose { color: var(--coral); } .tile i.gold { color: var(--sun); } .tile i.blue { color: #7cc0ee; } .tile i.green { color: var(--good); }
+  .li { display: inline-block; vertical-align: -3px; margin-right: 10px; font-size: 17px; color: var(--ink2); }
+  .steps-row { display: flex; align-items: center; gap: 10px; margin-top: 12px; }
+  .steps-row input { flex: 1; min-width: 0; }
+  .ring.bump { animation: ringBump .7s cubic-bezier(.22,1,.36,1); }
+  @keyframes ringBump { 0% { transform: scale(1) } 35% { transform: scale(1.18) } 100% { transform: scale(1) } }
+  .chart .gap { stroke: var(--coral); stroke-width: 1.4; stroke-dasharray: 2 5; fill: none; opacity: .5; stroke-linecap: round; }
+  .chart .cone { fill: var(--coral); fill-opacity: .14; }
+  .chart .solo { fill: var(--coral); }
+  .chart .pop { animation-delay: .9s; }
+  .chart.still .draw { animation: none; stroke-dasharray: none; stroke-dashoffset: 0; }
+  .chart.still .pop { animation: none; opacity: 1; }
+  @media (prefers-reduced-motion: reduce) { .ring.bump, .print { animation: none !important; } .ring .arc { transition: none; } }
   .ringbox, .energy-strip, .energy-note, .action-row { display: none; }
   @media (max-width: 380px) { body { padding-left: 11px; padding-right: 11px; } .goals { gap: 8px; } .goal .v { font-size: 17px; } }
   @media (prefers-reduced-motion: reduce) {
-    .bar > div, .jbar .fill, .jbar .walker { transition: none; }
-    .walker *, .jbar .flag .cloth, .chart .draw, .chart .pop { animation: none !important; }
+    .bar > div { transition: none; }
+    .chart .draw, .chart .pop, .hills .cloth, .tab-panel.on { animation: none !important; }
     .chart .draw { stroke-dashoffset: 0; } .chart .pop { opacity: 1; }
   }
+
+  /* v3: steps hero, hill path, footprints, sunrise celebration */
+  :root { --display: "Bricolage Grotesque", "Inter Tight", -apple-system, sans-serif; --water: #7cc0ee; }
+  h1, .big, .now, .bank b, .ring-c b, .cele b, .goal .v, .week-stat b, .mini b { font-family: var(--display); }
+  .card { background: linear-gradient(180deg, rgba(255,255,255,.075), rgba(255,255,255,.04)); }
+  button { transition: transform .12s ease-out; }
+  button:active { transform: scale(.97); }
+  .nav .plus:active { transform: scale(.94); }
+  .tab-panel.on { animation: tabIn .26s ease-out; }
+  @keyframes tabIn { from { opacity: 0; transform: translateY(7px) } to { opacity: 1; transform: none } }
+  .goals { grid-template-columns: 1fr 1fr; }
+  .big small, .goal .v .muted { font-family: "Inter Tight", -apple-system, sans-serif; }
+  .goal.w .bar > div { background: var(--water); }
+  .note::before { content: none; }
+
+  .hero { background: radial-gradient(circle at 10% 0%, rgba(245,192,78,.09), transparent 58%), linear-gradient(180deg, rgba(255,255,255,.08), rgba(255,255,255,.04)); }
+  .hero-top { display: flex; align-items: center; gap: 16px; }
+  .hero-side { flex: 1; min-width: 0; }
+  .hero-lbl { font-size: 11px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: var(--sun); }
+  .cheer { margin-top: 6px; font-size: 16.5px; font-weight: 600; line-height: 1.3; color: var(--ink); }
+  .ring { position: relative; width: 124px; height: 124px; flex: 0 0 124px; }
+  .ring svg.r { width: 100%; height: 100%; display: block; transform: rotate(-90deg); }
+  .ring .trk { fill: none; stroke: rgba(255,255,255,.11); stroke-width: 9; stroke-dasharray: 29.67 3; }
+  .ring .arc { fill: none; stroke-width: 9; stroke-linecap: round; stroke-dasharray: 326.7; stroke-dashoffset: 326.7; transition: stroke-dashoffset 1.1s cubic-bezier(.22,1,.36,1), stroke .4s; }
+  .ring.full .arc { stroke: var(--good); }
+  .ring-c { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; }
+  .ring-c b { font-size: 27px; font-weight: 800; letter-spacing: -.02em; line-height: 1; font-variant-numeric: tabular-nums; }
+  .ring-c span { font-size: 11px; color: var(--muted); margin-top: 4px; }
+  .ring.full .ring-c b { color: var(--good); }
+  .steps-row { margin-top: 14px; }
+  .mini-btn.save { flex: 0 0 auto; padding: 12px 16px; font-size: 14px; border: 0; color: #1d1006; background: linear-gradient(135deg, var(--sun), var(--coral)); }
+  .banked { margin-top: 14px; padding-top: 13px; border-top: 1px solid var(--grid); }
+  .bank b { font-size: 22px; }
+
+  .print { position: fixed; width: 14px; height: 14px; z-index: 200; pointer-events: none; color: #fff; opacity: 0; animation: printOn 1s ease-out forwards; }
+  .print .ic { width: 14px; height: 14px; fill: currentColor; stroke: none; }
+  @keyframes printOn { 0% { opacity: 0; transform: scale(.4) } 18% { opacity: 1; transform: scale(1.12) } 34% { transform: scale(1) } 72% { opacity: .9 } 100% { opacity: 0 } }
+
+  .cele { position: fixed; inset: 0; z-index: 250; pointer-events: none; overflow: hidden; background: linear-gradient(180deg, #123038 8%, #3b7d7c 48%, #eeb058 86%); animation: celeFade 2.9s ease-in-out forwards; }
+  .cele .c-sun { position: absolute; left: 50%; bottom: 150px; width: 150px; height: 150px; margin-left: -75px; border-radius: 50%; background: #ffd877; box-shadow: 0 0 90px 40px rgba(255,216,119,.45); animation: celeSun 1.5s cubic-bezier(.22,1,.36,1) both; }
+  .cele svg { position: absolute; left: 0; right: 0; bottom: 0; width: 100%; height: 300px; animation: celeHill 1.1s cubic-bezier(.22,1,.36,1) both; }
+  .cele .c-txt { position: absolute; left: 24px; right: 24px; top: 26%; text-align: center; color: #fff; animation: celeTxt .7s .35s ease-out both; }
+  .cele b { display: block; font-size: 44px; font-weight: 800; letter-spacing: -.02em; line-height: 1.05; }
+  .cele span { display: block; margin-top: 10px; font-size: 17px; font-weight: 600; }
+  @keyframes celeFade { 0% { opacity: 0 } 10% { opacity: 1 } 84% { opacity: 1 } 100% { opacity: 0 } }
+  @keyframes celeSun { from { transform: translateY(190px) } to { transform: none } }
+  @keyframes celeHill { from { transform: translateY(110%) } to { transform: none } }
+  @keyframes celeTxt { from { opacity: 0; transform: translateY(14px) } to { opacity: 1; transform: none } }
+
+  .hills { display: block; width: 100%; height: auto; margin-top: 16px; }
+  .hills .cloth { transform-box: fill-box; transform-origin: left center; animation: flagWave 1.7s ease-in-out infinite; }
+  @keyframes flagWave { 0%,100% { transform: skewY(0) scaleX(1) } 50% { transform: skewY(-8deg) scaleX(.9) } }
+  .jlabels { margin-top: 8px; }
+  .rc-ic { display: inline-block; font-size: 21px; color: var(--sun); }
 </style>
 </head>
 <body>
@@ -265,11 +327,14 @@
 
   <!-- TODAY -->
   <div class="tab-panel on" id="tab-today">
-    <div class="card banked" aria-label="What you have done so far">
-      <div class="bank"><b id="bankKg">—</b><span>kg down so far</span></div>
-      <div class="bank"><b id="bankDays">0</b><span>days logged</span></div>
-      <div class="bank"><b id="bankSteps">0</b><span>steps walked</span></div>
-      <div class="cheer" id="cheer"></div>
+    <div class="card hero" aria-label="Your steps today and what you have done so far">
+      <div class="hero-top"><div class="ring" id="stepsRing"><svg class="r" viewBox="0 0 120 120" aria-hidden="true"><defs><linearGradient id="ringG" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#ef8a5f"/><stop offset="1" stop-color="#f5c04e"/></linearGradient></defs><circle class="trk" cx="60" cy="60" r="52"/><circle class="arc" id="stepsArc" cx="60" cy="60" r="52" stroke="url(#ringG)"/></svg><div class="ring-c"><b id="stepsBig">0</b><span id="stepsOf">of 10,000</span></div></div><div class="hero-side"><div class="hero-lbl">Steps today</div><div class="cheer" id="cheer"></div></div></div>
+      <div class="steps-row"><input type="number" inputmode="numeric" id="stepsToday" aria-label="Phone step total so far today" placeholder="Phone step total" onkeydown="if(event.key==='Enter')logSteps('stepsToday')"><button class="mini-btn save" onclick="logSteps('stepsToday')">Save steps</button></div>
+      <div class="banked">
+        <div class="bank"><b id="bankKg">—</b><span>kg down so far</span></div>
+        <div class="bank"><b id="bankDays">0</b><span>days logged</span></div>
+        <div class="bank"><b id="bankSteps">0</b><span>steps walked</span></div>
+      </div>
     </div>
     <div class="card checkin hide" id="checkinCard"><div class="lbl">Sunday check-in</div><div class="txt" id="checkinTxt"></div></div>
     <div class="card kcal">
@@ -284,11 +349,9 @@
       <div class="goals">
         <div class="goal p"><div class="n">Protein</div><div class="v" id="mProt">0g</div><div class="bar"><div id="pBar" style="width:0%"></div></div></div>
         <div class="goal w"><div class="n">Water</div><div class="v" id="mWater">0 L</div><div class="bar"><div id="waterBar" style="width:0%"></div></div></div>
-        <div class="goal s"><div class="n">Steps</div><div class="v" id="mSteps">0</div><div class="bar"><div id="stepsBar" style="width:0%"></div></div></div>
       </div>
       <div class="momentum"><div class="move" id="nextMove">Log whatever you have so far.</div></div>
       <div class="anchor-status"><div class="anchor" id="anchorFood">✓ Food logged</div><div class="anchor" id="anchorProtein">✓ Protein</div><div class="anchor" id="anchorWater">✓ Water</div><div class="anchor" id="anchorSteps">✓ Steps</div></div>
-      <div class="row" style="margin-top:12px"><input type="number" inputmode="numeric" id="stepsToday" aria-label="Phone step total so far today" placeholder="👣 Steps on your phone now" onkeydown="if(event.key==='Enter')logSteps('stepsToday')"><button class="mini-btn blue" style="flex:0 0 auto" onclick="logSteps('stepsToday')">Save steps</button></div>
     </div>
 
     <div class="sect">Diary <a href="#" onclick="setTab('week');return false">View week</a></div>
@@ -329,7 +392,7 @@
       <svg id="repBars" viewBox="0 0 300 46" preserveAspectRatio="none" style="width:100%;height:52px;margin-top:12px"></svg>
       <div class="sub muted" id="repBarsLbl" style="font-size:11px"></div>
       <div id="repGrid" style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:12px"></div>
-      <div id="repTake" style="font-size:12.5px;margin-top:12px;color:#aa97a5;line-height:1.5"></div>
+      <div id="repTake" style="font-size:12.5px;margin-top:12px;color:#97a89c;line-height:1.5"></div>
     </div>
   </div>
 
@@ -347,28 +410,38 @@
           <button class="mini-btn blue" onclick="logWeight()">Save</button>
         </div>
       </div>
-      <div class="jbar">
-        <div class="fill" id="jFill" style="width:0%"></div>
-        <div class="ticks" id="jTicks" aria-hidden="true"></div>
-        <svg class="flag" viewBox="0 0 22 30" aria-hidden="true"><line x1="3" y1="1" x2="3" y2="30" stroke="#e7dbe3" stroke-width="2" stroke-linecap="round"/><path class="cloth" d="M4,2 L20,7.5 L4,13 Z" fill="#e7b75c"/></svg>
-        <div class="walker" id="jDot" style="left:0%" role="img" aria-label="You, running from 103.2 toward the 95.0 kilogram finish"><div class="sprite"></div></div>
-      </div>
+      <svg class="hills" id="hillScene" viewBox="0 0 340 180" role="img" aria-label="Your path up the hill from the start weight to the 95 kilogram goal">
+        <defs><linearGradient id="hSky" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#17424c"/><stop offset=".5" stop-color="#3b7d7c"/><stop offset=".9" stop-color="#eeb058"/></linearGradient>
+        <radialGradient id="hGlow"><stop offset="0" stop-color="#ffd877" stop-opacity=".62"/><stop offset="1" stop-color="#ffd877" stop-opacity="0"/></radialGradient>
+        <clipPath id="hClip"><rect width="340" height="180" rx="16"/></clipPath></defs>
+        <g clip-path="url(#hClip)"><rect width="340" height="180" fill="url(#hSky)"/>
+          <circle id="hGlow2" cx="238" cy="104" r="66" fill="url(#hGlow)"/><circle id="hSun" cx="238" cy="104" r="17" fill="#ffd877"/>
+          <path id="hFar" d="M-30 122 C20 86 70 86 120 110 S210 130 256 98 S340 80 390 102 V190 H-30 Z" fill="#2f6f62"/>
+          <path id="hMid" d="M-30 142 C40 114 96 118 150 136 S250 142 300 114 S360 106 390 112 V190 H-30 Z" fill="#1f5245"/>
+          <path d="M-6 158 C40 152 70 130 116 132 S176 140 212 110 S268 82 322 66 L350 60 V190 H-6 Z" fill="#123229"/>
+          <path id="hTrail" d="M-6 158 C40 152 70 130 116 132 S176 140 212 110 S268 82 322 66" fill="none" stroke="#f3dfae" stroke-opacity=".32" stroke-width="2.4" stroke-dasharray="1 6" stroke-linecap="round"/>
+          <path id="hDone" d="M-6 158 C40 152 70 130 116 132 S176 140 212 110 S268 82 322 66" fill="none" stroke="#f5c04e" stroke-width="3" stroke-linecap="round"/>
+          <g id="hStones"></g>
+          <g transform="translate(322 66)"><line x1="0" y1="0" x2="0" y2="-34" stroke="#f6f7ee" stroke-width="2" stroke-linecap="round"/><path class="cloth" d="M1 -34 L17 -28 L1 -22 Z" fill="#f5c04e"/></g>
+          <g id="wk"><ellipse cx="2" cy="1" rx="11" ry="2.2" fill="#000" opacity=".35"/><g id="wkBody"><g id="wkLegF"><line x1="0" y1="-23" x2="0" y2="-11" stroke="#5e3a24" stroke-width="4.4" stroke-linecap="round"/><g id="wkShinF"><line x1="0" y1="-11" x2="0" y2="-1.5" stroke="#5e3a24" stroke-width="3.8" stroke-linecap="round"/><line x1="-.5" y1="-1" x2="4.6" y2="-1" stroke="#c9d2c4" stroke-width="3.2" stroke-linecap="round"/></g></g><g id="wkLegN"><line x1="0" y1="-23" x2="0" y2="-11" stroke="#8f5a38" stroke-width="4.6" stroke-linecap="round"/><line x1="0" y1="-23" x2="0" y2="-16" stroke="#f3dfae" stroke-width="6.2" stroke-linecap="round"/><g id="wkShinN"><line x1="0" y1="-11" x2="0" y2="-1.5" stroke="#8f5a38" stroke-width="4" stroke-linecap="round"/><line x1="-.5" y1="-1" x2="4.8" y2="-1" stroke="#f6f7ee" stroke-width="3.4" stroke-linecap="round"/></g></g><g id="wkUpper"><g id="wkArmF"><line x1="0" y1="-37" x2="0" y2="-28.5" stroke="#5e3a24" stroke-width="3.5" stroke-linecap="round"/><g id="wkForeF"><line x1="0" y1="-28.5" x2="0" y2="-21" stroke="#5e3a24" stroke-width="3.1" stroke-linecap="round"/></g></g><line x1="0" y1="-38" x2="0" y2="-24" stroke="#ef8a5f" stroke-width="9.5" stroke-linecap="round"/><circle cx="1" cy="-47" r="5.6" fill="#8f5a38"/><path d="M-4.6 -47.5 a5.7 5.7 0 0 1 11 -1.6 q-5 -1.7 -11 1.6z" fill="#20130b"/><g id="wkArmN"><line x1="0" y1="-37" x2="0" y2="-28.5" stroke="#8f5a38" stroke-width="3.8" stroke-linecap="round"/><g id="wkForeN"><line x1="0" y1="-28.5" x2="0" y2="-21" stroke="#8f5a38" stroke-width="3.4" stroke-linecap="round"/></g></g></g></g></g>
+        </g>
+      </svg>
       <div class="jlabels"><span>103.2 start</span><span>99.1 halfway</span><span>95.0 goal</span></div>
       <svg class="chart" id="spark" viewBox="0 0 340 214" role="img" aria-label="Weight trend and forecast"></svg>
       <div class="trend-lines" id="trendTxt"></div>
     </div>
     <div class="sect">Movement <span class="sect-sub">phone steps and workouts stay separate</span></div>
     <div class="card">
-      <div class="flexbet"><div style="font-weight:700">👣 Full-day steps</div><div class="muted" id="stepsProgress" style="font-size:13px">0 / 10,000</div></div>
+      <div class="flexbet"><div style="font-weight:700">Full-day steps</div><div class="muted" id="stepsProgress" style="font-size:13px">0 / 10,000</div></div>
       <div class="row" style="margin-top:10px"><input type="number" id="stepsIn" aria-label="Full-day phone step total" placeholder="Phone total now"><button class="mini-btn blue" style="flex:0 0 auto" onclick="logSteps()">Update</button></div>
-      <div style="font-weight:700;margin-top:16px">🏃 Strava or another activity</div>
+      <div style="font-weight:700;margin-top:16px">Strava or another activity</div>
       <div class="row" style="margin-top:8px;gap:7px">
         <select id="wkType" aria-label="Activity type"><option value="walk">Walk</option><option value="run">Run</option><option value="gym">Gym</option><option value="other">Other</option></select>
         <input type="number" id="walkIn" aria-label="Activity minutes" placeholder="Min">
         <input type="number" id="activityStepsIn" aria-label="Steps in this activity" placeholder="Steps">
       </div>
       <button class="mini-btn blue" style="width:100%;margin-top:8px;padding:11px" onclick="logWorkout()">Add activity</button>
-      <button class="mini-btn" style="width:100%;margin-top:8px;padding:11px" onclick="document.getElementById('workoutIn').click()">📷 Read a Strava or workout screenshot</button>
+      <button class="mini-btn" style="width:100%;margin-top:8px;padding:11px" onclick="document.getElementById('workoutIn').click()">Read a Strava or workout screenshot</button>
       <div class="sub muted" id="walkList" style="font-size:12px;margin-top:8px"></div>
     </div>
   </div>
@@ -390,34 +463,34 @@
   <div class="row action-row"></div>
 
   <nav class="nav" aria-label="Hatua">
-    <button id="nav-today" class="on" onclick="setTab('today')"><span>◉</span>Today</button>
-    <button id="nav-week" onclick="setTab('week')"><span>▦</span>Week</button>
+    <button id="nav-today" class="on" onclick="setTab('today')"><span><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4.5"/><path d="M12 2v2.5M12 19.5V22M2 12h2.5M19.5 12H22M4.9 4.9l1.8 1.8M17.3 17.3l1.8 1.8M4.9 19.1l1.8-1.8M17.3 6.7l1.8-1.8"/></svg></span>Today</button>
+    <button id="nav-week" onclick="setTab('week')"><span><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="4" width="18" height="18" rx="2.5"/><path d="M16 2v4M8 2v4M3 10h18"/></svg></span>Week</button>
     <button class="plus" onclick="openSheet()" aria-label="Log something">+</button>
-    <button id="nav-progress" onclick="setTab('progress')"><span>↗</span>Progress</button>
-    <button id="nav-coach" onclick="setTab('coach')"><span>◌</span>Coach</button>
+    <button id="nav-progress" onclick="setTab('progress')"><span><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M23 6l-9.5 9.5-5-5L1 18"/><path d="M17 6h6v6"/></svg></span>Progress</button>
+    <button id="nav-coach" onclick="setTab('coach')"><span><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg></span>Coach</button>
   </nav>
 
   <div class="sheet hide" id="plusSheet" onclick="if(event.target===this)closeSheet()">
     <div class="box">
       <h3>Log something</h3>
       <div class="grid2">
-        <button class="tile" onclick="closeSheet();document.getElementById('photoIn').click()"><i class="rose">📸</i>Snap a meal</button>
-        <button class="tile" onclick="closeSheet();openTypeModal()"><i class="gold">✍️</i>Type it</button>
-        <button class="tile" onclick="closeSheet();setTab('today');document.getElementById('quickWrap').scrollIntoView({behavior:'smooth'})"><i class="green">🔁</i>Eat again</button>
-        <button class="tile" onclick="closeSheet();quick('water',800)"><i class="blue">💧</i>Water, one bottle</button>
+        <button class="tile" onclick="closeSheet();document.getElementById('photoIn').click()"><i class="rose"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg></i>Snap a meal</button>
+        <button class="tile" onclick="closeSheet();openTypeModal()"><i class="gold"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M17 3a2.83 2.83 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z"/></svg></i>Type it</button>
+        <button class="tile" onclick="closeSheet();setTab('today');document.getElementById('quickWrap').scrollIntoView({behavior:'smooth'})"><i class="green"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M17 1l4 4-4 4"/><path d="M3 11V9a4 4 0 0 1 4-4h14"/><path d="M7 23l-4-4 4-4"/><path d="M21 13v2a4 4 0 0 1-4 4H3"/></svg></i>Eat again</button>
+        <button class="tile" onclick="closeSheet();quick('water',800)"><i class="blue"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z"/></svg></i>Water, one bottle</button>
       </div>
       <div class="list">
-        <button onclick="closeSheet();quick('water',250)">💧 Water, a glass <small>+250 ml</small></button>
-        <button onclick="closeSheet();setTab('progress');document.getElementById('wIn').focus()">⚖️ Weight <small>morning weigh-in</small></button>
-        <button onclick="closeSheet();setTab('today');document.getElementById('stepsToday').focus()">👣 Steps <small>phone total</small></button>
-        <button onclick="closeSheet();setTab('progress');document.getElementById('walkIn').focus()">🏃 Workout <small>Strava or gym</small></button>
+        <button onclick="closeSheet();quick('water',250)"><span class="li"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z"/></svg></span>Water, a glass <small>+250 ml</small></button>
+        <button onclick="closeSheet();setTab('progress');document.getElementById('wIn').focus()"><span class="li"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="4"/><path d="M7.5 10.5a4.5 4.5 0 0 1 9 0z"/><path d="M12 10.5l1.7-2.4"/></svg></span>Weight <small>morning weigh-in</small></button>
+        <button onclick="closeSheet();setTab('today');document.getElementById('stepsToday').focus()"><span class="li"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><ellipse cx="8" cy="10.5" rx="2.7" ry="4.3"/><ellipse cx="8" cy="18.8" rx="1.9" ry="1.6"/><ellipse cx="16" cy="6.5" rx="2.7" ry="4.3"/><ellipse cx="16" cy="14.8" rx="1.9" ry="1.6"/></svg></span>Steps <small>phone total</small></button>
+        <button onclick="closeSheet();setTab('progress');document.getElementById('walkIn').focus()"><span class="li"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg></span>Workout <small>Strava or gym</small></button>
       </div>
     </div>
   </div>
 
   <div class="modal hide" id="typeModal" onclick="if(event.target===this)this.classList.add('hide')">
     <div class="box">
-      <h3>What did you eat? 🍽️</h3>
+      <h3>What did you eat?</h3>
       <input type="text" id="descIn" placeholder="e.g. 2 chapatis, beef stew, sukuma">
       <div class="row" style="margin-top:14px">
         <button class="btn-hero" onclick="submitText()">Log it — Claude counts the calories</button>
@@ -427,7 +500,7 @@
 
   <div class="modal hide" id="ctxModal" onclick="if(event.target===this){this.classList.add('hide');pendingPhoto=null;toast('Photo discarded')}">
     <div class="box">
-      <h3>📸 Got it — what's on the plate?</h3>
+      <h3>Got it. What's on the plate?</h3>
       <div class="muted" style="font-size:12.5px;margin-bottom:10px">Optional, but a hint like "goat stew + matoke, ate half" makes the calorie count much more accurate. Added oil defaults to zero, so mention the amount only when you used some.</div>
       <input type="text" id="ctxIn" placeholder="e.g. oven baked, no oil, ate half" onkeydown="if(event.key==='Enter')submitPhoto(true)">
       <div class="row" style="margin-top:14px">
@@ -454,7 +527,11 @@
   const API = 'https://script.google.com/macros/s/AKfycbyJy-buyJXfiC99fDQk_6_rHRjO4shKjTROWWBy1tKYBjrbexjohG4aG5u2TqP3LN_ZQA/exec';
   let CODE = localStorage.getItem('p95code') || '';
   const CIRC = 414.7;
-  let S = null, TODAY = null, lastKcal = 0, prevWater = 0;
+  let S = null, TODAY = null, lastKcal = 0, prevWater = null;
+  // Icons are Feather icon paths (MIT licence), drawn inline so they look the same on every phone.
+  const svgIc = body => '<svg class="ic" viewBox="0 0 24 24" aria-hidden="true">' + body + '</svg>';
+  const ICON = { lunch: svgIc('<path d="M3 2v7c0 1.1.9 2 2 2h4a2 2 0 0 0 2-2V2"/><path d="M7 2v20"/><path d="M21 15V2a5 5 0 0 0-5 5v6c0 1.1.9 2 2 2h3zm0 0v7"/>'), dinner: svgIc('<path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>'), drinks: svgIc('<path d="M18 8h1a4 4 0 0 1 0 8h-1"/><path d="M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V8z"/><path d="M6 1v3M10 1v3M14 1v3"/>'), water: svgIc('<path d="M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z"/>'), move: svgIc('<path d="M22 12h-4l-3 9L9 3l-3 9H2"/>'), steps: svgIc('<ellipse cx="8" cy="10.5" rx="2.7" ry="4.3"/><ellipse cx="8" cy="18.8" rx="1.9" ry="1.6"/><ellipse cx="16" cy="6.5" rx="2.7" ry="4.3"/><ellipse cx="16" cy="14.8" rx="1.9" ry="1.6"/>'), protein: svgIc('<path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/>') };
+  Object.assign(ICON, { foot: svgIc('<ellipse cx="12" cy="9" rx="5" ry="7.5"/><ellipse cx="12" cy="20.5" rx="3.4" ry="2.7"/>'), glass: svgIc('<path d="M6 3h12l-1.6 18H7.6z"/><path d="M6.7 9h10.6"/>'), egg: svgIc('<path d="M12 3c-4 0-7 6.6-7 11a7 7 0 0 0 14 0c0-4.4-3-11-7-11z"/>'), bowl: svgIc('<path d="M3 11h18a9 9 0 0 1-18 0z"/><path d="M8 21h8"/><path d="M9 7c0-2 2-2 2-4M14 7c0-2 2-2 2-4"/>'), fruit: svgIc('<path d="M12 7c-2-2-8-2-8 5 0 5 4 10 6 10 1 0 1.2-.6 2-.6s1 .6 2 .6c2 0 6-5 6-10 0-7-6-7-8-5z"/><path d="M12 7c0-2 1-4 3-5"/>') });
 
   function toast(msg) {
     const t = document.getElementById('toast');
@@ -532,7 +609,7 @@
     const tOf = d => new Date(d + 'T00:00:00').getTime();
     const pts = [];
     Object.keys(S.days).sort().forEach(d => { const w = Number(S.days[d].weight); if (w > 40 && w < 250) pts.push({ d: d, w: w, t: tOf(d) }); });
-    const fc = { goal: goal, avgNow: null, perDay: 0, ready: false, stale: false, eta: null, label: '', next: null, series: [] };
+    const fc = { goal: goal, avgNow: null, perDay: 0, ready: false, stale: false, thin: false, eta: null, label: '', next: null, series: [] };
     if (!pts.length) return fc;
     fc.series = pts.map(p => { const win = pts.filter(q => q.t <= p.t && p.t - q.t < 7 * day); return { d: p.d, t: p.t, w: win.reduce((a, q) => a + q.w, 0) / win.length }; });
     const first = fc.series[0], last = fc.series[fc.series.length - 1];
@@ -543,7 +620,8 @@
     if (!fc.ready || fc.stale) return fc;
     // Slope of the 7-day average over the last four weeks (least squares), so the forecast follows how things are going lately.
     let win = fc.series.filter(p => p.t >= last.t - 28 * day);
-    if (win.length < 4 || (last.t - win[0].t) / day < 10) win = fc.series;
+    // Without at least four weigh-ins across ten days in the last four weeks, an old trend would be passed off as a forecast.
+    if (win.length < 4 || (last.t - win[0].t) / day < 10) { fc.thin = true; return fc; }
     const mx = win.reduce((a, p) => a + p.t, 0) / win.length, my = win.reduce((a, p) => a + p.w, 0) / win.length;
     const den = win.reduce((a, p) => a + (p.t - mx) * (p.t - mx), 0);
     fc.perDay = den ? win.reduce((a, p) => a + (p.t - mx) * (p.w - my), 0) / den * day : 0;
@@ -562,15 +640,21 @@
   }
   function forecastText(fc) {
     if (fc.avgNow === null) return 'Weigh in when you like';
-    if (fc.avgNow <= fc.goal) return fc.goal + ' reached. Well done 🎯';
+    if (fc.avgNow <= fc.goal) return fc.goal + ' reached. Well done.';
     if (fc.stale) return 'Weigh in to refresh your forecast';
+    if (fc.thin) return 'A few more weigh-ins will bring your forecast back';
     if (!fc.ready) return 'A forecast appears after a few more weigh-ins';
     if (fc.next) return 'Next: ' + fc.next.kg + ' kg around ' + fc.next.label;
     if (fc.eta) return 'At this trend, you reach ' + fc.goal + ' around ' + fc.label;
     return fc.perDay > 0.01 ? 'Your trend has edged up a little' : 'Your trend is level for now';
   }
+  function forecastShort(fc) {
+    if (fc.stale) return 'after your next weigh-in';
+    if (!fc.ready || fc.thin) return 'after a few more weigh-ins';
+    return fc.perDay > 0.01 ? 'trend has edged up a little' : 'trend is level for now';
+  }
   const movedText = d => Math.abs(d) < .05 ? 'level' : Math.abs(d).toFixed(1) + ' kg ' + (d < 0 ? 'down' : 'up');
-  function compact(n) { return n >= 1e6 ? (n / 1e6).toFixed(2) + 'M' : n >= 10000 ? Math.round(n / 1000) + 'k' : n.toLocaleString(); }
+  function compact(n) { return n >= 999500 ? (n / 1e6).toFixed(2) + 'M' : n >= 10000 ? Math.round(n / 1000) + 'k' : n.toLocaleString(); }
   const hasLog = x => !!(x && (x.weight || x.waterMl || x.steps || (x.meals || []).length || (x.walks || []).length));
   // One true, specific thing that is going well. Never a number that is missing.
   function cheerLine(fc) {
@@ -616,13 +700,91 @@
     const avg = (arr, fn) => arr.length ? arr.reduce((n, x) => n + fn(x), 0) / arr.length : 0;
     const parts = ['Days logged: ' + week.filter(m => m.logged).length + ' of 7.'];
     if (eat.length) parts.push('Food averaged ' + Math.round(avg(eat, m => m.kcal)).toLocaleString() + ' kcal a day against a budget of ' + Math.round(avg(eat, m => budgetFor(m.key))).toLocaleString() + ', with ' + Math.round(avg(eat, m => m.protein)) + ' g protein.');
-    const earlier = fc.series.filter(p => p.d <= addDays(TODAY, -7)).pop();
+    const earlier = fc.series.filter(p => p.d <= addDays(TODAY, -7) && p.d >= addDays(TODAY, -14)).pop();
     if (fc.avgNow !== null) {
       const delta = earlier ? fc.avgNow - earlier.w : null;
       parts.push('Your 7-day average is ' + fc.avgNow.toFixed(1) + ' kg' + (delta === null ? '.' : Math.abs(delta) < .05 ? ', the same as last week.' : ', ' + Math.abs(delta).toFixed(1) + ' kg ' + (delta < 0 ? 'lower' : 'higher') + ' than last week.'));
       const ft = forecastText(fc); parts.push(/[a-z0-9]$/i.test(ft) ? ft + '.' : ft);
     }
     document.getElementById('checkinTxt').textContent = parts.join(' ');
+  }
+
+  // The walker climbs the path as a person, not a loop: he walks up to where the 7-day average
+  // puts him, stops, gives one wave, and stands still. The sun rises as the goal gets closer.
+  const WK = { p: null, target: 0, started: null, raf: 0, len: 0, els: null };
+  const wkAt = p => .03 + .95 * p;
+  function wkReduced() { return !!(window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches); }
+  function wkEls() {
+    if (WK.els) return WK.els;
+    const g = id => document.getElementById(id), trail = g('hTrail');
+    if (!trail || !trail.getTotalLength) return null;
+    let len = 0;
+    try { len = trail.getTotalLength(); } catch (e) { return null; }
+    if (!len) return null;
+    WK.len = len;
+    const e = { trail: trail, done: g('hDone'), sun: g('hSun'), glow: g('hGlow2'), far: g('hFar'), mid: g('hMid'), wk: g('wk'), body: g('wkBody'), upper: g('wkUpper'),
+      legN: g('wkLegN'), shinN: g('wkShinN'), legF: g('wkLegF'), shinF: g('wkShinF'), armN: g('wkArmN'), foreN: g('wkForeN'), armF: g('wkArmF'), foreF: g('wkForeF'), stones: [] };
+    e.done.style.strokeDasharray = len.toFixed(1);
+    // one stone for every kilo along the way
+    const st = S.settings, range = st.startWeight - st.goalWeight, box = g('hStones');
+    box.innerHTML = '';
+    for (let k = 1; k < range; k++) {
+      const pt = trail.getPointAtLength(wkAt(k / range) * len), c = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+      c.setAttribute('cx', pt.x.toFixed(1)); c.setAttribute('cy', pt.y.toFixed(1)); c.setAttribute('r', '2.8');
+      box.appendChild(c);
+      e.stones.push({ c: c, p: k / range });
+    }
+    WK.els = e;
+    return e;
+  }
+  function wkFrame(e, p) {
+    const pt = e.trail.getPointAtLength(wkAt(p) * WK.len), sunY = (100 - 66 * p).toFixed(1);
+    e.wk.setAttribute('transform', 'translate(' + pt.x.toFixed(2) + ' ' + pt.y.toFixed(2) + ')');
+    e.done.style.strokeDashoffset = (WK.len * (1 - wkAt(p))).toFixed(1);
+    e.sun.setAttribute('cy', sunY); e.glow.setAttribute('cy', sunY);
+    e.far.setAttribute('transform', 'translate(' + (-14 * p).toFixed(1) + ' 0)');
+    e.mid.setAttribute('transform', 'translate(' + (-7 * p).toFixed(1) + ' 0)');
+    e.stones.forEach(s => s.c.setAttribute('fill', p + .0005 >= s.p ? '#f5c04e' : 'rgba(246,247,238,.34)'));
+  }
+  function wkPose(e, ph, amt, wave, t) {
+    const rot = (el, a, x, y) => el.setAttribute('transform', 'rotate(' + a.toFixed(1) + ' ' + x + ' ' + y + ')');
+    const s = Math.sin(ph), c = Math.cos(ph), mix = (a, b, k) => a + (b - a) * k;
+    rot(e.legN, -25 * s * amt, 0, -23); rot(e.shinN, (5 + 42 * Math.max(0, c)) * amt, 0, -11);
+    rot(e.legF, 25 * s * amt, 0, -23);  rot(e.shinF, (5 + 42 * Math.max(0, -c)) * amt, 0, -11);
+    rot(e.armF, -22 * s * amt, 0, -37); rot(e.foreF, -(8 + 14 * amt), 0, -28.5);
+    rot(e.armN, mix(22 * s * amt, -128 + 16 * Math.sin(t / 95), wave), 0, -37);
+    rot(e.foreN, mix(-(8 + 14 * amt), -22, wave), 0, -28.5);
+    e.body.setAttribute('transform', 'translate(0 ' + (2 * s * s * amt).toFixed(2) + ')');
+    rot(e.upper, 3.5 * amt, 0, -23);
+  }
+  function playWalk() {
+    const e = wkEls();
+    if (!e) return;
+    cancelAnimationFrame(WK.raf);
+    const p1 = WK.target;
+    WK.started = p1;
+    if (wkReduced() || document.hidden) { WK.p = p1; wkFrame(e, p1); wkPose(e, 0, 0, 0, 0); return; }
+    const p0 = WK.p !== null && WK.p < p1 - .002 && p1 - WK.p < .3 ? WK.p : Math.max(0, p1 - .14);
+    const walk = p1 - p0 < .002 ? 0 : 2400, settle = 260, waveFor = 1500, t0 = performance.now();
+    let ph = 0, last = t0;
+    (function step(now) {
+      if (!document.getElementById('tab-progress').classList.contains('on')) { WK.p = p1; return; }
+      const t = Math.max(0, now - t0), dt = Math.max(0, now - last), k = walk ? Math.min(1, t / walk) : 1, wt = t - walk - settle;
+      last = now;
+      const amt = t < walk ? Math.min(1, t / 220) * Math.min(1, (walk - t) / 260) : 0;
+      const wave = wt <= 0 || wt >= waveFor ? 0 : Math.min(1, wt / 240) * Math.min(1, (waveFor - wt) / 240);
+      ph += dt * .0118;
+      WK.p = p0 + (p1 - p0) * (k * k * (3 - 2 * k));
+      wkFrame(e, WK.p); wkPose(e, ph, amt, wave, t);
+      if (t < walk + settle + waveFor) WK.raf = requestAnimationFrame(step);
+      else { WK.p = p1; wkFrame(e, p1); wkPose(e, 0, 0, 0, 0); }
+    })(t0);
+  }
+  function journey(fc) {
+    const st = S.settings;
+    WK.target = fc.avgNow === null ? 0 : Math.max(0, Math.min(1, (st.startWeight - fc.avgNow) / (st.startWeight - st.goalWeight)));
+    if (!document.getElementById('tab-progress').classList.contains('on')) return;
+    if (WK.started === null || Math.abs(WK.target - WK.started) > .002) playWalk();
   }
 
   function countUp(el, to, suffix) {
@@ -636,18 +798,24 @@
     })(t0);
   }
 
-  function confetti() {
-    const colors = ['#e783a3', '#e7b75c', '#e783a3', '#2b3d36', '#302037', '#fff'];
-    for (let i = 0; i < 40; i++) {
-      const p = document.createElement('div');
-      p.className = 'cf';
-      p.style.left = Math.random() * 100 + 'vw';
-      p.style.background = colors[i % colors.length];
-      p.style.animationDelay = (Math.random() * .4) + 's';
-      p.style.setProperty('--dx', (Math.random() * 2 - 1) * 90 + 'px');
-      document.body.appendChild(p);
-      setTimeout(() => p.remove(), 2900);
-    }
+  // The big moments: the sun comes up behind the hills for a few seconds.
+  function celebrate(title, sub) {
+    if (wkReduced()) return toast(title + '. ' + sub);
+    try {
+    const old = document.getElementById('cele');
+    if (old) old.remove();
+    const c = document.createElement('div');
+    c.id = 'cele'; c.className = 'cele'; c.setAttribute('role', 'status');
+    c.innerHTML = '<div class="c-sun"></div><svg viewBox="0 0 390 300" preserveAspectRatio="none" aria-hidden="true">' +
+      '<path d="M0 150 C70 90 130 100 200 140 S330 170 390 110 V300 H0 Z" fill="#2f6f62"/>' +
+      '<path d="M0 205 C80 165 150 175 220 205 S340 215 390 175 V300 H0 Z" fill="#1f5245"/>' +
+      '<path d="M0 262 C90 225 170 235 250 255 S350 250 390 225 V300 H0 Z" fill="#123229"/></svg>' +
+      '<div class="c-txt"><b></b><span></span></div>';
+    c.querySelector('b').textContent = title;
+    c.querySelector('span').textContent = sub;
+    document.body.appendChild(c);
+    setTimeout(() => c.remove(), 2950);
+    } catch (e) { toast(title + '. ' + sub); } // a celebration must never get in the way of a save
   }
 
   function render() {
@@ -658,8 +826,8 @@
     const isGym = budget > (st.kcalBudget || 2100);
 
     const h = new Date().getHours();
-    document.getElementById('greet').textContent = (h < 12 ? 'Morning, Collo ☀️' : h < 17 ? 'Afternoon, Collo 💪' : 'Evening, Collo 🌙');
-    document.getElementById('daymeta').textContent = new Date(TODAY).toDateString().slice(0, 10) + (isGym ? ' · 💪 gym day · ' + budget.toLocaleString() + ' kcal' : '');
+    document.getElementById('greet').textContent = (h < 12 ? 'Morning, Collo' : h < 17 ? 'Afternoon, Collo' : 'Evening, Collo');
+    document.getElementById('daymeta').textContent = new Date(TODAY).toDateString().slice(0, 10) + (isGym ? ' · gym day · ' + budget.toLocaleString() + ' kcal' : '');
     document.getElementById('daychip').textContent = 'Day ' + dayN;
 
     let kcal = 0, protein = 0, pending = 0;
@@ -689,8 +857,12 @@
     document.getElementById('mWalk').innerHTML = '<span class="' + (walkMin >= 30 ? 'ok' : '') + '">' + walkMin + '</span><span class="muted" style="font-weight:400"> min</span>';
     const stepsTgt = st.stepsTarget || 10000;
     const stepsVal = d.steps || 0;
-    document.getElementById('mSteps').innerHTML = '<span class="' + (stepsVal >= stepsTgt ? 'ok' : '') + '">' + stepsVal.toLocaleString() + '</span><span class="muted" style="font-weight:400">/' + Math.round(stepsTgt / 1000) + 'k</span>';
-    document.getElementById('stepsBar').style.width = Math.min(100, stepsVal / stepsTgt * 100) + '%';
+    countUp(document.getElementById('stepsBig'), stepsVal);
+    document.getElementById('stepsOf').textContent = 'of ' + stepsTgt.toLocaleString();
+    const stepsArc = document.getElementById('stepsArc');
+    stepsArc.style.strokeDashoffset = (326.7 * (1 - Math.min(1, stepsVal / stepsTgt))).toFixed(1);
+    stepsArc.style.opacity = stepsVal > 0 ? 1 : 0;
+    document.getElementById('stepsRing').classList.toggle('full', stepsVal >= stepsTgt);
 
     const anchors = [
       kcal > 0 && pending === 0,
@@ -705,22 +877,27 @@
     else if (litres < .8) nextMove = 'A bottle of water is an easy place to start.';
     else if (h >= 16 && stepsVal < stepsTgt * .55) nextMove = 'A walk before dark would be a nice lift.';
     else if (h >= 18 && protein < protTarget - 40) nextMove = 'A protein-led dinner would round off today.';
-    else if (stepsVal < stepsTgt) nextMove = 'Add your phone steps after your next walk.';
+    else if (stepsVal < stepsTgt) nextMove = stepsVal > 0 ? 'Update your steps after your next walk.' : 'Add your phone steps whenever you like.';
     else if (protein < protTarget) nextMove = Math.round(protTarget - protein) + ' g more protein would round off today.';
     else if (litres < 3) nextMove = 'One more bottle of water whenever it suits you.';
     else nextMove = 'That is a full day. Well done.';
     document.getElementById('nextMove').textContent = nextMove;
-    document.querySelector('.anchor-status').classList.toggle('hide', !anchorN);
+    document.querySelector('.anchor-status').classList.toggle('hide', !(anchorN || stepsVal > 0));
     ['Food', 'Protein', 'Water', 'Steps'].forEach((name, i) => {
       const el = document.getElementById('anchor' + name);
       el.classList.toggle('done', anchors[i]);
       el.setAttribute('aria-label', name + (anchors[i] ? ' done' : ''));
     });
 
+    const stepsTick = document.getElementById('anchorSteps');
+    stepsTick.classList.toggle('done', stepsVal > 0);
+    stepsTick.textContent = stepsVal >= stepsTgt ? '✓ ' + stepsTgt.toLocaleString() + ' steps' : '✓ Steps recorded';
+    stepsTick.setAttribute('aria-label', stepsVal >= stepsTgt ? 'Steps aim reached' : stepsVal > 0 ? 'Steps recorded' : 'Steps');
+
     renderDiary(d, litres, st);
 
     document.getElementById('waterBar').style.width = Math.min(100, (d.waterMl || 0) / (st.waterTargetMl || 3000) * 100) + '%';
-    if (prevWater < st.waterTargetMl && (d.waterMl || 0) >= st.waterTargetMl) { confetti(); toast('3 litres — hydration complete! 💧'); }
+    if (prevWater !== null && prevWater < st.waterTargetMl && (d.waterMl || 0) >= st.waterTargetMl) celebrate((st.waterTargetMl / 1000) + ' litres', 'Your water is done for today.');
     prevWater = d.waterMl || 0;
 
     const latest = latestWeight();
@@ -730,23 +907,15 @@
     const paceEl = document.getElementById('wPace');
     const fc = forecast95();
     paceEl.textContent = forecastText(fc);
-    const prog = w ? Math.max(0, Math.min(100, (st.startWeight - w) / (st.startWeight - st.goalWeight) * 100)) : 0;
-    document.getElementById('jFill').style.width = prog + '%';
-    document.getElementById('jDot').style.left = prog + '%';
-    const ticks = document.getElementById('jTicks');
-    if (ticks && !ticks.childElementCount) {
-      const range = st.startWeight - st.goalWeight;
-      for (let k = 1; k < range; k++) { const i = document.createElement('i'); i.style.left = (k / range * 100) + '%'; ticks.appendChild(i); }
-      const mid = document.createElement('i'); mid.className = 'mid'; mid.style.left = '50%'; ticks.appendChild(mid);
-    }
+    journey(fc);
 
     const wl = d.walks || [];
     document.getElementById('stepsProgress').textContent = stepsVal.toLocaleString() + ' / ' + stepsTgt.toLocaleString();
     document.getElementById('walkList').textContent = wl.length
       ? wl.map(x => {
-          const emo = x.type === 'gym' ? '🏋️' : x.type === 'run' ? '🏃' : x.type === 'other' ? '🤸' : '🚶';
-          if (x.status === 'pending') return emo + ' reading photo…';
-          return emo + ' ' + (x.desc ? x.desc + ' · ' : '') + (x.min || 0) + ' min' + (x.steps ? ' · ' + x.steps.toLocaleString() + ' activity steps' : '') + (x.kcal ? ' · ' + x.kcal + ' kcal' : '') + ' at ' + x.at;
+          const emo = x.type === 'gym' ? 'Gym' : x.type === 'run' ? 'Run' : x.type === 'other' ? 'Activity' : 'Walk';
+          if (x.status === 'pending') return 'Reading photo…';
+          return (x.desc || emo) + ' · ' + (x.min || 0) + ' min' + (x.steps ? ' · ' + x.steps.toLocaleString() + ' activity steps' : '') + (x.kcal ? ' · ' + x.kcal + ' kcal' : '') + ' at ' + x.at;
         }).join(' · ')
       : 'No movement logged yet.';
 
@@ -763,7 +932,7 @@
       dgEl.textContent = dg;
     } else {
       dgEl.classList.remove('digest-card');
-      dgEl.innerHTML = '<span class="muted" style="font-size:13px">Fresh day. Your morning recap lands here each day ☀️</span>';
+      dgEl.innerHTML = '<span class="muted" style="font-size:13px">Fresh day. Your morning recap lands here each day.</span>';
     }
 
     renderWeek();
@@ -787,7 +956,7 @@
       : '<div class="kc"><span class="dots"><span></span><span></span><span></span></span><span style="display:block;font-size:11px" class="muted">counting</span></div>';
     return '<div class="meal' + (m.casual ? ' casual' : '') + '"><div class="t"><div class="d">' + esc(m.desc || 'Photo meal') + '</div>' +
       '<div class="m">' + m.at + (m.casual ? ' · snack' : '') + (nutrients ? ' · ' + nutrients : '') + '</div>' + ingredients +
-      (m.note ? '<div class="note">💬 ' + esc(m.note) + '</div>' : '') + '</div>' + kc +
+      (m.note ? '<div class="note">' + esc(m.note) + '</div>' : '') + '</div>' + kc +
       '<button class="del" aria-label="Remove" onclick="delMeal(\'' + m.id + '\')">✕</button></div>';
   }
   function groupSummary(items) {
@@ -802,23 +971,23 @@
     const meals = d.meals || [];
     const hourOf = m => parseInt(String(m.at || '00:00').slice(0, 2), 10) || 0;
     const groups = [
-      { key:'lunch', name:'Lunch', ico:'🍛', items: meals.filter(m => !m.casual && hourOf(m) >= 11 && hourOf(m) < 16) },
-      { key:'dinner', name:'Dinner', ico:'🍲', items: meals.filter(m => !m.casual && hourOf(m) >= 16) },
-      { key:'snacks', name:'Drinks and snacks', ico:'☕', items: meals.filter(m => m.casual || hourOf(m) < 11) }
+      { key:'lunch', name:'Lunch', ico:ICON.lunch, items: meals.filter(m => !m.casual && hourOf(m) >= 11 && hourOf(m) < 16) },
+      { key:'dinner', name:'Dinner', ico:ICON.dinner, items: meals.filter(m => !m.casual && hourOf(m) >= 16) },
+      { key:'snacks', name:'Drinks and snacks', ico:ICON.drinks, items: meals.filter(m => m.casual || hourOf(m) < 11) }
     ];
     const target = (st.waterTargetMl || 3000) / 1000;
     const walks = d.walks || [];
     const walkText = walks.length ? walks.map(x => {
-      const emo = x.type === 'gym' ? '🏋️' : x.type === 'run' ? '🏃' : x.type === 'other' ? '🤸' : '🚶';
-      if (x.status === 'pending') return emo + ' reading photo…';
-      return emo + ' ' + (x.desc ? x.desc + ' · ' : '') + (x.min || 0) + ' min' + (x.kcal ? ' · ' + x.kcal + ' kcal' : '');
+      const emo = x.type === 'gym' ? 'Gym' : x.type === 'run' ? 'Run' : x.type === 'other' ? 'Activity' : 'Walk';
+      if (x.status === 'pending') return 'Reading photo…';
+      return (x.desc || emo) + ' · ' + (x.min || 0) + ' min' + (x.kcal ? ' · ' + x.kcal + ' kcal' : '');
     }).join(' · ') : 'Nothing logged yet.';
     let html = groups.map(g => '<div class="group"><div class="ghead"><div class="ico">' + g.ico + '</div><div class="t"><b>' + g.name + '</b><span>' +
       esc(groupSummary(g.items) || (g.key === 'snacks' ? 'Coffee, tea, fruit, anything small' : 'Nothing logged yet')) + '</span></div>' +
       '<button class="logbtn" onclick="openSheet()">Log</button></div>' + g.items.map(mealRow).join('') + '</div>').join('');
-    html += '<div class="group"><div class="ghead"><div class="ico">💧</div><div class="t"><b>Water</b><span>' + litres.toFixed(1) + ' of ' + target.toFixed(1) + ' L</span></div><button class="logbtn" onclick="quick(\'water\',800)">+ Bottle</button></div>' +
+    html += '<div class="group"><div class="ghead"><div class="ico c-water">' + ICON.water + '</div><div class="t"><b>Water</b><span>' + litres.toFixed(1) + ' of ' + target.toFixed(1) + ' L</span></div><button class="logbtn" onclick="quick(\'water\',800)">+ Bottle</button></div>' +
       '<div class="inline-acts"><button class="mini-btn" onclick="quick(\'water\',250)">+ 250 ml</button><button class="mini-btn" onclick="quick(\'water\',-800)">− Bottle</button></div></div>';
-    html += '<div class="group"><div class="ghead"><div class="ico">🏃</div><div class="t"><b>Exercise</b><span>' + esc(walkText) + '</span></div><button class="logbtn" onclick="setTab(\'progress\');document.getElementById(\'walkIn\').focus()">Log</button></div></div>';
+    html += '<div class="group"><div class="ghead"><div class="ico c-move">' + ICON.move + '</div><div class="t"><b>Exercise</b><span>' + esc(walkText) + '</span></div><button class="logbtn" onclick="setTab(\'progress\');document.getElementById(\'walkIn\').focus()">Log</button></div></div>';
     document.getElementById('mealsCard').innerHTML = html;
   }
   function renderTopWeek() {
@@ -847,7 +1016,7 @@
     document.getElementById('topWeek').style.display = name === 'today' ? '' : 'none';
     try { localStorage.setItem('p95tab', name); } catch (e) {}
     window.scrollTo({ top: 0 });
-    if (name === 'progress' && S) renderTrend();
+    if (name === 'progress' && S) { renderTrend(); playWalk(); }
   }
   function openSheet() { document.getElementById('plusSheet').classList.remove('hide'); }
   function closeSheet() { document.getElementById('plusSheet').classList.add('hide'); }
@@ -893,7 +1062,7 @@
       water >= (S.settings.waterTargetMl || 3000),
       steps >= (S.settings.stepsTarget || 10000)
     ];
-    return { key:key, day:day, kcal:kcal, protein:protein, pending:pending, water:water, steps:steps, active:active, logged:logged, score:anchors.filter(Boolean).length, icons:['🍽️','🥩','💧','👣'].filter((x, i) => anchors[i]).join('') };
+    return { key:key, day:day, kcal:kcal, protein:protein, pending:pending, water:water, steps:steps, active:active, logged:logged, score:anchors.filter(Boolean).length, icons:[ICON.lunch, ICON.protein, ICON.water, ICON.steps].filter((x, i) => i === 3 ? steps > 0 : anchors[i]).join('') };
   }
   function weekRangeLabel(startKey, endKey) {
     const a = new Date(startKey + 'T12:00:00'), b = new Date(endKey + 'T12:00:00');
@@ -934,7 +1103,7 @@
     const avgWater = avg(waterDays, m => m.water) / 1000;
     const avgSteps = Math.round(avg(stepDays, m => m.steps));
     const active = elapsed.reduce((n, m) => n + m.active, 0);
-    const srW = forecast95().series, wkEnd = srW.filter(p => p.d >= weekCursor && p.d <= endKey).pop(), wkPrev = srW.filter(p => p.d < weekCursor).pop();
+    const srW = forecast95().series, wkEnd = srW.filter(p => p.d >= weekCursor && p.d <= endKey).pop(), wkPrev = srW.filter(p => p.d < weekCursor && p.d >= addDays(weekCursor, -10)).pop();
     const weightChange = wkEnd && wkPrev ? wkEnd.w - wkPrev.w : null;
     const stat = (label, value) => '<div class="week-stat"><span>' + label + '</span><b>' + value + '</b></div>';
     document.getElementById('weekStats').innerHTML =
@@ -1014,16 +1183,14 @@
       .map(f => ({ desc: f.desc, kcal: med(f.kcals), protein: med(f.prots), casual: f.casuals * 2 > f.n, n: f.n, last: f.last }));
     return PINNED_FAVS.concat(learned);
   }
-  function foodEmo(d) {
+  function foodIcon(d) {
     d = d.toLowerCase();
-    if (/coffee|espresso|cortado|americano/.test(d)) return '☕';
-    if (/\btea\b|chai/.test(d)) return '🍵';
-    if (/\bcoke\s*zero\b/.test(d)) return '🥤';
-    if (/egg/.test(d)) return '🥚';
-    if (/yoghurt|yogurt/.test(d)) return '🥛';
-    if (/watermelon|apple|banana|mango|fruit|avocado/.test(d)) return '🍎';
-    if (/muesli|oats|porridge/.test(d)) return '🥣';
-    return '🍽️';
+    if (/coffee|espresso|cortado|americano|\btea\b|chai/.test(d)) return ICON.drinks;
+    if (/\bcoke\s*zero\b/.test(d)) return ICON.glass;
+    if (/egg/.test(d)) return ICON.egg;
+    if (/yoghurt|yogurt|muesli|oats|porridge/.test(d)) return ICON.bowl;
+    if (/watermelon|apple|banana|mango|fruit|avocado/.test(d)) return ICON.fruit;
+    return ICON.lunch;
   }
   function renderQuick() {
     FAVS = favorites();
@@ -1035,7 +1202,7 @@
       b.className = 'repeat-card';
       b.setAttribute('aria-label', 'Log ' + f.desc + ', ' + f.kcal + ' calories');
       const short = f.desc.length > 30 ? f.desc.slice(0, 29) + '…' : f.desc;
-      b.innerHTML = '<span style="font-size:18px">' + foodEmo(f.desc) + '</span>' +
+      b.innerHTML = '<span class="rc-ic">' + foodIcon(f.desc) + '</span>' +
         '<span class="repeat-count">' + (f.pinned ? (f.pinLabel || 'regular choice') : (f.n > 1 ? f.n + '× lately' : 'recent')) + '</span>' +
         '<span class="repeat-name">' + esc(short) + '</span>' +
         '<span class="repeat-meta">' + f.kcal.toLocaleString() + ' kcal · ' + f.protein + 'g protein</span>';
@@ -1056,7 +1223,7 @@
       const saved = await apiPost({ action: 'logMeal', desc: f.desc, kcal: f.kcal, protein: f.protein, casual: f.casual });
       if (!saved || !saved.ok) throw new Error((saved && saved.error) || 'save failed');
       apply(saved);
-      toast(foodEmo(f.desc) + ' Logged & counted — ' + f.kcal + ' kcal');
+      toast('Logged and counted: ' + f.kcal + ' kcal');
     } catch (e) {
       if (button) {
         button.disabled = false;
@@ -1096,7 +1263,7 @@
     const v = document.getElementById('chatIn').value.trim();
     if (!v) return;
     document.getElementById('chatIn').value = '';
-    toast('Sent 💬 — coach can reply and update meal totals');
+    toast('Sent. Your coach can reply and update meal totals.');
     apply(await apiPost({ action: 'chatPost', role: 'collo', text: v }));
   }
 
@@ -1106,72 +1273,100 @@
     return out;
   }
 
+  let chartSig = null, chartPlayed = false;
   function renderTrend() {
-    const st = S.settings;
-    const pts = [];
-    Object.keys(S.days).sort().forEach(dt => { const w = Number(S.days[dt].weight); if (w > 40 && w < 250) pts.push({ d: dt, w: w }); });
-    const svg = document.getElementById('spark'), txt = document.getElementById('trendTxt');
-    if (pts.length < 2) { svg.innerHTML = ''; txt.innerHTML = '<div class="trend-note">Add a few morning weigh-ins to see your trend.</div>'; return; }
-    const W = 340, H = 214, L = 34, R = 16, T = 24, B = 26, day = 86400000;
+    const st = S.settings, day = 86400000;
     const tOf = d => new Date(d + 'T00:00:00').getTime();
-    const fc = forecast95(), tMile = tOf(st.endDate), tNow = tOf(TODAY), t0 = tOf(st.startDate);
-    const t1 = Math.max(tMile, tNow + 7 * day, fc.eta ? Math.min(fc.eta, tNow + 150 * day) : 0);
+    const pts = [];
+    Object.keys(S.days).sort().forEach(dt => { const w = Number(S.days[dt].weight); if (w > 40 && w < 250) pts.push({ d: dt, w: w, t: tOf(dt) }); });
+    const svg = document.getElementById('spark'), txt = document.getElementById('trendTxt');
+    // Redraw only when the numbers change, and play the draw-in once, the first time the chart is on screen.
+    const visible = document.getElementById('tab-progress').classList.contains('on');
+    const sig = TODAY + '|' + pts.map(p => p.d + ':' + p.w).join(',');
+    if (sig === chartSig && (chartPlayed || !visible)) return;
+    chartSig = sig;
+    if (pts.length < 2) { svg.innerHTML = ''; txt.innerHTML = '<div class="trend-note">Add a few morning weigh-ins to see your trend.</div>'; return; }
+    if (visible) chartPlayed = true;
+    svg.classList.toggle('still', !visible);
+    const fc = forecast95(), avg = fc.series; // the same 7-day average the forecast uses
+    const W = 340, H = 214, L = 34, R = 16, T = 24, B = 26;
+    const tMile = tOf(st.endDate), tNow = tOf(TODAY), t0 = Math.min(tOf(st.startDate), pts[0].t);
+    const falling = !!(fc.eta || fc.next);
+    const hit = rate => Math.max(tNow + day, fc.lastT + (fc.avgNow - st.goalWeight) / -rate * day); // when a given rate reaches the goal, never before tomorrow
+    const t1 = Math.max(tMile, tNow + 7 * day, falling ? Math.min(hit(fc.perDay) + 14 * day, tNow + 150 * day) : 0);
     const ws = pts.map(p => p.w).concat([st.goalWeight, st.startWeight]);
     const lo = Math.floor(Math.min.apply(null, ws) - 0.4), hi = Math.ceil(Math.max.apply(null, ws) + 0.4);
     const X = t => L + (W - L - R) * (t - t0) / (t1 - t0);
     const Y = w => T + (H - T - B) * (hi - w) / (hi - lo);
     const f = n => n.toFixed(1);
-    // pace figures
-    const first = pts[0], last = pts[pts.length - 1];
-    // a 7-day trailing average takes the morning-to-morning noise out of the line
-    const avg = pts.map(p => { const tp = tOf(p.d); const win = pts.filter(q => { const tq = tOf(q.d); return tq <= tp && tp - tq < 7 * day; }); return { d: p.d, w: win.reduce((a, q) => a + q.w, 0) / win.length }; });
-    const pathOf = arr => arr.map((p, i) => (i ? 'L' : 'M') + f(X(tOf(p.d))) + ',' + f(Y(p.w))).join(' ');
-    let out = '<defs><linearGradient id="wArea" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#e783a3" stop-opacity=".3"/><stop offset="1" stop-color="#e783a3" stop-opacity="0"/></linearGradient></defs>';
+    const last = pts[pts.length - 1];
+    // Runs of regular weigh-ins. More than 10 days without one is shown as a gap, never as a flat line.
+    const runs = [];
+    pts.forEach((p, i) => { if (!i || p.t - pts[i - 1].t > 10 * day) runs.push([]); runs[runs.length - 1].push(i); });
+    const pathOf = (arr, idx) => idx.map((i, k) => (k ? 'L' : 'M') + f(X(arr[i].t)) + ',' + f(Y(arr[i].w))).join(' ');
+    let out = '<defs><linearGradient id="wArea" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ef8a5f" stop-opacity=".3"/><stop offset="1" stop-color="#ef8a5f" stop-opacity="0"/></linearGradient></defs>';
     // kg grid with labels on the left
     const step = hi - lo > 9 ? 2 : 1;
     for (let w = lo; w <= hi; w += step) {
       out += '<line class="grid" x1="' + L + '" x2="' + (W - R) + '" y1="' + f(Y(w)) + '" y2="' + f(Y(w)) + '"/>' +
         '<text x="' + (L - 7) + '" y="' + f(Y(w) + 3.5) + '" text-anchor="end">' + w + '</text>';
     }
-    // month ticks along the bottom
+    // month ticks along the bottom; a label is skipped when it would sit on top of the one before
     const d0 = new Date(t0);
+    let lastLabelX = X(t0);
     out += '<text x="' + f(X(t0)) + '" y="' + (H - 8) + '" text-anchor="start">' + d0.toLocaleDateString('en', { month: 'short' }) + '</text>';
     for (let m = new Date(d0.getFullYear(), d0.getMonth() + 1, 1); m.getTime() <= t1; m = new Date(m.getFullYear(), m.getMonth() + 1, 1)) {
-      const x = f(X(m.getTime()));
-      out += '<line class="grid" x1="' + x + '" x2="' + x + '" y1="' + T + '" y2="' + (H - B) + '"/>' +
-        '<text x="' + x + '" y="' + (H - 8) + '" text-anchor="middle">' + m.toLocaleDateString('en', { month: 'short' }) + '</text>';
+      const xn = X(m.getTime()), x = f(xn);
+      out += '<line class="grid" x1="' + x + '" x2="' + x + '" y1="' + T + '" y2="' + (H - B) + '"/>';
+      if (xn - lastLabelX >= 28 && xn <= W - R - 6) { out += '<text x="' + x + '" y="' + (H - 8) + '" text-anchor="middle">' + m.toLocaleDateString('en', { month: 'short' }) + '</text>'; lastLabelX = xn; }
     }
-    // goal line, pace line, today
+    // goal line and today
     out += '<line class="goal" x1="' + L + '" x2="' + (W - R) + '" y1="' + f(Y(st.goalWeight)) + '" y2="' + f(Y(st.goalWeight)) + '"/>' +
-      '<text x="' + (L + 6) + '" y="' + f(Y(st.goalWeight) - 5) + '" text-anchor="start" fill="#62c7a5">' + st.goalWeight.toFixed(1) + ' goal</text>';
+      '<text x="' + (L + 6) + '" y="' + f(Y(st.goalWeight) - 5) + '" text-anchor="start" fill="#6fd6a8">' + st.goalWeight.toFixed(1) + ' goal</text>';
     if (tNow > t0 && tNow < t1) out += '<line class="today" x1="' + f(X(tNow)) + '" x2="' + f(X(tNow)) + '" y1="' + (T - 4) + '" y2="' + (H - B) + '"/>' +
       '<text x="' + f(X(tNow)) + '" y="' + (T - 8) + '" text-anchor="middle">today</text>';
-    // the data: soft area, faint daily line, strong 7-day line, dotted projection
-    out += '<path class="area" d="' + pathOf(avg) + ' L' + f(X(tOf(last.d))) + ',' + (H - B) + ' L' + f(X(tOf(first.d))) + ',' + (H - B) + ' Z"/>';
-    out += '<path class="raw" d="' + pathOf(pts) + '"/>';
-    out += '<path class="avg draw" id="avgPath" d="' + pathOf(avg) + '"/>';
-    if (fc.eta) { const tEnd = Math.min(fc.eta, t1); out += '<path class="proj pop" d="M' + f(X(fc.lastT)) + ',' + f(Y(fc.avgNow)) + ' L' + f(X(tEnd)) + ',' + f(Y(fc.avgNow + fc.perDay * (tEnd - fc.lastT) / day)) + '"/>'; }
+    // forecast: a soft wedge between a slower and a faster version of the recent trend, with the trend itself dotted
+    if (falling) {
+      const slow = fc.perDay * .6, fast = fc.perDay * 1.4;
+      const yAt = (rate, t) => Math.max(st.goalWeight, fc.avgNow + rate * (t - fc.lastT) / day);
+      const tEnd = Math.min(t1, hit(slow)), tMid = Math.min(t1, hit(fc.perDay));
+      let cone = 'M' + f(X(fc.lastT)) + ',' + f(Y(fc.avgNow)) + ' L' + f(X(tEnd)) + ',' + f(Y(yAt(slow, tEnd))) + ' L' + f(X(tEnd)) + ',' + f(Y(yAt(fast, tEnd)));
+      if (hit(fast) < tEnd) cone += ' L' + f(X(hit(fast))) + ',' + f(Y(st.goalWeight));
+      out += '<path class="cone pop" d="' + cone + ' Z"/>' +
+        '<path class="proj pop" d="M' + f(X(fc.lastT)) + ',' + f(Y(fc.avgNow)) + ' L' + f(X(tMid)) + ',' + f(Y(yAt(fc.perDay, tMid))) + '"/>';
+    }
+    // the data: soft area, faint daily line and strong 7-day line for each run, dashes across each gap
+    runs.forEach((idx, r) => {
+      if (r) { const a = avg[runs[r - 1][runs[r - 1].length - 1]], b = avg[idx[0]];
+        out += '<path class="gap" d="M' + f(X(a.t)) + ',' + f(Y(a.w)) + ' L' + f(X(b.t)) + ',' + f(Y(b.w)) + '"/>'; }
+      if (idx.length > 1) {
+        const a = avg[idx[0]], b = avg[idx[idx.length - 1]];
+        out += '<path class="area" d="' + pathOf(avg, idx) + ' L' + f(X(b.t)) + ',' + (H - B) + ' L' + f(X(a.t)) + ',' + (H - B) + ' Z"/>' +
+          '<path class="raw" d="' + pathOf(pts, idx) + '"/><path class="avg draw" d="' + pathOf(avg, idx) + '"/>';
+      } else out += '<circle class="solo" cx="' + f(X(avg[idx[0]].t)) + '" cy="' + f(Y(avg[idx[0]].w)) + '" r="2.6"/>';
+    });
     // where you started and where you are
-    out += '<circle class="pop" cx="' + f(X(t0)) + '" cy="' + f(Y(st.startWeight)) + '" r="4" fill="#130d17" stroke="#e7b75c" stroke-width="2"/>' +
-      '<text class="pop" x="' + f(X(t0) + 8) + '" y="' + f(Y(st.startWeight) + 4) + '" fill="#e7b75c">' + st.startWeight.toFixed(1) + ' start</text>';
-    const lx = X(tOf(last.d)), ly = Y(last.w), flip = lx > W - 72;
-    out += '<circle class="pop" cx="' + f(lx) + '" cy="' + f(ly) + '" r="4.5" fill="#e783a3"><animate attributeName="r" values="4.5;7;4.5" dur="1.6s" repeatCount="indefinite"/></circle>' +
+    out += '<circle class="pop" cx="' + f(X(tOf(st.startDate))) + '" cy="' + f(Y(st.startWeight)) + '" r="4" fill="#0e1c19" stroke="#f5c04e" stroke-width="2"/>' +
+      '<text class="pop" x="' + f(X(tOf(st.startDate)) + 8) + '" y="' + f(Y(st.startWeight) - 6) + '" fill="#f5c04e">' + st.startWeight.toFixed(1) + ' start</text>';
+    const lx = X(last.t), ly = Y(last.w), flip = lx > W - 72;
+    out += '<circle class="pop" cx="' + f(lx) + '" cy="' + f(ly) + '" r="4.5" fill="#ef8a5f"><animate attributeName="r" values="4.5;7;4.5" dur="1.6s" repeatCount="indefinite"/></circle>' +
       '<g class="pop"><rect class="pill" x="' + f(flip ? lx - 54 : lx + 10) + '" y="' + f(ly - 22) + '" width="44" height="18" rx="9"/>' +
       '<text class="lbl" x="' + f(flip ? lx - 32 : lx + 32) + '" y="' + f(ly - 9) + '" text-anchor="middle">' + last.w.toFixed(1) + '</text></g>';
     svg.innerHTML = out;
-    // draw the average line in; if the tab is hidden the length is 0, so just show it
-    const drawn = document.getElementById('avgPath');
-    try { const len = drawn.getTotalLength(); if (len > 0) drawn.style.setProperty('--len', len.toFixed(1)); else drawn.classList.remove('draw'); } catch (e) { drawn.classList.remove('draw'); }
-    const firstLabel = new Date(first.d + 'T12:00:00').toLocaleDateString('en', { day: 'numeric', month: 'short' });
+    // draw each solid line in; if the tab is hidden the length is 0, so just show it
+    svg.querySelectorAll('.avg.draw').forEach(p => {
+      try { const len = p.getTotalLength(); if (len > 0) p.style.setProperty('--len', len.toFixed(1)); else p.classList.remove('draw'); } catch (e) { p.classList.remove('draw'); }
+    });
     const lineItem = (label, value) => '<div class="trend-line"><span>' + label + '</span><b>' + value + '</b></div>';
-    const back = fc.series.filter(p => p.t <= fc.lastT - 28 * day).pop();
+    const back = avg.filter(p => p.t <= fc.lastT - 24 * day && p.t >= fc.lastT - 35 * day).pop(); // a reading from about four weeks ago, or no row
     txt.innerHTML =
-      lineItem('7-day average', avg[avg.length - 1].w.toFixed(1) + ' kg') +
+      lineItem('7-day average', fc.avgNow.toFixed(1) + ' kg') +
       (fc.next ? lineItem('Next kilo', fc.next.kg + ' kg around ' + fc.next.label) : '') +
-      lineItem('Forecast for ' + fc.goal, fc.avgNow <= fc.goal ? 'reached 🎯' : fc.eta ? 'around ' + fc.label : fc.next ? 'more than two years at this trend' : forecastText(fc)) +
+      lineItem('Forecast for ' + fc.goal, fc.avgNow <= fc.goal ? 'reached' : fc.eta ? 'around ' + fc.label : fc.next ? 'more than two years at this trend' : forecastShort(fc)) +
       (back && !fc.stale ? lineItem('Last 4 weeks', movedText(fc.avgNow - back.w)) : '') +
-      (fc.ready ? lineItem('Since ' + firstLabel, movedText(fc.avgNow - fc.series[0].w)) : '') +
-      '<div class="trend-note">Solid line is your 7-day average, the faint line is each weigh-in, and the dotted line is the forecast. One weigh-in can jump with water; the average does not.</div>';
+      lineItem('Since the ' + st.startWeight.toFixed(1) + ' kg start', movedText(fc.avgNow - st.startWeight)) +
+      '<div class="trend-note">The solid line is your 7-day average and the faint line is each weigh-in. Dashes bridge a stretch with no weigh-ins.' +
+      (falling ? ' The shaded wedge is where your recent trend points.' : '') + ' One weigh-in can jump with water; the average does not.</div>';
   }
 
   let repMonth = null;
@@ -1232,16 +1427,16 @@
     const monthHasGym = bars.some(b => b.budget > baseB);
     const bw = 300 / dim, cap = (monthHasGym ? Math.max(baseB, gymB) : baseB) * 1.4;
     const yBase = (44 - (baseB / cap) * 40).toFixed(1), yGym = (44 - (gymB / cap) * 40).toFixed(1);
-    let sv = '<line x1="0" y1="45" x2="300" y2="45" stroke="#3a2841" stroke-width="1"/>' +
-      '<line x1="0" y1="' + yBase + '" x2="300" y2="' + yBase + '" stroke="#3a2841" stroke-width="1" stroke-dasharray="4 4"/>' +
-      (monthHasGym ? '<line x1="0" y1="' + yGym + '" x2="300" y2="' + yGym + '" stroke="#3a2841" stroke-width="1" stroke-dasharray="2 4"/>' : '');
+    let sv = '<line x1="0" y1="45" x2="300" y2="45" stroke="#2b4339" stroke-width="1"/>' +
+      '<line x1="0" y1="' + yBase + '" x2="300" y2="' + yBase + '" stroke="#2b4339" stroke-width="1" stroke-dasharray="4 4"/>' +
+      (monthHasGym ? '<line x1="0" y1="' + yGym + '" x2="300" y2="' + yGym + '" stroke="#2b4339" stroke-width="1" stroke-dasharray="2 4"/>' : '');
     bars.forEach(b => {
       const x = ((b.day - 1) * bw + 1).toFixed(1), w = Math.max(1.5, bw - 2).toFixed(1);
       if (b.kcal > 0) {
         const h = Math.max(3, Math.min(1, b.kcal / cap) * 40);
-        sv += '<rect x="' + x + '" y="' + (44 - h).toFixed(1) + '" width="' + w + '" height="' + h.toFixed(1) + '" rx="1.5" fill="' + (b.kcal <= b.budget ? '#e783a3' : '#e7b75c') + '"/>';
+        sv += '<rect x="' + x + '" y="' + (44 - h).toFixed(1) + '" width="' + w + '" height="' + h.toFixed(1) + '" rx="1.5" fill="' + (b.kcal <= b.budget ? '#ef8a5f' : '#f5c04e') + '"/>';
       } else if (b.logged) {
-        sv += '<rect x="' + x + '" y="41" width="' + w + '" height="3" rx="1.5" fill="#3a2841"/>';
+        sv += '<rect x="' + x + '" y="41" width="' + w + '" height="3" rx="1.5" fill="#2b4339"/>';
       }
     });
     document.getElementById('repBars').innerHTML = sv;
@@ -1253,19 +1448,19 @@
     const avgP = eatDays.length ? Math.round(protSum / eatDays.length) : 0;
     const avgW = waterDays ? waterSum / waterDays / 1000 : 0;
     if (wFirst !== null) {
-      const srM = forecast95().series, inM = srM.filter(p => p.d.slice(0, 7) === repMonth), prevM = srM.filter(p => p.d < repMonth + '-01').pop();
+      const srM = forecast95().series, inM = srM.filter(p => p.d.slice(0, 7) === repMonth), prevM = srM.filter(p => p.d < repMonth + '-01' && p.d >= addDays(repMonth + '-01', -10)).pop();
       if (inM.length) { wFirst = (prevM || inM[0]).w; wLast = inM[inM.length - 1].w; }
     }
     const tile = (lbl, val) => '<div class="mini"><span>' + lbl + '</span><b>' + val + '</b></div>';
     document.getElementById('repGrid').innerHTML =
-      tile('⚖️ 7-day average', wFirst !== null ? wFirst.toFixed(1) + ' → ' + wLast.toFixed(1) : '—') +
-      tile('📉 Change', wFirst !== null ? movedText(wLast - wFirst) : '—') +
-      tile('🍽️ Avg kcal', avgK ? avgK.toLocaleString() : '—') +
-      tile('📅 Days logged', bars.filter(b => b.logged).length + ' d') +
-      tile('🥩 Protein avg', avgK ? avgP + ' g' : '—') +
-      tile('💧 Water avg', waterDays ? (+avgW.toFixed(1)) + ' L' : '—') +
-      tile('🏃 Active', activeMin ? activeMin + ' min' : '—') +
-      tile('👣 Steps avg', stepsDays ? Math.round(stepsSum / stepsDays).toLocaleString() : '—');
+      tile('7-day average', wFirst !== null ? wFirst.toFixed(1) + ' → ' + wLast.toFixed(1) : '—') +
+      tile('Change', wFirst !== null ? movedText(wLast - wFirst) : '—') +
+      tile('Avg kcal', avgK ? avgK.toLocaleString() : '—') +
+      tile('Days logged', bars.filter(b => b.logged).length + ' d') +
+      tile('Protein avg', avgK ? avgP + ' g' : '—') +
+      tile('Water avg', waterDays ? (+avgW.toFixed(1)) + ' L' : '—') +
+      tile('Active', activeMin ? activeMin + ' min' : '—') +
+      tile('Steps avg', stepsDays ? Math.round(stepsSum / stepsDays).toLocaleString() : '—');
 
     let take;
     if (wFirst === null) {
@@ -1285,7 +1480,7 @@
     if (!v) return;
     document.getElementById('typeModal').classList.add('hide');
     document.getElementById('descIn').value = '';
-    toast('Logged 🍽️ — your coach will count it shortly');
+    toast('Logged. Your coach will count it shortly.');
     apply(await apiPost({ action: 'logMeal', desc: v }));
   }
   let pendingPhoto = null;
@@ -1310,7 +1505,7 @@
     if (!pendingPhoto) return;
     const b64 = pendingPhoto; pendingPhoto = null;
     const desc = withCtx ? document.getElementById('ctxIn').value.trim() : '';
-    toast('Photo logged 📸 — your coach will count the calories');
+    toast('Photo logged. Your coach will count the calories.');
     apply(await apiPost({ action: 'logMeal', photoB64: b64, mime: 'image/jpeg', desc: desc }));
   }
   async function quick(kind, val) { apply(await apiPost({ action: 'quickLog', kind: kind, value: val })); }
@@ -1319,8 +1514,37 @@
     const v = parseFloat(document.getElementById('wIn').value);
     if (!v || v < 60 || v > 130) return toast('Enter a weight in kg');
     document.getElementById('wIn').value = '';
-    apply(await apiPost({ action: 'quickLog', kind: 'weight', value: v }));
-    toast('Saved ' + v.toFixed(1) + ' kg. Thanks for weighing in.');
+    const seriesBefore = forecast95().series, lowBefore = seriesBefore.length ? Math.min.apply(null, seriesBefore.map(p => p.w)) : null;
+    let savedW;
+    try { savedW = await apiPost({ action: 'quickLog', kind: 'weight', value: v }); }
+    catch (e) { document.getElementById('wIn').value = v; return toast('No connection. Your weight is still in the box, so try again.'); }
+    apply(savedW);
+    if (!savedW || !savedW.ok) return; // apply() has already said the save did not go through
+    const avgAfter = forecast95().avgNow, kilo = n => Math.floor(+n.toFixed(1)); // compare what the screen shows, to one decimal
+    if (lowBefore !== null && avgAfter !== null && kilo(avgAfter) < kilo(lowBefore)) celebrate('Under ' + (kilo(avgAfter) + 1) + ' kg', 'Your 7-day average, for the first time.');
+    else toast('Saved ' + v.toFixed(1) + ' kg. Thanks for weighing in.');
+  }
+  // Saving steps leaves a short trail of footprints walking away from the ring.
+  function stepsBurst() {
+    const ring = document.getElementById('stepsRing');
+    if (!ring) return;
+    ring.classList.remove('bump'); void ring.offsetWidth; ring.classList.add('bump');
+    const r = ring.getBoundingClientRect();
+    const tgt = S.settings.stepsTarget || 10000, f = Math.min(1, ((S.days[TODAY] || {}).steps || 0) / tgt);
+    if (!r.width || !f || wkReduced()) return;
+    const n = 6, span = Math.min(f, .34), cx = r.left + r.width / 2, cy = r.top + r.height / 2;
+    for (let i = 0; i < n; i++) {
+      const th = (f - span + span * (i + 1) / n) * Math.PI * 2, rad = r.width * .43 + (i % 2 ? 4 : -4);
+      const p = document.createElement('div');
+      p.className = 'print';
+      p.innerHTML = ICON.foot;
+      p.style.left = (cx + Math.sin(th) * rad - 7).toFixed(1) + 'px';
+      p.style.top = (cy - Math.cos(th) * rad - 7).toFixed(1) + 'px';
+      p.style.animationDelay = (i * 85) + 'ms';
+      p.firstChild.style.transform = 'rotate(' + (th * 180 / Math.PI + 90).toFixed(0) + 'deg)';
+      document.body.appendChild(p);
+      setTimeout(() => p.remove(), 1000 + i * 85 + 60);
+    }
   }
   async function logSteps(src) {
     const box = document.getElementById(src || 'stepsIn');
@@ -1333,12 +1557,15 @@
     if (!hadDay) S.days[TODAY] = { weight: null, waterMl: 0, walks: [], meals: [] };
     S.days[TODAY].steps = v;
     render();
-    toast('👣 ' + v.toLocaleString() + ' shown now · saving…');
+    toast(v.toLocaleString() + ' steps, saving…');
     try {
-      apply(await persistSteps(v));
-      if (before < tgt && v >= tgt) { confetti(); toast('👣 ' + v.toLocaleString() + ' steps. Brilliant! 🎉'); }
-      else if (v < tgt) toast('👣 ' + v.toLocaleString() + ' steps saved');
-      else toast('👣 ' + v.toLocaleString() + ' saved');
+      const savedSteps = await persistSteps(v);
+      apply(savedSteps);
+      if (!savedSteps || !savedSteps.ok) throw new Error('steps not saved'); // roll back below instead of claiming a save
+      try { stepsBurst(); } catch (e) {}
+      if (before < tgt && v >= tgt) celebrate(tgt.toLocaleString() + ' steps', 'That is the full aim. Well done.');
+      else if (v < tgt) toast(v.toLocaleString() + ' steps saved. Thank you.');
+      else toast(v.toLocaleString() + ' steps saved. Thank you.');
     } catch (e) {
       if (hadDay) S.days[TODAY].steps = before;
       else delete S.days[TODAY];
@@ -1353,9 +1580,8 @@
     if (!v) return toast('Enter minutes');
     document.getElementById('walkIn').value = '';
     document.getElementById('activityStepsIn').value = '';
-    const emo = type === 'gym' ? '🏋️' : type === 'run' ? '🏃' : '🚶';
     apply(await apiPost({ action: 'logWorkout', type: type, min: v, desc: isNaN(activitySteps) ? '' : activitySteps + ' activity steps' }));
-    toast(emo + ' ' + type + ' saved · ' + v + ' min' + (isNaN(activitySteps) ? '' : ' · ' + activitySteps.toLocaleString() + ' steps'));
+    toast(type.charAt(0).toUpperCase() + type.slice(1) + ' saved · ' + v + ' min' + (isNaN(activitySteps) ? '' : ' · ' + activitySteps.toLocaleString() + ' steps'));
   }
   function workoutPhotoPicked(inp) {
     const f = inp.files[0]; inp.value = '';
@@ -1369,7 +1595,7 @@
       cv.getContext('2d').drawImage(img, 0, 0, cv.width, cv.height);
       const b64 = cv.toDataURL('image/jpeg', 0.82).split(',')[1];
       apply(await apiPost({ action: 'logWorkout', photoB64: b64, mime: 'image/jpeg' }));
-      toast('Activity saved 📸 — the workout stays separate from your daily phone total');
+      toast('Activity saved. It stays separate from your phone step total.');
     };
     img.onerror = () => toast('Could not read that image');
     img.src = URL.createObjectURL(f);
